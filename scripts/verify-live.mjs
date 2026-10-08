@@ -15,22 +15,39 @@ async function query(url,timeout=16000){
     return {status:result.status,url:result.url,type:result.headers.get("content-type"),buffer:Buffer.from(await result.arrayBuffer())};}
   catch(e){return{status:"ERR",error:String(e).slice(0,100)};}
 }
-await Promise.all(fileList.map(async name=>{
+// Ограничиваем нагрузку на CDN и сеть проверяющего агента; ERR не означает HTTP 404.
+async function retryQuery(url,timeout=7500){
+  let result;
+  for(let attempt=0;attempt<2;attempt++){
+    result=await query(url,timeout);
+    if(result.status!=="ERR")return result;
+  }
+  return result;
+}
+async function mapLimit(items,limit,fn){
+  let index=0;
+  await Promise.all(Array.from({length:Math.min(limit,items.length)},async()=>{
+    while(index<items.length){const current=index++;await fn(items[current]);}
+  }));
+}
+await mapLimit(fileList,9,async name=>{
   const url=new URL(name,site).href+"?verify="+Date.now();
-  const live=await query(url,12000);
+  const live=await retryQuery(url,3000);
   const local=existsSync(resolve(root,name))?readFileSync(resolve(root,name)):null;
   const equal=!!local && !!live.buffer && sha(local)===sha(live.buffer);
   const out={name,status:live.status,bytes:live.buffer?.length||0,match:equal};
   report.assets.push(out);
-  if(live.status!==200)report.broken.push(out);
+  if(live.status!==200)report.broken.push({...out,error:live.error||null});
   else if(!equal)report.stale.push({...out,liveHash:sha(live.buffer),localHash:local?sha(local):null});
-}));
+});
+if(process.argv.includes("--external")){
 const sources=readFileSync(resolve(root,"resources.js"),"utf8");
 const urlRegex=/https:\/\/[^"'\s]+/g;
 const urls=[...new Set(sources.match(urlRegex)||[])].filter(x=>!x.endsWith("/")&& !x.includes("undefined"));
-for(const url of urls){
- const response=await query(url,13000);
+await mapLimit(urls,3,async url=>{
+ const response=await retryQuery(url,6500);
  report.external.push({url,status:response.status,bytes:response.buffer?.length||0,final:response.url||null,error:response.error||null});
+});
 }
 const html=report.assets.find(x=>x.name==="index.html");
 console.log(JSON.stringify(report,null,2));
