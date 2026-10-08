@@ -43,3 +43,12 @@
 .remediation-row .btn{justify-self:start}
 .reading-short{margin:8px 0!important;border-left:3px solid #7ea6dc;padding:5px 10px;background:#eff5fd;font-size:11px!important;line-height:1.6;color:#334f73}
 .reading-short-unmapped{border-left-color:#ddd0af;background:#faf7f0;color:#746445}
+
+/* Прозрачная маркировка проекта КИМ и запертых зависимых блоков. */
+.exam-meta{display:grid;gap:5px;margin:8px 0 16px;padding:13px 15px;border:1px solid #d3dfef;border-radius:13px;background:#f3f7fc}
+.exam-meta>strong{font-size:13px;line-height:1.6;color:#314b70}
+.exam-meta p{font-size:12px;line-height:1.6;margin:0;color:#335473}
+.exam-meta small{font-size:11px;line-height:1.6;color:#62738a}
+.task-actions button:disabled,.task button:disabled{opacity:.52;cursor:not-allowed}
+.backlog-description .note{line-height:1.6;font-size:11px;margin:5px 0;color:#766548}
+@media(max-width:650px){.exam-meta{padding:11px}}
