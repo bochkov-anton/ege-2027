@@ -18,7 +18,7 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 test("приложение загружается без DOM-ошибок и выводит план дня",()=>{
@@ -49,7 +49,8 @@ test("результат занятий сохраняется и низкая �
   const first=L.planDay(date,L.iso(L.monday(new Date())))[0];
   const click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
   click({action:"detail",id:first.id});
-  assert.ok(a.node("#dialog-content").innerHTML.includes("Материалы и практика"));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("1. Теория Фоксфорд"));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("2. Задания и проверка"));
   a.node("#task-score").value="2/10";
   click({action:"save-score"});
   const saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
@@ -74,8 +75,8 @@ test("поиск тем и открытие подробной карточки 
   assert.ok(a.node("#topic-results").innerHTML.includes("Генетика")||a.node("#topic-results").innerHTML.includes("генетика"));
   const topic=a.window.EGE_UX.findTopics("генетика")[0];assert.ok(topic);
   click({action:"open-topic",key:topic.key});
-  assert.ok(a.node("#dialog-content").innerHTML.includes("Что нужно знать"));
-  assert.ok(a.node("#dialog-content").innerHTML.includes("Знать"));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("ЧТО НУЖНО ПОНЯТЬ"));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("КРАТКИЙ КОНСПЕКТ"));
   a.events.get("document:input")({target:{id:"topic-note",value:"Нужно повторить решётку Пеннета."}});
   const saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(saved.topicNotes[topic.key],"Нужно повторить решётку Пеннета.");
@@ -129,7 +130,8 @@ test("прежние данные загружаются, небезопасны
   click({action:"open-topic",key:"bio:1:0"});
   const resources=a.node("#dialog-content").innerHTML;
   assert.ok(!resources.includes("javascript:alert"));
-  assert.ok(resources.includes("ФИПИ"));
+  assert.ok(resources.includes("Фоксфорд"));
+  assert.ok(!resources.includes("fipi.ru"));
   assert.ok(a.node("#dialog-content").innerHTML.includes("Мои заметки"));
 });
 test("закладки доступны из поиска и с главной страницы",()=>{
@@ -280,8 +282,8 @@ test("кнопка Материалы открывает список источ
   assert.ok(a.node("#app").innerHTML.includes('data-action="show-materials"'));
   assert.ok(!a.node("#app").innerHTML.includes('title="Открыть материал"'));
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"show-materials",id:first}})}});
-  assert.ok(a.node("#dialog-content").innerHTML.includes("Учебные источники"),a.node("#dialog-content").innerHTML.slice(0,600));
-  assert.ok(a.node("#dialog-content").innerHTML.includes("Навигаторе ФИПИ"));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("подборки задач"),a.node("#dialog-content").innerHTML.slice(0,600));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("РЕШУ ЕГЭ"));
   assert.ok(a.node("#dialog-content").innerHTML.includes('data-action="copy-resource"'));
   assert.ok(!a.node("#dialog-content").innerHTML.includes("doc.fipi.ru"));
 });
@@ -317,4 +319,24 @@ test("ночной предел останавливает таймер и не 
   assert.equal(end.studyTimer.startedAt,null);
   assert.ok(end.timeSpent[id]<16*3600,"No overnight accumulation");
   assert.ok(end.timeSpent[id]>=0);
+});
+test("теория Фоксфорд отделена от прямых заданий и переключается без потери заметок",()=>{
+  const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
+  if(!L.isStudyDay(day))return;
+  const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
+  const click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
+  click({action:"detail",id:first});
+  const html=a.node("#dialog-content").innerHTML;
+  assert.ok(html.includes("Теория Фоксфорд"));
+  assert.ok(html.includes("КРАТКИЙ КОНСПЕКТ"));
+  assert.ok(html.includes("Задания и проверка"));
+  assert.ok(html.includes("category_id="));
+  assert.ok(!html.includes("fipi.ru"));
+  click({action:"lesson-tab",tab:"practice"});
+  assert.equal(a.node("#lesson-theory").hidden,true);
+  assert.equal(a.node("#lesson-practice").hidden,false);
+  a.events.get("document:input")({target:{id:"task-note",value:"Нужно повторить определение"}});
+  click({action:"lesson-tab",tab:"theory"});
+  assert.equal(a.node("#lesson-theory").hidden,false);
+  assert.equal(JSON.parse(a.store.get("ege2027-local-progress-v1")).notes[first],"Нужно повторить определение");
 });

@@ -8,7 +8,7 @@
   try{state=L.safeState(JSON.parse(localStorage.getItem(STORE)||"null"),currentMonday);}
   catch{state=L.safeState(null,currentMonday);}
   let view="today",date=L.today(),focusWeek=Math.max(0,Math.min(25,L.weekNumber(date,state.startDate))),focusSubject="bio",searchQuery="",searchSubject="all",searchPinned=false,openTopicKey=null,schoolExpanded=false,showAllReviews=false;
-  let openTask=null,noticeHandle=null;
+  let openTask=null,noticeHandle=null,lessonTab='theory';
   function save(){try{localStorage.setItem(STORE,JSON.stringify(state));}catch{notice("Не удалось сохранить: скачайте резервную копию JSON.");}}
   function notice(msg){$("#notice").textContent=msg;clearTimeout(noticeHandle);noticeHandle=setTimeout(()=>$("#notice").textContent="",3600);}
   function subj(key){return D.subjects[key]||D.subjects.bio;}
@@ -38,13 +38,72 @@
       '<button type="button" class="btn ghost small" data-action="copy-resource" data-url="'+safe(url)+'">Скопировать адрес</button></div></div>'+
       (x.user&&key?'<button type="button" class="btn ghost small" data-action="remove-resource" data-topic="'+safe(key)+'" data-url="'+safe(url)+'" title="Удалить ссылку">×</button>':'')+'</div>';
   }
+  function authored(key,subject,title){
+    return window.EGE_LESSONS?.get(key)||U.topicGuide(subject,title);
+  }
+  function theoryFor(key,subject,title){
+    return window.EGE_THEORY?.get(key,subject,title,authored(key,subject,title))||{};
+  }
+  function directExercises(key){return window.EGE_PRACTICE?.get(key)?.sources||[];}
   function resourceCards(subject,week,title,key){
-    const saved=key?(Array.isArray(state.customLinks[key])?state.customLinks[key]:[]).filter(x=>U.safeHttpUrl(x.url)&&typeof x.title==="string").slice(0,12):[];
-    return '<div class="resource-help"><strong>Учебные источники</strong><p>Прямые PDF и неподтверждённые видео заменены надёжными входными страницами. В Навигаторе ФИПИ выберите предмет и указанный раздел. На планшете при пустом окне скопируйте адрес и вставьте его в Chrome. Внешние сайты требуют интернета.</p></div>'+
-      '<div class="resources-box">'+[...saved.map(x=>({...x,user:true})),...R.forTopic(subject,Math.min(25,week),title)].map(x=>sourceActions(x,key)).join("")+'</div>';
+    const sources=directExercises(key);
+    const saved=key?(Array.isArray(state.customLinks[key])?state.customLinks[key]:[])
+      .filter(x=>U.safeHttpUrl(x.url)&&typeof x.title==="string").slice(0,12):[];
+    return '<div class="practice-intro"><strong>Прямые подборки задач по теме</strong>'+
+      '<p>Откройте условия задач, решите 5–8 самостоятельно, затем сверьте решения и запишите результат.</p></div>'+
+      '<div class="direct-exercises">'+(sources.length?sources.map((x,i)=>
+      '<div class="direct-exercise"><span class="direct-index">'+(i+1)+'</span>'+
+      '<div class="direct-description"><strong>'+safe(x.title)+'</strong>'+
+      '<span>РЕШУ ЕГЭ · '+(i===0?"основной набор":"дополнительный набор")+'</span>'+
+      '<div class="row wrap"><a class="btn small" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Открыть задания →</a>'+
+      '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать адрес</button></div></div></div>').join(""):'<p class="note">Подтверждённая подборка пока отсутствует; используйте учебную задачу ниже.</p>')+'</div>'+
+      (saved.length?'<details class="personal-links"><summary>Мои дополнительные ссылки ('+saved.length+')</summary>'+saved.map(x=>sourceActions({...x,user:true},key)).join("")+'</details>':"");
+  }
+  function lessonPanel(key,subject,title,task=null,initial="theory"){
+    const guide=authored(key,subject,title),info=theoryFor(key,subject,title);
+    const showTheory=initial!=="practice",checks=task?(state.steps[task.id]||[]):[];
+    let html='<nav class="lesson-tabs" aria-label="Разделы темы" role="tablist">'+
+      '<button type="button" role="tab" aria-selected="'+showTheory+'" class="lesson-tab'+(showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="theory">1. Теория Фоксфорд</button>'+
+      '<button type="button" role="tab" aria-selected="'+!showTheory+'" class="lesson-tab'+(!showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="practice">2. Задания и проверка</button></nav>';
+    html+='<section id="lesson-theory" class="lesson-section" role="tabpanel"'+(showTheory?"":" hidden")+'>'+
+      '<div class="study-chapter"><div class="study-kicker">ЧТО НУЖНО ПОНЯТЬ</div><p>'+safe(guide.know)+'</p></div>';
+    const articles=info.articles||[];
+    if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">СТАТЬЯ УЧЕБНИКА ФОКСФОРДА</div>'+
+      articles.map(x=>'<div class="foxford-item"><strong>'+safe(x.title)+'</strong>'+
+      '<p class="note">Прочитайте объяснения и разобранные примеры. Затем выполните задания самостоятельно.</p>'+
+      '<a class="btn" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Читать теорию Фоксфорда →</a>'+
+      '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать ссылку</button></div>').join("")+'</div>';
+    else html+='<div class="foxford-missing"><strong>Точная статья Фоксфорда для этой узкой темы ещё не подтверждена.</strong>'+
+      '<p>Не подменяем теорию кодификатором или неподходящей статьёй. Используйте конспект ниже.</p></div>';
+    html+='<div class="study-chapter"><div class="study-kicker">КРАТКИЙ КОНСПЕКТ · ОФЛАЙН</div>'+
+      '<h3>Объяснение</h3><p>'+safe(info.explanation||guide.know)+'</p>'+
+      '<div class="worked-example"><strong>Разобранный пример</strong><p>'+safe(info.example||guide.doTask)+'</p></div>'+
+      '<h3>Что воспроизвести без подсказки</h3><p>'+safe(guide.doTask)+'</p></div>'+
+      '<button type="button" class="btn" data-action="lesson-tab" data-tab="practice">Перейти к заданиям →</button></section>';
+    html+='<section id="lesson-practice" class="lesson-section" role="tabpanel"'+(showTheory?" hidden":"")+'>'+
+      '<div class="study-chapter"><div class="study-kicker">КОНКРЕТНОЕ УЧЕБНОЕ ДЕЙСТВИЕ</div>'+
+      '<h3>Что выполнить</h3><p>'+safe(guide.doTask)+'</p>'+
+      '<p class="criterion"><strong>Критерий освоения:</strong> '+safe(guide.check)+'</p></div>'+
+      '<div id="dialog-resources">'+resourceCards(subject,0,title,key)+'</div>'+resourceForm(key);
+    if(task){
+      const steps=[
+        "Прочитать теорию: "+guide.know,
+        "Выполнить упражнения: "+guide.doTask,
+        "Проверить: "+guide.check
+      ];
+      const last=state.results[task.id],score=last?last.correct+"/"+last.total:"";
+      html+='<h3>Контрольные действия</h3><div class="step-list">'+steps.map((v,i)=>
+        '<label class="step-line"><input type="checkbox" data-action="toggle-step" data-step="'+i+'"'+(checks[i]?" checked":"")+'><span>'+safe(v)+'</span></label>').join("")+'</div>'+
+      '<div class="result-box"><div class="field"><label for="task-score">Верных заданий / всего</label>'+
+      '<input id="task-score" inputmode="text" placeholder="Например, 6/8" value="'+safe(score)+'"></div>'+
+      '<button class="btn secondary small" data-action="save-score">Записать результат</button>'+
+      '<span class="note">Для освоения: не менее 80% самостоятельно. При ошибках повторите соответствующий шаг.</span></div>';
+    }
+    html+='</section>';
+    return html;
   }
   function quickCapture(t){return state.results[t.id]?'<span class="chip status-good">'+safe(U.scoreText(state.results[t.id]))+'</span>':"";}
-  function stepsFor(t){return R.practicePlan(t.subject,t.kind,Math.max(0,L.weekNumber(t.id.split(":")[0],state.startDate)),t.title);}
+  function stepsFor(t){return [1,2,3];}
   function schoolInfo(day){return {...window.EGE_WELLBEING.DEFAULTS,...(state.school[day]||{})};}
   function liveInfo(day){const i=schoolInfo(day);return day===L.today()?{...i,nowMinute:new Date().getHours()*60+new Date().getMinutes()}:i;}
   function modeFor(day){return L.suggestDay(liveInfo(day));}
@@ -88,10 +147,10 @@
     return rest+'<article class="task '+(done?"done":skipped?"skipped":"")+'" style="--subject:'+subjData.color+'">'+
       '<div class="task-icon">'+safe(subjData.icon)+'</div><div class="task-copy"><div class="row wrap">'+badge(t.subject)+
       '<span class="chip">'+labels[t.kind]+'</span>'+originNote+quickCapture(t)+'</div>'+
-      '<h3>'+safe(t.title)+'</h3><p class="task-goal">'+safe(U.taskGoal(t))+'</p><div class="meta">'+t.minutes+' мин'+(checked?" · "+checked+"/"+stepsFor(t).length+" шагов":"")+(state.notes[t.id]?" · Есть заметка":"")+
+      '<h3>'+safe(t.title)+'</h3><p class="task-goal"><strong>Задание:</strong> '+safe(authored(t.topicKey,t.subject,t.title).doTask)+'</p><div class="meta">'+t.minutes+' мин'+(checked?" · "+checked+"/"+stepsFor(t).length+" шагов":"")+(state.notes[t.id]?" · Есть заметка":"")+
       (skipped?" · Пропущено без переноса":"")+'</div></div>'+
       '<div class="task-actions"><button class="btn small '+(done?"secondary":"")+'" data-action="detail" data-id="'+safe(t.id)+'">'+(done?"Посмотреть":"Начать →")+'</button>'+
-      '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'">Материалы</button>'+
+      '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'">Задания</button>'+
       '<button class="check-button" data-action="toggle-task" data-id="'+safe(t.id)+'" aria-label="'+(done?"Отменить выполнение":"Отметить выполненным")+'">'+(done?"✓":"")+'</button>'+
       (!done?'<button class="btn ghost small" data-action="skip-task" data-id="'+safe(t.id)+'">'+(skipped?"Вернуть":"Пропустить")+'</button>':"")+'</div></article>';
   }
@@ -119,6 +178,9 @@
     html+='<section class="hero card">'+(next?'<div><div class="kicker">Следующее занятие</div><h2>'+safe(next.title)+'</h2><p>'+safe(U.taskGoal(next))+'</p><div class="row wrap">'+badge(next.subject)+'<span class="chip">'+next.minutes+' мин</span></div></div><button class="btn" data-action="detail" data-id="'+safe(next.id)+'">Начать →</button>':
       '<div><div class="kicker">Сегодня</div><h2>'+(mode==="off"?"Отдых":"Основная работа завершена")+'</h2><p>Никаких дополнительных часов ради галочек.</p></div>')+'</section>';
     if(isActualToday)html+=breakPanel();
+    if(next)html+='<section class="lesson-roadmap card padding"><h2>Как проходит занятие</h2>'+
+      '<div class="roadmap-steps"><span>1. Изучить объяснение Фоксфорда</span>'+
+      '<span>2. Решить задания по теме</span><span>3. Проверить результат и записать ошибки</span></div></section>';
     html+=schoolPanel(date,mode);
     html+='<div class="metric-strip"><div class="card metric"><b>'+done+'/'+shown.length+'</b><span>Блоков выполнено</span></div><div class="card metric"><b>'+Math.floor(totalTime(shown)/60)+' ч '+String(totalTime(shown)%60).padStart(2,"0")+'</b><span>Чистое время</span></div><div class="card metric"><b>'+due.length+'</b><span>Повторений сейчас</span></div></div>';
     html+='<div class="grid-2"><div class="stack"><div class="row between wrap"><h2 style="margin:0">План ЕГЭ</h2><div class="row wrap"><button class="btn secondary small" data-action="set-mode" data-mode="normal">160 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="light">90 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="short">35 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="off">Отдых</button><button class="btn ghost small" data-action="set-mode" data-mode="auto">Авто</button></div></div>';
@@ -163,16 +225,31 @@
         pair.map(s=>'<div class="week-topic"><span style="color:'+subj(s).color+'">'+safe(subj(s).name)+'</span>'+safe(blocks.find(b=>b.subject===s&&b.kind!=="review")?.title||"")+'</div>').join("")+'</button>';
     }).join("")+'</div>';
     html+='<div class="card padding" style="margin-top:19px"><div class="row between wrap"><h2>Темы недели</h2><span class="chip">Сб и Вс — выходные</span></div><div class="grid-3">'+D.subjectOrder.map(s=>{
-      const data=subj(s);return '<div><div class="row">'+badge(s)+'</div><ul class="simple-list">'+data.weeks[focusWeek].map(t=>'<li>'+safe(t)+'</li>').join("")+'</ul></div>';
+      const data=subj(s);return '<div class="week-course"><div class="row">'+badge(s)+'</div>'+
+      data.weeks[focusWeek].map((t,i)=>{
+        const key=L.topicKey(s,focusWeek,i),guide=authored(key,s,t),articles=theoryFor(key,s,t).articles||[];
+        return '<article class="week-lesson"><strong>'+safe(t)+'</strong>'+
+          '<p class="note"><b>Изучить:</b> '+safe(guide.know)+'</p>'+
+          '<p class="note"><b>Выполнить:</b> '+safe(guide.doTask)+'</p>'+
+          '<p class="note">'+(articles.length?"Есть статья Фоксфорда":"Краткий конспект")+
+          ' · '+directExercises(key).length+' набора заданий</p>'+
+          '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(key)+'">Разобрать тему →</button></article>';
+      }).join("")+'</div>';
     }).join("")+'</div></div>';
     return html+'<p class="note" style="margin-top:12px">Эта страница — календарная карта тем. Фактически изучаемые задания выбираются из очереди в разделе «Сегодня». Нажмите на день для просмотра его исходного плана. Химия с пятой недели — ориентировочное распределение.</p>';
   }
   function links(key,week,title){return externalLinks(R.forTopic(key,week??focusWeek,title||subj(key).weeks[week??focusWeek][0]));}
   function topicCard(topic){
     const [label,statusClass]=reviewStatus(topic.key),star=state.pinned[topic.key]?"★ ":"";
-    return '<div class="topic topic-compact"><small>'+badge(topic.subject)+' <span>· Неделя '+(topic.week+1)+'</span></small>'+
-      '<div class="topic-title">'+star+safe(topic.title)+'</div><span class="note '+statusClass+'">'+safe(label)+'</span>'+
-      '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(topic.key)+'">Открыть тему →</button></div>';
+    const guide=authored(topic.key,topic.subject,topic.title),count=directExercises(topic.key).length;
+    const foxford=(theoryFor(topic.key,topic.subject,topic.title).articles||[]).length;
+    return '<article class="topic topic-compact lesson-topic"><small>'+badge(topic.subject)+' <span>· Неделя '+(topic.week+1)+'</span></small>'+
+      '<div class="topic-title">'+star+safe(topic.title)+'</div>'+
+      '<p class="note"><strong>Научиться:</strong> '+safe(guide.doTask)+'</p>'+
+      '<p class="note"><strong>Критерий:</strong> '+safe(guide.check)+'</p>'+
+      '<span class="note '+statusClass+'">'+safe(label)+'</span>'+
+      '<span class="note">'+(foxford?"Есть статья Фоксфорда":"Есть офлайн-конспект")+' · '+count+' подборки задач</span>'+
+      '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(topic.key)+'">Теория и задания →</button></article>';
   }
   function topicSearchResults(){
     if(!searchQuery.trim()&&!searchPinned)return "";
@@ -452,26 +529,21 @@
     const assigned=L.studyAgenda(state,L.today(),modeFor(L.today())).find(x=>x.id===id);
     const t=assigned||source;
     openTask=t;openTopicKey=t.topicKey;
-    const note=state.notes[id]||"",priorScore=state.results[id],guide=U.topicGuide(t.subject,t.title);
-    const steps=stepsFor(t),checks=state.steps[id]||[];
+    const note=state.notes[id]||"",priorScore=state.results[id],guide=authored(t.topicKey,t.subject,t.title);
+    lessonTab="theory";
     const week=Math.max(0,Math.min(25,L.weekNumber(id.split(":")[0],state.startDate)));
     const kind={new:"Изучить",practice:"Решить самостоятельно",mixed:"Смешанная практика",review:"Проверить себя"}[t.kind];
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
       '<h2 style="margin:12px 0 5px">'+safe(t.title)+'</h2><p class="note">'+safe(kind)+' · '+t.minutes+' мин</p></div>'+
       '<button class="dialog-close" data-action="close-dialog" aria-label="Закрыть карточку">×</button></div>'+
-      '<div class="goal-box"><strong>Цель занятия</strong><p>'+safe(U.taskGoal(t))+'</p>'+
-      '<p class="note" style="margin-top:8px"><strong>Как проверить себя:</strong> '+safe(guide.check)+'</p></div>'+
-      '<h3 style="margin-top:18px">План действий <span class="note">· Отмечайте по мере выполнения</span></h3>'+
-      '<div class="step-list">'+steps.map((v,i)=>'<label class="step-line"><input type="checkbox" data-action="toggle-step" data-step="'+i+'"'+(checks[i]?' checked':'')+'><span>'+safe(v)+'</span></label>').join("")+'</div>'+
-      '<h3 style="margin-top:18px">Материалы и практика</h3><p class="note">Сначала изучите объяснение, затем перейдите к практическим заданиям. Ссылки открываются в Chrome и требуют интернета.</p>'+
-      '<div id="dialog-resources">'+resourceCards(t.subject,week,t.title,t.topicKey)+'</div>'+resourceForm(t.topicKey)+
+      '<div class="lesson-objective"><div class="study-kicker">ЦЕЛЬ ЗАНЯТИЯ</div><p>'+safe(guide.doTask)+'</p>'+
+      '<small><strong>Проверка освоения:</strong> '+safe(guide.check)+'</small></div>'+
+      '<div id="lesson-panel">'+lessonPanel(t.topicKey,t.subject,t.title,t,lessonTab)+'</div>'+
       '<div class="timer-box"><div><div class="stat-caption">УЧЕБНЫЙ ТАЙМЕР · цель '+t.minutes+' минут</div><div class="timer" id="timer-clock">'+clockDisplay(currentTime(id))+'</div>'+
       '<p class="note">Таймер продолжает идти после закрытия карточки. Время учитывается по часам планшета.</p></div>'+
       '<div class="row"><button class="btn secondary small" data-action="timer-toggle" id="timer-button">'+timerButtonLabel(id)+'</button><button class="btn ghost small" data-action="timer-reset">Сброс</button></div></div>'+
       '<div id="timer-alert" class="timer-alert" role="status" aria-live="assertive" hidden></div>'+
       '<div class="field" style="margin-top:16px"><label for="task-note">Быстрая запись</label><textarea id="task-note" maxlength="2000" placeholder="Какая ошибка? Какой метод? Что повторить позже?">'+safe(note)+'</textarea><span class="note" id="saved-label">Сохраняется при наборе</span></div>'+
-      '<div class="result-box"><div class="field"><label for="task-score">Результат</label><input id="task-score" placeholder="Например, 8/10" inputmode="text" value="'+safe(priorScore?priorScore.correct+"/"+priorScore.total:"")+'"></div>'+
-      '<button class="btn secondary small" data-action="save-score">Записать результат</button><span class="note">Число верных / всего. Необязательно для теории.</span></div>'+
       '<div class="row wrap dialog-actions"><button class="btn" data-action="dialog-complete">'+(state.completed[id]?"Отменить выполнение":"Завершить занятие ✓")+'</button>'+
       '<button class="btn secondary" data-action="dialog-error">Записать ошибку</button></div>'+
       '<div id="dialog-error-form" hidden><div class="field"><label for="dialog-error-type">Тип ошибки</label>'+
@@ -482,16 +554,13 @@
   }
   function topicDetail(key){
     const t=U.topicByKey(key);if(!t)return;
-    openTask=null;openTopicKey=key;
-    const [status]=reviewStatus(key),personal=state.topicNotes[key]||"",guide=U.topicGuide(t.subject,t.title);
+    openTask=null;openTopicKey=key;lessonTab="theory";
+    const [status]=reviewStatus(key),personal=state.topicNotes[key]||"",guide=authored(key,t.subject,t.title);
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
       '<p class="note" style="margin:12px 0 4px">Неделя '+(t.week+1)+' · '+safe(status)+'</p>'+
       '<h2>'+safe(t.title)+'</h2></div><button class="dialog-close" data-action="close-dialog" aria-label="Закрыть">×</button></div>'+
-      '<div class="goal-box"><strong>Что нужно знать, уметь и проверить</strong><dl class="topic-guide">'+
-      '<dt>Знать</dt><dd>'+safe(guide.know)+'</dd>'+
-      '<dt>Уметь</dt><dd>'+safe(guide.doTask)+'</dd>'+
-      '<dt>Проверить</dt><dd>'+safe(guide.check)+'</dd></dl></div>'+
-      '<h3 style="margin-top:18px">Материалы и задания</h3><div id="dialog-resources">'+resourceCards(t.subject,t.week,t.title,key)+'</div>'+resourceForm(key)+
+      '<div class="lesson-objective"><div class="study-kicker">ЦЕЛЬ ТЕМЫ</div><p>'+safe(guide.doTask)+'</p></div>'+
+      '<div id="lesson-panel">'+lessonPanel(key,t.subject,t.title,null,"theory")+'</div>'+
       '<div class="field" style="margin-top:18px"><label for="topic-note">Мои заметки по теме</label>'+
       '<textarea id="topic-note" maxlength="3000" placeholder="Основные формулы, трудные места, конкретные задания, которые надо решить...">'+safe(personal)+'</textarea><span class="note">Сохраняется при наборе</span></div>'+
       '<div class="row wrap" style="margin-top:16px"><button class="btn secondary" data-action="pin-topic" data-key="'+safe(key)+'">'+(state.pinned[key]?"★ В закладках":"☆ В закладки")+'</button><button class="btn" data-action="start-topic-review" data-key="'+safe(key)+'">'+(state.reviews[key]?"Повтор уже запланирован":"Изучила → назначить повтор")+'</button>'+
@@ -581,6 +650,20 @@
       }
       case "toggle-task":completeTask(b.dataset.id);break;
       case "detail":detail(b.dataset.id);break;
+      case "lesson-tab":{
+        lessonTab=b.dataset.tab==="practice"?"practice":"theory";
+        const isTheory=lessonTab==="theory";
+        const t=$("#lesson-theory"),p=$("#lesson-practice");
+        if(t)t.hidden=!isTheory;
+        if(p)p.hidden=isTheory;
+        document.querySelectorAll(".lesson-tab").forEach(el=>{
+          const selected=el.dataset.tab===lessonTab;
+          el.classList.toggle("selected",selected);
+          el.setAttribute("aria-selected",String(selected));
+        });
+        $("#lesson-panel")?.scrollIntoView?.({block:"start",behavior:"smooth"});
+        break;
+      }
       case "copy-resource":{
         const url=U.safeHttpUrl(b.dataset.url);
         if(!url){notice("Адрес некорректен.");break;}
@@ -592,8 +675,10 @@
       }
       case "show-materials":{
         detail(b.dataset.id);
-        const section=$("#dialog-resources");
-        if(section?.scrollIntoView)section.scrollIntoView({block:"center",behavior:"smooth"});
+        lessonTab="practice";
+        const th=$("#lesson-theory"),pr=$("#lesson-practice");
+        if(th)th.hidden=true;
+        if(pr)pr.hidden=false;
         break;
       }
       case "set-mode":{const info=schoolInfo(date);state.school[date]={...info,manualMode:b.dataset.mode};save();render();break;}

@@ -1,0 +1,37 @@
+.lesson-objective{padding:16px;border:1px solid #dbe5f7;border-radius:16px;background:#f1f5ff;margin:16px 0}
+.lesson-objective p{font-size:14px;line-height:1.65;font-weight:650;color:#2b3d5c;margin:8px 0}
+.lesson-objective small{display:block;font-size:12px;color:#64728d;line-height:1.6}
+.study-kicker{font-size:10px;font-weight:850;color:#5b6fa1;text-transform:uppercase;letter-spacing:.8px}
+.lesson-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:5px;border-radius:14px;background:#eef2f9;margin:20px 0 14px}
+.lesson-tab{border:none;border-radius:10px;padding:13px 12px;background:transparent;color:#64718d;font-weight:780;text-align:center;cursor:pointer;min-height:48px}
+.lesson-tab.selected{background:#fff;color:#3754a2;box-shadow:0 2px 7px rgba(31,52,102,.09)}
+.lesson-section[hidden]{display:none!important}
+.lesson-section{display:grid;gap:15px}
+.study-chapter{padding:16px;border:1px solid #e1e6f0;border-radius:14px;background:#fff}
+.study-chapter h3{font-size:14px;color:#334466;margin:12px 0 7px}
+.study-chapter p{font-size:13px;line-height:1.8;margin:7px 0 14px}
+.worked-example{background:#f5f7fc;border-left:3px solid #7291d7;padding:12px 14px;border-radius:5px}
+.worked-example strong{font-size:12px;color:#355a9b}
+.worked-example p{margin:7px 0 0!important}
+.foxford-list{background:#eaf0ff;border:1px solid #cddbf5;border-radius:14px;padding:16px}
+.foxford-item{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #d9e3f7}
+.foxford-item:last-child{border:0}
+.foxford-item strong{width:100%;font-size:14px;color:#25497f}
+.foxford-item .note{width:100%;margin:0;line-height:1.65}
+.foxford-item .btn{min-height:44px}
+.foxford-missing{padding:12px;background:#fff7e9;border-radius:12px;border:1px solid #f1dfbc;font-size:12px;line-height:1.7}
+.foxford-missing p{margin:7px 0 0}
+.criterion{padding:12px;border-radius:11px;background:#effaf4;color:#286444}
+.practice-intro{padding:12px 15px;background:#edf4ff;border-radius:12px;line-height:1.7}
+.practice-intro p{font-size:12px;margin:5px 0 0}
+.direct-exercises{display:grid;gap:10px}
+.direct-exercise{display:flex;gap:11px;align-items:flex-start;padding:14px;border:1px solid #dbe4f4;border-radius:13px;background:#fff}
+.direct-index{flex:0 0 30px;display:grid;place-items:center;background:#e9effa;border-radius:30px;width:30px;height:30px;color:#4358aa;font-weight:800}
+.direct-description{flex:1;min-width:0;display:grid;gap:7px}
+.direct-description strong{font-size:13px;line-height:1.5}
+.direct-description span{color:#8190a3;font-size:11px}
+.lesson-roadmap{margin:12px 0 18px}
+.lesson-roadmap h2{margin:0 0 12px}
+.roadmap-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.roadmap-steps span{font-size:12px;line-height:1.55;border:1px solid #e4e8f3;border-radius:10px;padding:10px;background:#f9fbff}
+@media(max-width:700px){.roadmap-steps{grid-template-columns:1fr}.lesson-tab{font-size:12px;padding:10px 5px}.study-chapter{padding:13px}.direct-exercise{padding:12px}.direct-description .row{flex-direction:column;align-items:stretch}.direct-description .btn{text-align:center}}
