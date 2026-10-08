@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import vm from "node:vm";
 
 const ctx=vm.createContext({window:{},Date,Intl,console});
-for(const file of ["data.js","logic.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),ctx,{filename:file});
+for(const file of ["data.js","wellbeing.js","logic.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),ctx,{filename:file});
 const D=ctx.window.EGE_DATA,L=ctx.window.EGE_LOGIC;
 test("все три предмета имеют 26 недель с 3 темами",()=>{
   for(const key of D.subjectOrder){

@@ -32,11 +32,12 @@
     return r?.type||"Внешний ресурс";
   }
   function resourceHint(r){
+    if(typeof r?.hint==="string"&&r.hint)return r.hint;
     const u=String(r?.url||"");
     if(u.includes("/2026/"))return "Материал 2026 года: содержание полезно, номера и критерии сверяйте с ФИПИ-2027.";
     if(u.includes("prob_catalog"))return "Откройте каталог и выберите задания по названию темы — подборка не создана автоматически.";
     if(u.includes("demoversii"))return "Актуальные демоверсии, спецификации и критерии. Проверяйте год документа.";
-    return "Откроется в новой вкладке; вернитесь и запишите результат.";
+    return "Внешний сайт. Если ссылка откроется пустой, скопируйте адрес и вставьте в Chrome.";
   }
   function safeHttpUrl(input){
     try{

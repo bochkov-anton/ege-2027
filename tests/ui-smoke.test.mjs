@@ -18,7 +18,7 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","logic.js","resources.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 test("приложение загружается без DOM-ошибок и выводит план дня",()=>{
@@ -280,7 +280,41 @@ test("кнопка Материалы открывает список источ
   assert.ok(a.node("#app").innerHTML.includes('data-action="show-materials"'));
   assert.ok(!a.node("#app").innerHTML.includes('title="Открыть материал"'));
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"show-materials",id:first}})}});
-  assert.ok(a.node("#dialog-content").innerHTML.includes("Где изучать и решать"));
-  assert.ok(a.node("#dialog-content").innerHTML.includes("официальный Навигатор ФИПИ"));
-  assert.ok(a.node("#dialog-content").innerHTML.includes('rel="noopener noreferrer"'));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("Учебные источники"),a.node("#dialog-content").innerHTML.slice(0,600));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("Навигаторе ФИПИ"));
+  assert.ok(a.node("#dialog-content").innerHTML.includes('data-action="copy-resource"'));
+  assert.ok(!a.node("#dialog-content").innerHTML.includes("doc.fipi.ru"));
+});
+
+test("вкладка нагрузки показывает защищённый сон и параметры школы",()=>{
+  const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
+  if(!L.isStudyDay(day))return;
+  assert.ok(a.node("#app").innerHTML.includes("Защищённый сон"));
+  assert.ok(a.node("#app").innerHTML.includes("school-wake"));
+  assert.ok(a.node("#app").innerHTML.includes("school-recovery"));
+  a.events.get("document:change")({target:{id:"school-wake",value:"06:30"}});
+  let state=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+  assert.equal(state.school[day].wakeTime,"06:30");
+  a.events.get("document:change")({target:{id:"school-sleep",value:"6"}});
+  a.events.get("document:click")({target:{closest:()=>({dataset:{action:"set-mode",mode:"normal"}})}});
+  state=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+  assert.equal(state.school[day].manualMode,"normal");
+  assert.equal(L.suggestDay(state.school[day]),"off");
+  assert.ok(a.node("#app").innerHTML.includes("0 мин ЕГЭ"));
+});
+test("ночной предел останавливает таймер и не засчитывает часы сна в занятия",()=>{
+  const clock={now:Date.now()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
+  if(!L.isStudyDay(day))return;
+  const id=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
+  const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
+  click({action:"detail",id});click({action:"timer-toggle"});
+  const t=JSON.parse(a.store.get("ege2027-local-progress-v1")).studyTimer;
+  if(!t?.startedAt)return;
+  assert.ok(t.hardStopAt>clock.now);
+  clock.now=t.hardStopAt+9*3600*1000;
+  a.tick();
+  const end=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+  assert.equal(end.studyTimer.startedAt,null);
+  assert.ok(end.timeSpent[id]<16*3600,"No overnight accumulation");
+  assert.ok(end.timeSpent[id]>=0);
 });

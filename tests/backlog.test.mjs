@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import vm from "node:vm";
 import {readFileSync} from "node:fs";
 const ctx=vm.createContext({window:{},Date,Intl});
-for(const file of ["data.js","logic.js"])
+for(const file of ["data.js","wellbeing.js","logic.js"])
   vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),ctx,{filename:file});
 const L=ctx.window.EGE_LOGIC;
 const start="2026-10-05",thursday="2026-10-08";

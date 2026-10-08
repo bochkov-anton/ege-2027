@@ -1,0 +1,18 @@
+/* Дополнения: доступные ресурсы и защита вечернего окна */
+.safety-notice{background:#fff6e8;border:1px solid #edcfaa;border-radius:12px;padding:10px 14px;margin:12px 0}
+.safety-notice p{font-size:12px;line-height:1.5;color:#855526;margin:0 0 7px}
+.safety-notice p:last-child{margin-bottom:0}
+.resource-buttons{margin-top:10px}
+.resource-address{display:block;font-size:11px;overflow-wrap:anywhere;word-break:break-word;color:#7f8d9d;padding:4px 0}
+.resource-line{align-items:flex-start}
+.resource-copy{min-width:0;overflow-wrap:anywhere}
+.resource-copy strong{display:block;font-size:13px;line-height:1.4}
+.resource-buttons .btn{white-space:normal;min-height:41px}
+.school-accordion .school-inner{max-width:100%}
+.school-accordion input[type="time"]{min-width:0}
+@media(max-width:760px){
+  .resource-buttons{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .resource-buttons .btn{text-align:center;font-size:11px;min-height:44px;padding:8px 6px}
+  .school-timeline{gap:9px}
+  .school-timeline span{line-height:1.5}
+}

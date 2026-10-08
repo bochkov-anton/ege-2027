@@ -26,36 +26,58 @@
     if((item.successes||0)>=2)return ["Дважды проверено","status-good"];
     return [item.due<=L.today()?"Пора повторить":"В процессе",item.due<=L.today()?"status-warn":"muted"];
   }
+  function sourceActions(x,key){
+    const url=U.safeHttpUrl(x.url);
+    if(!url)return "";
+    return '<div class="resource-line"><div class="resource-copy">'+
+      '<div class="resource-type">'+safe(x.user?"Добавлено вручную · адрес не проверен":U.resourceKind(x))+'</div>'+
+      '<strong>'+safe(x.title)+'</strong>'+
+      '<small>'+safe(x.user?"Пользовательская ссылка: проверьте адрес вручную.":U.resourceHint(x))+'</small>'+
+      '<small class="resource-address">'+safe(url)+'</small>'+
+      '<div class="row wrap resource-buttons"><a class="btn secondary small" href="'+safe(url)+'" rel="noreferrer">Открыть сайт ↗</a>'+
+      '<button type="button" class="btn ghost small" data-action="copy-resource" data-url="'+safe(url)+'">Скопировать адрес</button></div></div>'+
+      (x.user&&key?'<button type="button" class="btn ghost small" data-action="remove-resource" data-topic="'+safe(key)+'" data-url="'+safe(url)+'" title="Удалить ссылку">×</button>':'')+'</div>';
+  }
   function resourceCards(subject,week,title,key){
     const saved=key?(Array.isArray(state.customLinks[key])?state.customLinks[key]:[]).filter(x=>U.safeHttpUrl(x.url)&&typeof x.title==="string").slice(0,12):[];
-    return '<div class="resource-help"><strong>Где изучать и решать</strong><p>Выберите источник из списка. PDF ФИПИ — тематические материалы 2026 года, а не готовое индивидуальное домашнее задание. Если PDF не открылся на планшете, перейдите в <a href="https://fipi.ru/navigator-podgotovki/navigator-ege" target="_blank" rel="noopener noreferrer">официальный Навигатор ФИПИ ↗</a> и найдите предмет.</p></div>'+
-      '<div class="resources-box">'+[...saved.map(x=>({...x,user:true})),...R.forTopic(subject,Math.min(25,week),title)].map(x=>
-      '<div class="resource-line"><div class="resource-copy"><div class="resource-type">'+safe(x.user?"Моя ссылка":U.resourceKind(x))+'</div><a target="_blank" rel="noopener noreferrer" href="'+safe(x.url)+'">'+safe(x.title)+' ↗</a><small>'+safe(x.user?"Добавлена вручную":U.resourceHint(x))+'</small></div>'+
-      (x.user&&key?'<button type="button" class="btn ghost small" data-action="remove-resource" data-topic="'+safe(key)+'" data-url="'+safe(x.url)+'" title="Удалить ссылку">×</button>':'')+'</div>'
-    ).join("")+'</div>';
+    return '<div class="resource-help"><strong>Учебные источники</strong><p>Прямые PDF и неподтверждённые видео заменены надёжными входными страницами. В Навигаторе ФИПИ выберите предмет и указанный раздел. На планшете при пустом окне скопируйте адрес и вставьте его в Chrome. Внешние сайты требуют интернета.</p></div>'+
+      '<div class="resources-box">'+[...saved.map(x=>({...x,user:true})),...R.forTopic(subject,Math.min(25,week),title)].map(x=>sourceActions(x,key)).join("")+'</div>';
   }
   function quickCapture(t){return state.results[t.id]?'<span class="chip status-good">'+safe(U.scoreText(state.results[t.id]))+'</span>':"";}
   function stepsFor(t){return R.practicePlan(t.subject,t.kind,Math.max(0,L.weekNumber(t.id.split(":")[0],state.startDate)),t.title);}
-  function schoolInfo(day){return state.school[day]||{homework:60,sleep:8.5,energy:"ok",manualMode:"auto"};}
-  function modeFor(day){return L.suggestDay(schoolInfo(day));}
+  function schoolInfo(day){return {...window.EGE_WELLBEING.DEFAULTS,...(state.school[day]||{})};}
+  function liveInfo(day){const i=schoolInfo(day);return day===L.today()?{...i,nowMinute:new Date().getHours()*60+new Date().getMinutes()}:i;}
+  function modeFor(day){return L.suggestDay(liveInfo(day));}
   function externalLinks(resources){
-    return '<div class="link-list">'+resources.map(x=>'<a target="_blank" rel="noopener noreferrer" href="'+safe(x.url)+'" title="'+safe(x.type||"Материал")+'">'+safe(x.title)+' ↗</a>').join("")+'</div>';
+    return '<div class="link-list">'+resources.map(x=>'<a rel="noreferrer" href="'+safe(x.url)+'" title="'+safe(x.type||"Материал")+'">'+safe(x.title)+' ↗</a>').join("")+'</div>';
   }
   function schoolPanel(day,mode){
-    const i=schoolInfo(day),homework=Number(i.homework??60);
-    const clock=m=>String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
-    const start=15*60+15+homework+15,finish=start+(mode==="normal"?210:mode==="light"?105:0);
-    const select=(id,value,choices)=>'<select id="'+id+'">'+choices.map(([v,t])=>'<option value="'+v+'"'+(String(v)===String(value)?" selected":"")+'>'+t+'</option>').join("")+'</select>';
-    return '<details class="school-accordion card"'+(schoolExpanded?' open':'')+'><summary class="school-summary">'+
-      '<div><strong>Школа и нагрузка</strong><small>Домашние задания, сон, усталость · настроить</small></div><span class="chip">'+(mode==="normal"?"160":mode==="light"?"90":"0")+' мин ЕГЭ</span></summary>'+
-      '<div class="school-inner"><p class="note">Время ориентировочное. Учёбу можно сдвигать, но не сокращать сон ради расписания.</p>'+
-      '<div class="school-fields"><div class="field"><label for="school-homework">Домашнее задание</label>'+select("school-homework",i.homework??60,[[0,"0 мин"],[30,"30 мин"],[60,"60 мин"],[90,"90 мин"],[120,"120 мин"],[150,"150+ мин"]])+'</div>'+
-      '<div class="field"><label for="school-sleep">Сон прошлой ночью</label>'+select("school-sleep",i.sleep??8.5,[[6,"Менее 7 ч"],[7,"7 ч"],[7.5,"7,5 ч"],[8,"8 ч"],[8.5,"8,5 ч"],[9,"9+ ч"]])+'</div>'+
-      '<div class="field"><label for="school-energy">Самочувствие</label>'+select("school-energy",i.energy||"ok",[["good","Бодро"],["ok","Нормально"],["low","Сильно устала"]])+'</div></div>'+
-      '<div class="school-timeline"><span>14:00–15:15 · обед и отдых</span><span>15:15–'+clock(15*60+15+homework)+' · Д/З школы</span>'+
-      (mode==="off"?'<span>Дальше отдых от ЕГЭ</span>':'<span>'+clock(start)+'–'+clock(finish)+' · ЕГЭ с паузами</span>')+'</div>'+
-      (finish>1200&&mode!=="off"?'<p class="note danger-text">Позднее 20:00: лучше облегчить ЕГЭ, а не сокращать сон.</p>':'')+
-      '<p class="note">Оценки нагрузки — ориентиры, не медицинская диагностика.</p></div></details>';
+    const i=schoolInfo(day),p=window.EGE_WELLBEING.computeDay(liveInfo(day));
+    const select=(id,value,choices)=>'<select id="'+id+'">'+choices.map(([v,t])=>
+      '<option value="'+v+'"'+(String(v)===String(value)?" selected":"")+'>'+t+'</option>').join("")+'</select>';
+    const field=(id,label,content)=>'<div class="field"><label for="'+id+'">'+label+'</label>'+content+'</div>';
+    const timeField=(id,label,value)=>field(id,label,'<input id="'+id+'" type="time" value="'+safe(value)+'">');
+    return '<details class="school-accordion card"'+(schoolExpanded||(mode==="off"&&p.warnings.length)?' open':'')+'><summary class="school-summary">'+
+      '<div><strong>Школа · ДЗ · сон · режим</strong><small>Заполняйте по факту, план рассчитывается автоматически</small></div>'+
+      '<span class="chip">'+p.studyMinutes+' мин ЕГЭ</span></summary>'+
+      '<div class="school-inner"><p class="note"><strong>Защищённый сон:</strong> '+p.targetSleepHours+' ч (ориентир AASM 8–10 ч для 13–18 лет); отход ко сну '+p.bedTime+
+      ', без экранов с '+p.screensOff+'. Время учёбы не может уменьшать это окно.</p>'+
+      '<div class="school-fields">'+
+       field("school-homework","Школьное ДЗ",select("school-homework",i.homework,[[0,"0 минут"],[30,"30 минут"],[60,"60 минут"],[90,"90 минут"],[120,"120 минут"],[150,"150 минут"],[180,"180 минут"],[210,"210 минут"],[240,"240 минут"],[300,"300 минут"]]))+
+       field("school-sleep","Сон прошлой ночью",select("school-sleep",i.sleep,[[5,"Меньше 6 ч"],[6,"6 ч"],[6.5,"6,5 ч"],[7,"7 ч"],[7.5,"7,5 ч"],[8,"8 ч"],[8.5,"8,5 ч"],[9,"9 ч"],[10,"10 ч"]]))+
+       field("school-energy","Самочувствие",select("school-energy",i.energy,[["good","Бодро"],["ok","Нормально"],["low","Очень устала"]]))+
+       timeField("school-end","Конец занятий в школе",i.schoolEnd)+
+       timeField("school-wake","Подъём утром",i.wakeTime)+
+       field("school-sleep-target","План сна",select("school-sleep-target",i.sleepTarget,[[8,"8 ч"],[8.5,"8,5 ч"],[9,"9 ч"],[9.5,"9,5 ч"],[10,"10 ч"]]))+
+       field("school-commute","Дорога после школы",select("school-commute",i.commute,[[0,"0 минут"],[15,"15 минут"],[30,"30 минут"],[45,"45 минут"],[60,"60 минут"],[90,"90 минут"]]))+
+       field("school-activity","Движение вне школы",select("school-activity",i.activityReserve,[[0,"Учтено в школьном дне"],[15,"15 минут"],[30,"30 минут"],[45,"45 минут"],[60,"60 минут"]]))+
+       field("school-recovery","Восстановление после школы",select("school-recovery",i.recovery,[[15,"15 минут"],[30,"30 минут"],[45,"45 минут"],[60,"60 минут"],[90,"90 минут"]]))+
+       field("school-meal","Приём пищи",select("school-meal",i.meal,[[15,"15 минут"],[30,"30 минут"],[45,"45 минут"],[60,"60 минут"]]))+'</div>'+
+      '<div class="school-timeline">'+p.timeline.map(x=>'<span><strong>'+safe(x.at)+'</strong> · '+safe(x.label)+(x.minutes&&x.label!=="ЕГЭ с перерывами"?" · "+x.minutes+" мин":"")+'</span>').join("")+'</div>'+
+      '<p class="note"><strong>Фактический бюджет:</strong> '+p.availableMinutes+' мин до отключения экранов, из них '+p.studyMinutes+' мин занятий и '+p.breakMinutes+' мин перерывов. К школьному ДЗ добавлено '+p.homeworkBreakMinutes+' мин коротких перерывов.</p>'+
+      (p.warnings.length?'<div class="safety-notice" role="status">'+p.warnings.map(x=>'<p>'+safe(x)+'</p>').join("")+'</div>':"")+
+      (p.notes.length?'<p class="note">'+safe(p.notes.join(" "))+'</p>':"")+
+      '<p class="note">Медицинские основания: AASM (сон 8–10 ч), WHO (в среднем 60 мин активного движения за день по неделе), CDC (убрать экраны за 30 мин до сна). Пороги ДЗ и режимы 160/90/35/0 — консервативные правила планировщика, не медицинские нормы.</p></div></details>';
   }
   function taskCard(t,index,showBreak=true){
     const subjData=subj(t.subject),done=!!state.completed[t.id],skipped=!!state.skipped[t.id],checked=(state.steps[t.id]||[]).filter(Boolean).length;
@@ -88,7 +110,7 @@
     const done=shown.filter(x=>state.completed[x.id]).length,skipped=shown.filter(x=>state.skipped[x.id]).length,next=shown.find(x=>!state.completed[x.id]&&!state.skipped[x.id]);
     const due=L.dueItems(state.reviews,L.today());
     let html=head("Ежедневный план",nameDay(date).replace(/^./,c=>c.toUpperCase())+", "+dformat(date),
-      (week>=26?"После основного курса · ":(week>=0?"Неделя "+(week+1)+" из 26 · ":""))+(isRest?"День без занятий":"Два предмета, одна большая смена контекста"),viewDateNav());
+      (week>=26?"После основного курса · ":(week>=0?"Неделя "+(week+1)+" из 26 · ":""))+(isRest?"День без занятий":"Нагрузка регулируется по ДЗ, сну, самочувствию и времени"),viewDateNav());
     if(isRest)return html+'<div class="empty"><strong>Полный выходной</strong>Сегодня нет занятий, карточек, пробников и повторений. Суббота и воскресенье всегда свободны.</div>';
     if(week<0)return html+'<div class="empty"><strong>Программа ещё не началась</strong>Начало: '+dformat(state.startDate)+'. Дату можно изменить в настройках.</div>';
     if(week>=26&&!debt.total)html+='<div class="callout" style="margin-bottom:14px"><strong>Основная программа выполнена.</strong> Теперь смешанная практика, пробники и повторение.</div>';
@@ -99,7 +121,7 @@
     if(isActualToday)html+=breakPanel();
     html+=schoolPanel(date,mode);
     html+='<div class="metric-strip"><div class="card metric"><b>'+done+'/'+shown.length+'</b><span>Блоков выполнено</span></div><div class="card metric"><b>'+Math.floor(totalTime(shown)/60)+' ч '+String(totalTime(shown)%60).padStart(2,"0")+'</b><span>Чистое время</span></div><div class="card metric"><b>'+due.length+'</b><span>Повторений сейчас</span></div></div>';
-    html+='<div class="grid-2"><div class="stack"><div class="row between wrap"><h2 style="margin:0">План ЕГЭ</h2><div class="row wrap"><button class="btn secondary small" data-action="set-mode" data-mode="normal">160 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="light">90 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="off">Отдых</button><button class="btn ghost small" data-action="set-mode" data-mode="auto">Авто</button></div></div>';
+    html+='<div class="grid-2"><div class="stack"><div class="row between wrap"><h2 style="margin:0">План ЕГЭ</h2><div class="row wrap"><button class="btn secondary small" data-action="set-mode" data-mode="normal">160 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="light">90 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="short">35 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="off">Отдых</button><button class="btn ghost small" data-action="set-mode" data-mode="auto">Авто</button></div></div>';
     html+='<div class="schedule">'+(shown.length?shown.map((t,i)=>taskCard(t,i,mode==="normal")).join(""):'<div class="empty"><strong>Сегодня без ЕГЭ</strong>Отдых и школьные задания имеют приоритет. Пропущенное не нужно переносить на выходные.</div>')+'</div>';
     html+='<div class="card padding day-reflection"><label for="day-note"><strong>Итог дня</strong> <span class="note">· Одно предложение — по желанию</span></label><textarea id="day-note" maxlength="1200" placeholder="Что получилось? Что стоит повторить?">'+safe(state.dayNotes[date]||"")+'</textarea><span class="note">Сохранение при вводе. Необязательно.</span></div>'+
     '<p class="note">Незавершённое не исчезает. Темы идут по порядку, но в день предлагается не более 160 минут, по выходным — отдых.</p></div>';
@@ -297,7 +319,7 @@
     const t=state.studyTimer;
     if(t&&(!id||t.taskId===id)){
       const started=Number(t.startedAt)||0;
-      return Math.max(0,Number(t.elapsedSeconds)||0)+(started?Math.max(0,Math.floor((Date.now()-started)/1000)):0);
+      return Math.max(0,Number(t.elapsedSeconds)||0)+(started?Math.max(0,Math.floor((Math.min(Date.now(),Number(t.hardStopAt)||Infinity)-started)/1000)):0);
     }
     return id?Math.max(0,Number(state.timeSpent[id])||0):0;
   }
@@ -314,10 +336,21 @@
       if(!confirm("Сейчас идёт другое занятие. Остановить его таймер и перейти к этому?"))return false;
       pauseStudyTimer();
     }
+    const budget=window.EGE_WELLBEING.computeDay(liveInfo(L.today()));
+    if(budget.mode==="off"){
+      notice("Занятие не помещается до подготовки ко сну. Выберите отдых или перенесите его на следующий учебный день.");
+      return false;
+    }
+    const midnight=new Date();midnight.setHours(0,0,0,0);
+    const hardStopAt=midnight.getTime()+budget.screensOffMinute*60000;
+    if(Date.now()>=hardStopAt){notice("Поздно для нового занятия: защищаем время сна.");return false;}
     if(!state.studyTimer||state.studyTimer.taskId!==task.id){
       state.studyTimer={taskId:task.id,elapsedSeconds:Math.max(0,Number(state.timeSpent[task.id])||0),
         startedAt:null,targetSeconds:task.minutes*60,notified:false};
     }
+    state.studyTimer.hardStopAt=hardStopAt;
+    if(budget.mode==="short")state.studyTimer.targetSeconds=Math.min(state.studyTimer.targetSeconds,25*60);
+    else if(budget.mode==="light")state.studyTimer.targetSeconds=Math.min(state.studyTimer.targetSeconds,45*60);
     if(!state.studyTimer.startedAt)state.studyTimer.startedAt=Date.now();
     save();renderSession();updateTimerDisplays();return true;
   }
@@ -366,7 +399,10 @@
   function checkTimers(){
     const t=state.studyTimer;
     if(t?.startedAt){
-      if(!t.notified&&currentTime(t.taskId)>=t.targetSeconds){
+      if(Number(t.hardStopAt)>0&&Date.now()>=t.hardStopAt){
+        pauseStudyTimer();renderSession();
+        alertUser("Пора завершить занятия: начинается защищённое время подготовки ко сну.");
+      }else if(!t.notified&&currentTime(t.taskId)>=t.targetSeconds){
         const assigned=L.studyAgenda(state,L.today(),modeFor(L.today())).find(x=>x.id===t.taskId);
         const suggested=suggestedPause(assigned);
         pauseStudyTimer();
@@ -545,6 +581,15 @@
       }
       case "toggle-task":completeTask(b.dataset.id);break;
       case "detail":detail(b.dataset.id);break;
+      case "copy-resource":{
+        const url=U.safeHttpUrl(b.dataset.url);
+        if(!url){notice("Адрес некорректен.");break;}
+        if(typeof navigator!=="undefined"&&navigator.clipboard?.writeText){
+          navigator.clipboard.writeText(url).then(()=>notice("Адрес скопирован. Откройте Chrome и вставьте ссылку."))
+            .catch(()=>prompt("Скопируйте адрес и откройте его в Chrome:",url));
+        }else if(typeof prompt==="function")prompt("Скопируйте адрес и откройте его в Chrome:",url);
+        break;
+      }
       case "show-materials":{
         detail(b.dataset.id);
         const section=$("#dialog-resources");
@@ -605,9 +650,9 @@
       }
       case "session-toggle":{
         const t=state.studyTimer;if(!t)break;
-        if(t.startedAt)pauseStudyTimer();
-        else {t.startedAt=Date.now();save();}
-        renderSession();updateTimerDisplays();break;
+        if(t.startedAt){pauseStudyTimer();renderSession();updateTimerDisplays();}
+        else {const task=lookup(t.taskId);if(task)startStudyTimer(task);}
+        break;
       }
       case "session-open":{
         if($("#task-dialog").open)closeDialog();
@@ -629,11 +674,14 @@
         state.startDate=v;date=v;focusWeek=0;save();render();
       }else ev.target.value=state.startDate;
     }
-    if(["school-homework","school-sleep","school-energy"].includes(ev.target.id)){
+    if(["school-homework","school-sleep","school-energy","school-end","school-wake","school-sleep-target","school-commute","school-activity","school-recovery","school-meal"].includes(ev.target.id)){
       const info={...schoolInfo(date)};
       if(ev.target.id==="school-homework")info.homework=Number(ev.target.value);
       if(ev.target.id==="school-sleep")info.sleep=Number(ev.target.value);
       if(ev.target.id==="school-energy")info.energy=ev.target.value;
+      const map={"school-end":"schoolEnd","school-wake":"wakeTime","school-sleep-target":"sleepTarget",
+        "school-commute":"commute","school-activity":"activityReserve","school-recovery":"recovery","school-meal":"meal"};
+      if(map[ev.target.id])info[map[ev.target.id]]=ev.target.id==="school-end"||ev.target.id==="school-wake"?ev.target.value:Number(ev.target.value);
       schoolExpanded=true;state.school[date]=info;save();render();
     }
     if(ev.target.id==="task-note"&&openTask){state.notes[openTask.id]=ev.target.value;save();}
@@ -642,7 +690,7 @@
       checked[step]=!!ev.target.checked;state.steps[openTask.id]=checked;save();
     }
     if(ev.target.id==="search-subject"){searchSubject=ev.target.value;$("#topic-results").innerHTML=topicSearchResults();}
-    if(["school-homework","school-sleep","school-energy"].includes(ev.target.id))schoolExpanded=true;
+    if(["school-homework","school-sleep","school-energy","school-end","school-wake","school-sleep-target","school-commute","school-activity","school-recovery","school-meal"].includes(ev.target.id))schoolExpanded=true;
   });
   document.addEventListener("input",ev=>{
     const el=ev.target;

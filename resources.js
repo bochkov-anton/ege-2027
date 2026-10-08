@@ -1,75 +1,60 @@
-/* Проверенные тематические материалы ФИПИ и каталоги практики.
- * PDF относятся к ЕГЭ-2026 (пособия остаются полезными, но КИМ-2027 проверять отдельно).
- * Не выдавать общие каталоги за точно подобранные номера задач. */
+/* Надёжные стартовые страницы ресурсов, вместо непроверенных PDF-путей.
+ * Проверено по публичным страницам ФИПИ и РЕШУ ЕГЭ; динамические подстраницы
+ * и встроенные PDF не гарантируются на Android PWA.
+ */
 (function(){
 "use strict";
-const base="https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/";
-const item=(title,url,type="Официальный материал")=>({title,url,type});
-const official={
-  bio:{
-    method:item("ФИПИ: биология как наука, метод эксперимента",base+"bi-1-biologija-kak-nauka.pdf"),
-    cell:item("ФИПИ: клетка, молекулярная биология, обмен",base+"bi-2-kletka.pdf"),
-    organism:item("ФИПИ: организм, размножение, генетика",base+"bi-3-organizm.pdf"),
-    diversity:item("ФИПИ: растения, грибы и животные",base+"bi-4-mnogoobrazie.pdf"),
-    human:item("ФИПИ: человек и здоровье",base+"bi-5-chelovek-i-ego-zdorove.pdf"),
-    evolution:item("ФИПИ: эволюция",base+"bi-6-evoljucija.pdf"),
-    ecology:item("ФИПИ: экосистемы и экология",base+"bi-7-ecologia.pdf"),
-    practice:item("ФИПИ: тренировочные задания по биологии",base+"bi-tren.pdf"),
-    experiment:item("ФИПИ: разбор задач по эксперименту (видео)","https://rutube.ru/video/3fe6e9b58f10ff15f77800e2ef47172e/","Официальное видео"),
-    genetics1:item("ФИПИ: генетика, кумулятивная полимерия (видео)","https://rutube.ru/video/83963f7f853c348f7d92fd09598cec30/","Официальное видео"),
-    genetics2:item("ФИПИ: независимое и сцепленное наследование (видео)","https://rutube.ru/video/be2a4085ca73e7029666be157aca26e4/","Официальное видео")
-  },
-  chem:{
-    basics:item("ФИПИ: строение вещества и основы химии",base+"hi-teoreticheskie-osnovy.pdf"),
-    reaction:item("ФИПИ: химические реакции, равновесие, ОВР",base+"hi-himicheskaja-reakcija.pdf"),
-    inorganic:item("ФИПИ: неорганические вещества",base+"hi-neorganicheskaja-himija.pdf"),
-    organic:item("ФИПИ: органические вещества и превращения",base+"hi-organicheskaja-himija.pdf"),
-    practice:item("ФИПИ: тренировочные задания по химии",base+"hi-tren.pdf")
-  },
-  math:{
-    basics:item("ФИПИ: выражения и преобразования",base+"Mat_prof_1.pdf"),
-    word:item("ФИПИ: текстовые задачи",base+"Mat_prof_2_tekst.pdf"),
-    equations:item("ФИПИ: уравнения",base+"Mat_prof_3%20uravnenia.pdf"),
-    inequalities:item("ФИПИ: неравенства",base+"Mat_prof_4_neravenstva.pdf"),
-    functions:item("ФИПИ: функции и производная",base+"Mat_prof_5_funkcii.pdf"),
-    probability:item("ФИПИ: вероятность и статистика",base+"Mat_prof_6_veroyatnost.pdf")
-  }
+const NAV="https://fipi.ru/navigator-podgotovki/navigator-ege";
+const BANK="https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege";
+const DEMO="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory";
+const VARIANTS="https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege/otkrytyye-varianty-kim-ege";
+const CATALOG={
+ bio:"https://bio-ege.sdamgia.ru/prob_catalog",
+ chem:"https://chem-ege.sdamgia.ru/prob_catalog",
+ math:"https://math-ege.sdamgia.ru/prob_catalog"
 };
+const item=(title,url,type,hint)=>({title,url,type,hint});
+const names={bio:"Биология",chem:"Химия",math:"Математика (профиль)"};
+const official=Object.fromEntries(Object.keys(names).map(key=>[key,{
+ navigator:item("ФИПИ · Навигатор ЕГЭ",NAV,"Официальный навигатор","На странице выберите предмет «"+names[key]+"» и найдите раздел «Подготовка по темам»."),
+ catalog:item("РЕШУ ЕГЭ · каталог "+names[key],CATALOG[key],"Каталог практики","Выберите задания по теме из каталога; это не индивидуально подобранная подборка.")
+}]));
 const shared=[
-  item("ФИПИ: демоверсии, спецификации, критерии — проверяйте год","https://fipi.ru/ege/demoversii-specifikacii-kodifikatory","Актуализация экзамена"),
-  item("ФИПИ: открытый банк заданий","https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege","Официальный банк")
+ item("ФИПИ · демонстрационные варианты и критерии",DEMO,"Официальные документы","Проверяйте год документа: материалы 2027 и 2026 могут различаться."),
+ item("ФИПИ · открытый банк заданий",BANK,"Официальный банк","Выберите нужный предмет и тип задания."),
+ item("ФИПИ · открытые варианты ЕГЭ-2026",VARIANTS,"Официальные варианты","Это архивные варианты 2026 года — не проект КИМ-2027.")
 ];
-const practice={
- bio:item("РЕШУ ЕГЭ: каталог биологических задач","https://bio-ege.sdamgia.ru/prob_catalog","Каталог практики"),
- chem:item("РЕШУ ЕГЭ: каталог химических задач","https://chem-ege.sdamgia.ru/prob_catalog","Каталог практики"),
- math:item("РЕШУ ЕГЭ: каталог профильной математики","https://math-ege.sdamgia.ru/prob_catalog","Каталог практики")
-};
-const all=(a)=>Array.from(new Map(a.filter(Boolean).map(x=>[x.url,x])).values());
+function sectionFor(subject,title){
+ const t=String(title||"").toLowerCase();
+ if(subject==="bio"){
+  if(/генет|наслед|скрещ|мейоз|организм/.test(t))return "Организм как биологическая система";
+  if(/клетк|днк|рнк|мембран|митоз|трансляц|транскрип/.test(t))return "Клетка как биологическая система";
+  if(/растен|ботаник|животн|таксон|многообраз/.test(t))return "Многообразие организмов";
+  if(/кров|человек|пищевар|систем|физиол/.test(t))return "Организм человека";
+  if(/эколог|биосфер|популяц|эволюц/.test(t))return "Эволюция живой природы / Экосистемы";
+  return "Биология: подготовка по темам";
+ }
+ if(subject==="chem"){
+  if(/органик|алкан|алкен|изомер|кислот|эфир|амин|спирт/.test(t))return "Органическая химия";
+  if(/окисл|овр|равновес|скорост|электролиз|гидролиз/.test(t))return "Теоретические основы химии. Химическая реакция";
+  if(/металл|неметалл|неорган/.test(t))return "Неорганическая химия";
+  return "Теоретические основы химии / Тренировочные задания";
+ }
+ if(/вероят|статист|комбинат/.test(t))return "Элементы комбинаторики, статистики и теории вероятностей";
+ if(/неравен/.test(t))return "Неравенства";
+ if(/уравнен|тригонометр/.test(t))return "Уравнения";
+ if(/текст|приклад|финанс/.test(t))return "Текстовые задачи";
+ if(/функц|производ|первообразн/.test(t))return "Функции, производная, первообразная";
+ return "Выражения / Профильная математика";
+}
 function forTopic(subject,week,title){
-  const t=String(title||"").toLowerCase(),o=official[subject]||{};
-  if(subject==="bio"){
-    const first=week<=5?[o.cell]:week<=7?[o.organism]:week<=15?[o.diversity]:week<=19?[o.human]:week<=21?[o.evolution]:week<=22?[o.ecology]:[o.practice];
-    if(/генетик|мендел|наслед|сцеплен|родослов/.test(t))first.unshift(o.organism,o.genetics2);
-    if(/митоз|мейоз|клеточн|транскрип|трансляц|дыхани|фотосинтез/.test(t))first.unshift(o.cell);
-    if(/эксперимент/.test(t))first.unshift(o.method,o.experiment);
-    if(/метод|уровни организации/.test(t))first.unshift(o.method);
-    return all([...first,o.practice,practice.bio,shared[0]]).slice(0,6);
-  }
-  if(subject==="chem"){
-    const chosen=week<2?[o.basics,o.reaction]:week<8?[o.inorganic,o.reaction]:week<15?[o.organic,o.reaction]:[o.practice,o.reaction];
-    if(/степен|атом|связ|период/.test(t))chosen.unshift(o.basics);
-    if(/органик|алкан|алкен|альдегид|спирт|фенол|карбон|эфир|амин|белк|изомер/.test(t))chosen.unshift(o.organic);
-    if(/металл|неметалл|амфотер|качествен|неорган/.test(t))chosen.unshift(o.inorganic);
-    if(/овр|ионн|равновес|электролиз|гидролиз|расч|раствор|стехиометр|34/.test(t))chosen.unshift(o.reaction);
-    return all([...chosen,o.practice,practice.chem,shared[0]]).slice(0,6);
-  }
-  const chosen=[o.basics];
-  if(/вероят|распределени|статист/.test(t))chosen.unshift(o.probability);
-  if(/неравен|одз|интервал/.test(t))chosen.unshift(o.inequalities);
-  if(/текстов|финансов|приклад|модел/.test(t))chosen.unshift(o.word);
-  if(/уравнен|тригонометр/.test(t))chosen.unshift(o.equations);
-  if(/производ|функци|график|экстремум/.test(t))chosen.unshift(o.functions);
-  return all([...chosen,practice.math,shared[0]]).slice(0,5);
+ if(!names[subject])return [];
+ const section=sectionFor(subject,title);
+ return [
+  item("ФИПИ · "+section,NAV,"Официальная теория","На странице ФИПИ откройте «"+names[subject]+"» → «Подготовка по темам» → «"+section+"»."),
+  item("РЕШУ ЕГЭ · "+names[subject],CATALOG[subject],"Каталог практики","Выберите категорию или найдите тему по названию. При необходимости откройте Chrome и вставьте адрес."),
+  shared[0],shared[1]
+ ];
 }
 function practicePlan(subject,kind,week,title){
   if(kind==="review")return ["Сначала ответить без конспекта: 2–4 контрольных вопроса/задачи.","Проверить ответы и отметить: уверенно, с трудом, ошибка.","Не добавлять материал ради заполнения времени."];

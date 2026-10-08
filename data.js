@@ -92,17 +92,17 @@ Mixed practice по всем четырём химическим потокам|
     bio: {name:"Биология",short:"Био",icon:"◉",color:"#2f9c81",target:"95–100",weeks:biology,links:[
       {title:"ФИПИ — открытый банк",url:"https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege"},
       {title:"ФИПИ — навигатор",url:"https://fipi.ru/navigator-podgotovki/navigator-ege"},
-      {title:"Решу ЕГЭ — биология",url:"https://bio-ege.sdamgia.ru/"}
+      {title:"Решу ЕГЭ — биология",url:"https://bio-ege.sdamgia.ru/prob_catalog"}
     ]},
     chem: {name:"Химия",short:"Химия",icon:"◈",color:"#6e84e9",target:"95–100",weeks:chemistry,links:[
       {title:"ФИПИ — открытый банк",url:"https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege"},
       {title:"ФИПИ — демоверсии и критерии",url:"https://fipi.ru/ege/demoversii-specifikacii-kodifikatory"},
-      {title:"Решу ЕГЭ — химия",url:"https://chem-ege.sdamgia.ru/"}
+      {title:"Решу ЕГЭ — химия",url:"https://chem-ege.sdamgia.ru/prob_catalog"}
     ]},
     math: {name:"Математика",short:"Матем.",icon:"∑",color:"#d18b40",target:"80+",weeks:mathematics,links:[
       {title:"ФИПИ — открытый банк",url:"https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege"},
-      {title:"Решу ЕГЭ — профиль",url:"https://math-ege.sdamgia.ru/"},
-      {title:"Math100 — подборки",url:"https://math100.ru/ege-profil2024/"}
+      {title:"Решу ЕГЭ — профиль",url:"https://math-ege.sdamgia.ru/prob_catalog"},
+      {title:"ФИПИ — открытые варианты ЕГЭ-2026",url:"https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege/otkrytyye-varianty-kim-ege"}
     ]}
   };
   window.EGE_DATA = {subjects,subjectOrder:["bio","chem","math"],totalWeeks:26,

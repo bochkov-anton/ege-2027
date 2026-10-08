@@ -30,9 +30,9 @@
   }
   function topicKey(sub,week,index) { return sub+":"+(week+1)+":"+index; }
   function suggestDay(info={}) {
-    const homework=Number(info.homework??60),sleep=Number(info.sleep??8.5),energy=info.energy||"ok";
-    const suggested=sleep<6.5&&energy==="low"?"off":(sleep<7.5||homework>=90||energy==="low"?"light":"normal");
-    return info.manualMode&&info.manualMode!=="auto"?info.manualMode:suggested;
+    return window.EGE_WELLBEING
+      ? window.EGE_WELLBEING.computeDay(info).mode
+      : (Number(info.sleep)<8 || Number(info.homework)>=90 || info.energy==="low"?"light":"normal");
   }
   function planDay(date,start, reviews={},mode="normal") {
     const d=parseDate(date), w=weekNumber(date,start);
@@ -58,6 +58,7 @@
       {id:date+":2",subject:secondary,title:stitle,topicKey:lastWeek?null:topicKey(secondary,w,si),kind:"mixed",minutes:45,label:"Второй предмет"},
       {id:date+":3",subject:reviewSubject,title:due.length?"Повторение по очереди и исправление ошибок":"Смешанные задания и проверка старого",topicKey:null,kind:"review",minutes:10,label:"Короткое повторение"}
     ];
+    if(mode==="short")return [{...standard[0],minutes:25},standard[3]];
     if(mode==="light")return [{...standard[0],minutes:45},{...standard[2],minutes:35},standard[3]];
     return standard;
   }
@@ -92,8 +93,8 @@
       return planned.map((task,i)=>({...task,slot:i,originDate:date,isBacklog:false}));
     }
     const pending=pendingStudy(state,date);
-    const max=mode==="light"?2:3;
-    const times=mode==="light"?[45,35]:[55,50,45];
+    const max=mode==="short"?1:mode==="light"?2:3;
+    const times=mode==="short"?[25]:mode==="light"?[45,35]:[55,50,45];
     const assigned=state.assignments?.[date];
     const entries=Array.isArray(assigned)
       ? assigned.slice(0,max).map(id=>{
