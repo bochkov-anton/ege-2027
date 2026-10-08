@@ -1,0 +1,4074 @@
+{
+  "schema": "ege-dependency-audit-v1",
+  "generated": "2026-10-08",
+  "fipiStatus": "draft",
+  "stats": {
+    "bio": {
+      "topics": 78,
+      "edges": 118,
+      "sets": 95,
+      "books": 69,
+      "fox": 25
+    },
+    "chem": {
+      "topics": 78,
+      "edges": 143,
+      "sets": 153,
+      "books": 57,
+      "fox": 17
+    },
+    "math": {
+      "topics": 78,
+      "edges": 108,
+      "sets": 153,
+      "books": 34,
+      "fox": 29
+    }
+  },
+  "issues": [],
+  "calendarInversions": [
+    {
+      "topic": "chem:2:0",
+      "requiredBefore": "chem:2:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:2:2",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:2:2",
+      "requiredBefore": "chem:9:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:3:0",
+      "requiredBefore": "chem:5:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:3:2",
+      "requiredBefore": "chem:9:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:3:2",
+      "requiredBefore": "chem:13:2",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:0",
+      "requiredBefore": "chem:5:2",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:2",
+      "requiredBefore": "chem:11:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:2",
+      "requiredBefore": "chem:11:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:2",
+      "requiredBefore": "chem:14:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:7:2",
+      "requiredBefore": "chem:13:2",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:8:2",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:8:2",
+      "requiredBefore": "chem:9:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:8:2",
+      "requiredBefore": "chem:9:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:9:0",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:9:1",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:9:2",
+      "requiredBefore": "chem:10:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "math:4:2",
+      "requiredBefore": "math:5:1",
+      "reason": "calendar_dependency_inversion"
+    }
+  ],
+  "topics": [
+    {
+      "id": "bio:1:0",
+      "title": "Методы биологии, уровни организации, вода и соли",
+      "subject": "bio",
+      "plannedWeek": 1,
+      "sequence": 1,
+      "prerequisites": [],
+      "examLines": [],
+      "fipiCategory": "Биология как наука; эксперимент и анализ",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:1:1",
+      "title": "Углеводы, липиды, белки, ферменты, АТФ",
+      "subject": "bio",
+      "plannedWeek": 1,
+      "sequence": 2,
+      "prerequisites": [],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:1:2",
+      "title": "ДНК и РНК: структура, сравнение, базовые задания",
+      "subject": "bio",
+      "plannedWeek": 1,
+      "sequence": 3,
+      "prerequisites": [],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:2:0",
+      "title": "Клеточная мембрана, диффузия, осмос, транспорт",
+      "subject": "bio",
+      "plannedWeek": 2,
+      "sequence": 4,
+      "prerequisites": [
+        "bio:1:0",
+        "bio:1:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:2:1",
+      "title": "Органоиды: строение и функции, изображения",
+      "subject": "bio",
+      "plannedWeek": 2,
+      "sequence": 5,
+      "prerequisites": [
+        "bio:1:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 2,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:2:2",
+      "title": "Прокариоты, эукариоты, вирусы, сравнение клеток",
+      "subject": "bio",
+      "plannedWeek": 2,
+      "sequence": 6,
+      "prerequisites": [
+        "bio:1:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 2,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:3:0",
+      "title": "Репликация ДНК, транскрипция, процессинг",
+      "subject": "bio",
+      "plannedWeek": 3,
+      "sequence": 7,
+      "prerequisites": [
+        "bio:1:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:3:1",
+      "title": "Генетический код, трансляция, биосинтез белка",
+      "subject": "bio",
+      "plannedWeek": 3,
+      "sequence": 8,
+      "prerequisites": [
+        "bio:1:2",
+        "bio:3:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:3:2",
+      "title": "Расчётные задачи ДНК–РНК–белок, последовательности",
+      "subject": "bio",
+      "plannedWeek": 3,
+      "sequence": 9,
+      "prerequisites": [
+        "bio:3:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 2,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:4:0",
+      "title": "Ферменты, анаболизм, катаболизм и АТФ",
+      "subject": "bio",
+      "plannedWeek": 4,
+      "sequence": 10,
+      "prerequisites": [
+        "bio:1:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:4:1",
+      "title": "Гликолиз и этапы энергетического обмена",
+      "subject": "bio",
+      "plannedWeek": 4,
+      "sequence": 11,
+      "prerequisites": [
+        "bio:4:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:4:2",
+      "title": "Клеточное дыхание, схемы, контроль клетки и молекулярной биологии",
+      "subject": "bio",
+      "plannedWeek": 4,
+      "sequence": 12,
+      "prerequisites": [
+        "bio:4:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:5:0",
+      "title": "Фотосинтез: световая и темновая фазы",
+      "subject": "bio",
+      "plannedWeek": 5,
+      "sequence": 13,
+      "prerequisites": [
+        "bio:2:0",
+        "bio:2:1",
+        "bio:4:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:5:1",
+      "title": "Хлоропласт, пигменты, фотолиз, фиксация CO₂",
+      "subject": "bio",
+      "plannedWeek": 5,
+      "sequence": 14,
+      "prerequisites": [
+        "bio:5:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:5:2",
+      "title": "Хемосинтез; сравнение фотосинтеза и дыхания",
+      "subject": "bio",
+      "plannedWeek": 5,
+      "sequence": 15,
+      "prerequisites": [
+        "bio:5:0",
+        "bio:4:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:6:0",
+      "title": "Интерфаза, клеточный цикл и митоз",
+      "subject": "bio",
+      "plannedWeek": 6,
+      "sequence": 16,
+      "prerequisites": [
+        "bio:2:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:6:1",
+      "title": "Мейоз I/II, кроссинговер, гаметогенез",
+      "subject": "bio",
+      "plannedWeek": 6,
+      "sequence": 17,
+      "prerequisites": [
+        "bio:6:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:6:2",
+      "title": "Наборы n/c, последовательности фаз и задачи",
+      "subject": "bio",
+      "plannedWeek": 6,
+      "sequence": 18,
+      "prerequisites": [
+        "bio:6:0",
+        "bio:6:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:7:0",
+      "title": "Гены, аллели, генотип, фенотип, законы Менделя",
+      "subject": "bio",
+      "plannedWeek": 7,
+      "sequence": 19,
+      "prerequisites": [
+        "bio:6:1",
+        "bio:3:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм как биологическая система; генетика",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:7:1",
+      "title": "Моно- и дигибридное скрещивание, анализирующее",
+      "subject": "bio",
+      "plannedWeek": 7,
+      "sequence": 20,
+      "prerequisites": [
+        "bio:7:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм как биологическая система; генетика",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:7:2",
+      "title": "Неполное доминирование, кодоминирование, оформление задач",
+      "subject": "bio",
+      "plannedWeek": 7,
+      "sequence": 21,
+      "prerequisites": [
+        "bio:7:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:8:0",
+      "title": "Сцепление, кроссинговер и наследование с полом",
+      "subject": "bio",
+      "plannedWeek": 8,
+      "sequence": 22,
+      "prerequisites": [
+        "bio:7:0",
+        "bio:6:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм как биологическая система; генетика",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:8:1",
+      "title": "Родословные, взаимодействие генов",
+      "subject": "bio",
+      "plannedWeek": 8,
+      "sequence": 23,
+      "prerequisites": [
+        "bio:7:0",
+        "bio:7:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм как биологическая система; генетика",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:8:2",
+      "title": "Мутации, цитогенетика, смешанная генетика",
+      "subject": "bio",
+      "plannedWeek": 8,
+      "sequence": 24,
+      "prerequisites": [
+        "bio:7:0",
+        "bio:6:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм как биологическая система; генетика",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:9:0",
+      "title": "Растительная клетка и ткани",
+      "subject": "bio",
+      "plannedWeek": 9,
+      "sequence": 25,
+      "prerequisites": [
+        "bio:2:0",
+        "bio:2:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Клетка как биологическая система",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:9:1",
+      "title": "Корень, стебель, лист, почка",
+      "subject": "bio",
+      "plannedWeek": 9,
+      "sequence": 26,
+      "prerequisites": [
+        "bio:9:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:9:2",
+      "title": "Ксилема, флоэма, изображения и связь строения с функцией",
+      "subject": "bio",
+      "plannedWeek": 9,
+      "sequence": 27,
+      "prerequisites": [
+        "bio:9:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:10:0",
+      "title": "Корневое и минеральное питание, транспорт воды",
+      "subject": "bio",
+      "plannedWeek": 10,
+      "sequence": 28,
+      "prerequisites": [
+        "bio:9:1",
+        "bio:9:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:10:1",
+      "title": "Транспирация, газообмен, фотопериодизм",
+      "subject": "bio",
+      "plannedWeek": 10,
+      "sequence": 29,
+      "prerequisites": [
+        "bio:9:1",
+        "bio:10:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:10:2",
+      "title": "Фитогормоны, ростовые движения, размножение растений",
+      "subject": "bio",
+      "plannedWeek": 10,
+      "sequence": 30,
+      "prerequisites": [
+        "bio:9:1",
+        "bio:10:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:11:0",
+      "title": "Водоросли, мхи, плауны, хвощи, папоротники",
+      "subject": "bio",
+      "plannedWeek": 11,
+      "sequence": 31,
+      "prerequisites": [
+        "bio:9:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:11:1",
+      "title": "Голосеменные и покрытосеменные",
+      "subject": "bio",
+      "plannedWeek": 11,
+      "sequence": 32,
+      "prerequisites": [
+        "bio:11:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:11:2",
+      "title": "Гаметофит, спорофит, жизненные циклы по памяти",
+      "subject": "bio",
+      "plannedWeek": 11,
+      "sequence": 33,
+      "prerequisites": [
+        "bio:11:0",
+        "bio:11:1",
+        "bio:6:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:12:0",
+      "title": "Цветок, опыление и двойное оплодотворение",
+      "subject": "bio",
+      "plannedWeek": 12,
+      "sequence": 34,
+      "prerequisites": [
+        "bio:11:1",
+        "bio:11:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:12:1",
+      "title": "Семена, плоды, семейства, однодольные и двудольные",
+      "subject": "bio",
+      "plannedWeek": 12,
+      "sequence": 35,
+      "prerequisites": [
+        "bio:12:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:12:2",
+      "title": "Смешанная ботаника, эксперимент, повтор генетики",
+      "subject": "bio",
+      "plannedWeek": 12,
+      "sequence": 36,
+      "prerequisites": [
+        "bio:9:0",
+        "bio:10:1",
+        "bio:11:2",
+        "bio:7:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Биология как наука; эксперимент и анализ",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:13:0",
+      "title": "Простейшие, губки, кишечнополостные",
+      "subject": "bio",
+      "plannedWeek": 13,
+      "sequence": 37,
+      "prerequisites": [
+        "bio:2:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:13:1",
+      "title": "Плоские, круглые, кольчатые черви",
+      "subject": "bio",
+      "plannedWeek": 13,
+      "sequence": 38,
+      "prerequisites": [
+        "bio:13:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:13:2",
+      "title": "Паразитические циклы, сравнение систем органов",
+      "subject": "bio",
+      "plannedWeek": 13,
+      "sequence": 39,
+      "prerequisites": [
+        "bio:13:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:14:0",
+      "title": "Моллюски и ракообразные",
+      "subject": "bio",
+      "plannedWeek": 14,
+      "sequence": 40,
+      "prerequisites": [
+        "bio:13:0",
+        "bio:13:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:14:1",
+      "title": "Паукообразные и насекомые",
+      "subject": "bio",
+      "plannedWeek": 14,
+      "sequence": 41,
+      "prerequisites": [
+        "bio:14:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:14:2",
+      "title": "Метаморфоз, сравнительные признаки, изображения",
+      "subject": "bio",
+      "plannedWeek": 14,
+      "sequence": 42,
+      "prerequisites": [
+        "bio:14:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:15:0",
+      "title": "Хордовые, рыбы, земноводные",
+      "subject": "bio",
+      "plannedWeek": 15,
+      "sequence": 43,
+      "prerequisites": [
+        "bio:13:0",
+        "bio:14:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:15:1",
+      "title": "Пресмыкающиеся и птицы",
+      "subject": "bio",
+      "plannedWeek": 15,
+      "sequence": 44,
+      "prerequisites": [
+        "bio:15:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:15:2",
+      "title": "Млекопитающие; эволюция дыхания и кровообращения",
+      "subject": "bio",
+      "plannedWeek": 15,
+      "sequence": 45,
+      "prerequisites": [
+        "bio:15:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:16:0",
+      "title": "Сравнительная зоология: сердце и кровообращение",
+      "subject": "bio",
+      "plannedWeek": 16,
+      "sequence": 46,
+      "prerequisites": [
+        "bio:15:0",
+        "bio:15:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; животные",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:16:1",
+      "title": "Сравнение дыхания, выделения и размножения",
+      "subject": "bio",
+      "plannedWeek": 16,
+      "sequence": 47,
+      "prerequisites": [
+        "bio:16:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:16:2",
+      "title": "Незнакомые изображения, смешанная ботаника+зоология, полувариант",
+      "subject": "bio",
+      "plannedWeek": 16,
+      "sequence": 48,
+      "prerequisites": [
+        "bio:13:0",
+        "bio:14:0",
+        "bio:15:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Система и многообразие органического мира; растения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:17:0",
+      "title": "Ткани, мышцы и опорно-двигательная система человека",
+      "subject": "bio",
+      "plannedWeek": 17,
+      "sequence": 49,
+      "prerequisites": [
+        "bio:2:1",
+        "bio:13:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:17:1",
+      "title": "Кожа, пищеварение, ферменты",
+      "subject": "bio",
+      "plannedWeek": 17,
+      "sequence": 50,
+      "prerequisites": [
+        "bio:17:0",
+        "bio:1:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:17:2",
+      "title": "Всасывание и обмен веществ",
+      "subject": "bio",
+      "plannedWeek": 17,
+      "sequence": 51,
+      "prerequisites": [
+        "bio:17:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:18:0",
+      "title": "Кровь, иммунитет, группы крови",
+      "subject": "bio",
+      "plannedWeek": 18,
+      "sequence": 52,
+      "prerequisites": [
+        "bio:17:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:18:1",
+      "title": "Сердце, сосуды, кровообращение и лимфа",
+      "subject": "bio",
+      "plannedWeek": 18,
+      "sequence": 53,
+      "prerequisites": [
+        "bio:18:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:18:2",
+      "title": "Дыхание и газообмен",
+      "subject": "bio",
+      "plannedWeek": 18,
+      "sequence": 54,
+      "prerequisites": [
+        "bio:18:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:19:0",
+      "title": "Почки, нефрон, мочеобразование, водно-солевой баланс",
+      "subject": "bio",
+      "plannedWeek": 19,
+      "sequence": 55,
+      "prerequisites": [
+        "bio:18:0",
+        "bio:18:1",
+        "bio:2:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:19:1",
+      "title": "Эндокринные железы, гормоны, органы-мишени",
+      "subject": "bio",
+      "plannedWeek": 19,
+      "sequence": 56,
+      "prerequisites": [
+        "bio:18:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:19:2",
+      "title": "Гомеостаз и отрицательная обратная связь",
+      "subject": "bio",
+      "plannedWeek": 19,
+      "sequence": 57,
+      "prerequisites": [
+        "bio:19:0",
+        "bio:19:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:20:0",
+      "title": "Нервная система, рефлекс и рефлекторная дуга",
+      "subject": "bio",
+      "plannedWeek": 20,
+      "sequence": 58,
+      "prerequisites": [
+        "bio:17:0",
+        "bio:19:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:20:1",
+      "title": "ЦНС, вегетативная система и анализаторы",
+      "subject": "bio",
+      "plannedWeek": 20,
+      "sequence": 59,
+      "prerequisites": [
+        "bio:20:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:20:2",
+      "title": "Высшая нервная деятельность, размножение человека, mixed",
+      "subject": "bio",
+      "plannedWeek": 20,
+      "sequence": 60,
+      "prerequisites": [
+        "bio:20:0",
+        "bio:20:1",
+        "bio:19:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм человека и здоровье",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:21:0",
+      "title": "Популяции, генофонд, мутации, дрейф, изоляция",
+      "subject": "bio",
+      "plannedWeek": 21,
+      "sequence": 61,
+      "prerequisites": [
+        "bio:7:0",
+        "bio:8:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм как биологическая система; генетика",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:21:1",
+      "title": "Естественный отбор, формы отбора, видообразование",
+      "subject": "bio",
+      "plannedWeek": 21,
+      "sequence": 62,
+      "prerequisites": [
+        "bio:21:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Эволюция живой природы",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:21:2",
+      "title": "Критерии вида, эволюционные задачи",
+      "subject": "bio",
+      "plannedWeek": 21,
+      "sequence": 63,
+      "prerequisites": [
+        "bio:21:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Эволюция живой природы",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:22:0",
+      "title": "Доказательства эволюции, гомология и аналогия",
+      "subject": "bio",
+      "plannedWeek": 22,
+      "sequence": 64,
+      "prerequisites": [
+        "bio:21:0",
+        "bio:21:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Эволюция живой природы",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:22:1",
+      "title": "Ароморфоз, идиоадаптация, дегенерация",
+      "subject": "bio",
+      "plannedWeek": 22,
+      "sequence": 65,
+      "prerequisites": [
+        "bio:22:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:22:2",
+      "title": "Антропогенез, происхождение жизни, филогенетические деревья",
+      "subject": "bio",
+      "plannedWeek": 22,
+      "sequence": 66,
+      "prerequisites": [
+        "bio:22:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Эволюция живой природы",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:23:0",
+      "title": "Экологические факторы, популяции и экосистемы",
+      "subject": "bio",
+      "plannedWeek": 23,
+      "sequence": 67,
+      "prerequisites": [
+        "bio:21:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Эволюция живой природы",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:23:1",
+      "title": "Пищевые сети, цепи, пирамиды и расчёты",
+      "subject": "bio",
+      "plannedWeek": 23,
+      "sequence": 68,
+      "prerequisites": [
+        "bio:23:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Экосистемы и закономерности",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:23:2",
+      "title": "Сукцессии, круговороты, биосфера, антропогенное воздействие",
+      "subject": "bio",
+      "plannedWeek": 23,
+      "sequence": 69,
+      "prerequisites": [
+        "bio:23:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Экосистемы и закономерности",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "bio:24:0",
+      "title": "Полный диагностический вариант 1 и подробный разбор",
+      "subject": "bio",
+      "plannedWeek": 24,
+      "sequence": 70,
+      "prerequisites": [
+        "bio:8:1",
+        "bio:12:2",
+        "bio:16:2",
+        "bio:20:2",
+        "bio:23:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:24:1",
+      "title": "Полный вариант 2 и разбор ошибок",
+      "subject": "bio",
+      "plannedWeek": 24,
+      "sequence": 71,
+      "prerequisites": [
+        "bio:24:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:24:2",
+      "title": "Пять самых дорогих слабых зон: коррекция и повтор",
+      "subject": "bio",
+      "plannedWeek": 24,
+      "sequence": 72,
+      "prerequisites": [
+        "bio:24:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:25:0",
+      "title": "Сложные тематические блоки, эксперимент",
+      "subject": "bio",
+      "plannedWeek": 25,
+      "sequence": 73,
+      "prerequisites": [
+        "bio:24:0",
+        "bio:24:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Биология как наука; эксперимент и анализ",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:25:1",
+      "title": "Генетика, изображения, последовательности, вторая часть",
+      "subject": "bio",
+      "plannedWeek": 25,
+      "sequence": 74,
+      "prerequisites": [
+        "bio:25:0",
+        "bio:8:1",
+        "bio:16:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Организм как биологическая система; генетика",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:25:2",
+      "title": "Полный вариант, разбор, повтор слабых зон",
+      "subject": "bio",
+      "plannedWeek": 25,
+      "sequence": 75,
+      "prerequisites": [
+        "bio:25:0",
+        "bio:25:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:26:0",
+      "title": "Полный вариант в экзаменационном режиме",
+      "subject": "bio",
+      "plannedWeek": 26,
+      "sequence": 76,
+      "prerequisites": [
+        "bio:25:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:26:1",
+      "title": "Задания второй части, контроль типовых ошибок",
+      "subject": "bio",
+      "plannedWeek": 26,
+      "sequence": 77,
+      "prerequisites": [
+        "bio:26:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "bio:26:2",
+      "title": "Финальная стабилизация: только слабые зоны и повтор",
+      "subject": "bio",
+      "plannedWeek": 26,
+      "sequence": 78,
+      "prerequisites": [
+        "bio:26:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная проверка содержания ЕГЭ",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:1:0",
+      "title": "Атом: электронные конфигурации, периодичность",
+      "subject": "chem",
+      "plannedWeek": 1,
+      "sequence": 1,
+      "prerequisites": [],
+      "examLines": [],
+      "fipiCategory": "Строение вещества и периодический закон",
+      "exerciseSets": 2,
+      "foxfordArticles": 2,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:1:1",
+      "title": "Химическая связь, решётки, степени окисления",
+      "subject": "chem",
+      "plannedWeek": 1,
+      "sequence": 2,
+      "prerequisites": [
+        "chem:1:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 3,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:1:2",
+      "title": "Моль, молярная масса, объём газа и расчёты по уравнениям",
+      "subject": "chem",
+      "plannedWeek": 1,
+      "sequence": 3,
+      "prerequisites": [
+        "chem:1:0",
+        "chem:1:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:2:1",
+      "title": "Классы неорганики, Na/K/Ca/Mg, Al/Zn",
+      "subject": "chem",
+      "plannedWeek": 2,
+      "sequence": 4,
+      "prerequisites": [
+        "chem:1:1",
+        "chem:1:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:2:0",
+      "title": "Электролиты, ионный обмен, растворимость",
+      "subject": "chem",
+      "plannedWeek": 2,
+      "sequence": 5,
+      "prerequisites": [
+        "chem:1:1",
+        "chem:1:2",
+        "chem:2:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 2,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:3:1",
+      "title": "Fe/Cu/Cr, галогены, сера и азот",
+      "subject": "chem",
+      "plannedWeek": 3,
+      "sequence": 6,
+      "prerequisites": [
+        "chem:2:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Неорганическая химия: классы, свойства и превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:4:1",
+      "title": "Амфотерность, неорганические цепочки",
+      "subject": "chem",
+      "plannedWeek": 4,
+      "sequence": 7,
+      "prerequisites": [
+        "chem:2:1",
+        "chem:3:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:5:0",
+      "title": "Металлы и важнейшие соединения: реакционная сеть",
+      "subject": "chem",
+      "plannedWeek": 5,
+      "sequence": 8,
+      "prerequisites": [
+        "chem:2:1",
+        "chem:3:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:5:1",
+      "title": "Растворы: массовая доля, молярная концентрация",
+      "subject": "chem",
+      "plannedWeek": 5,
+      "sequence": 9,
+      "prerequisites": [
+        "chem:1:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:3:0",
+      "title": "Гидролиз, pH и химическое равновесие",
+      "subject": "chem",
+      "plannedWeek": 3,
+      "sequence": 10,
+      "prerequisites": [
+        "chem:2:0",
+        "chem:1:1",
+        "chem:5:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:5:2",
+      "title": "ОВР: электронный баланс, влияние среды, задание 29",
+      "subject": "chem",
+      "plannedWeek": 5,
+      "sequence": 11,
+      "prerequisites": [
+        "chem:1:1",
+        "chem:3:1"
+      ],
+      "examLines": [
+        29
+      ],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:4:0",
+      "title": "Электролиз, P/C/Si, качественные реакции",
+      "subject": "chem",
+      "plannedWeek": 4,
+      "sequence": 12,
+      "prerequisites": [
+        "chem:2:0",
+        "chem:5:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:6:0",
+      "title": "Неметаллы и их соединения",
+      "subject": "chem",
+      "plannedWeek": 6,
+      "sequence": 13,
+      "prerequisites": [
+        "chem:3:1",
+        "chem:4:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Неорганическая химия: классы, свойства и превращения",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:6:1",
+      "title": "Ионные превращения: условия и продукты, задание 30",
+      "subject": "chem",
+      "plannedWeek": 6,
+      "sequence": 14,
+      "prerequisites": [
+        "chem:2:0",
+        "chem:3:0"
+      ],
+      "examLines": [
+        30
+      ],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:6:2",
+      "title": "Смешанные неорганические цепочки, задание 31",
+      "subject": "chem",
+      "plannedWeek": 6,
+      "sequence": 15,
+      "prerequisites": [
+        "chem:5:0",
+        "chem:6:0",
+        "chem:6:1"
+      ],
+      "examLines": [
+        31
+      ],
+      "fipiCategory": "Неорганическая химия: классы, свойства и превращения",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:7:0",
+      "title": "Гидролиз, электролиз, равновесие и скорость",
+      "subject": "chem",
+      "plannedWeek": 7,
+      "sequence": 16,
+      "prerequisites": [
+        "chem:3:0",
+        "chem:4:0",
+        "chem:6:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:7:1",
+      "title": "Качественные реакции, эксперимент и распознавание веществ",
+      "subject": "chem",
+      "plannedWeek": 7,
+      "sequence": 17,
+      "prerequisites": [
+        "chem:4:1",
+        "chem:6:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:8:0",
+      "title": "Неорганика: смешанные задачи и идентификация",
+      "subject": "chem",
+      "plannedWeek": 8,
+      "sequence": 18,
+      "prerequisites": [
+        "chem:6:2",
+        "chem:7:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:8:1",
+      "title": "ОВР + ионные процессы: сложные случаи",
+      "subject": "chem",
+      "plannedWeek": 8,
+      "sequence": 19,
+      "prerequisites": [
+        "chem:5:2",
+        "chem:7:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:10:0",
+      "title": "Гибридизация, изомерия, механизм реакций",
+      "subject": "chem",
+      "plannedWeek": 10,
+      "sequence": 20,
+      "prerequisites": [
+        "chem:1:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 2,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:9:0",
+      "title": "Алканы, алкены и циклоалканы",
+      "subject": "chem",
+      "plannedWeek": 9,
+      "sequence": 21,
+      "prerequisites": [
+        "chem:10:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:2:2",
+      "title": "Алканы и алкены: закрепление реакций и качественных признаков",
+      "subject": "chem",
+      "plannedWeek": 2,
+      "sequence": 22,
+      "prerequisites": [
+        "chem:10:0",
+        "chem:9:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:9:1",
+      "title": "Алкадиены, алкины, арены",
+      "subject": "chem",
+      "plannedWeek": 9,
+      "sequence": 23,
+      "prerequisites": [
+        "chem:9:0",
+        "chem:10:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:8:2",
+      "title": "Органика: номенклатура, изомерия, механизмы",
+      "subject": "chem",
+      "plannedWeek": 8,
+      "sequence": 24,
+      "prerequisites": [
+        "chem:10:0",
+        "chem:9:0",
+        "chem:9:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:10:1",
+      "title": "Галогенпроизводные и реакции углеводородов",
+      "subject": "chem",
+      "plannedWeek": 10,
+      "sequence": 25,
+      "prerequisites": [
+        "chem:9:0",
+        "chem:10:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:9:2",
+      "title": "Схемы превращений и прогноз продуктов",
+      "subject": "chem",
+      "plannedWeek": 9,
+      "sequence": 26,
+      "prerequisites": [
+        "chem:9:0",
+        "chem:9:1",
+        "chem:10:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:10:2",
+      "title": "Органические цепочки: первые самостоятельные",
+      "subject": "chem",
+      "plannedWeek": 10,
+      "sequence": 27,
+      "prerequisites": [
+        "chem:9:0",
+        "chem:10:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:11:0",
+      "title": "Спирты, многоатомные спирты и фенол",
+      "subject": "chem",
+      "plannedWeek": 11,
+      "sequence": 28,
+      "prerequisites": [
+        "chem:9:0",
+        "chem:10:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:11:1",
+      "title": "Альдегиды, кетоны (ацетон), карбоновые кислоты",
+      "subject": "chem",
+      "plannedWeek": 11,
+      "sequence": 29,
+      "prerequisites": [
+        "chem:11:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:11:2",
+      "title": "Качественные реакции органики и обратный синтез",
+      "subject": "chem",
+      "plannedWeek": 11,
+      "sequence": 30,
+      "prerequisites": [
+        "chem:11:0",
+        "chem:11:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:12:0",
+      "title": "Сложные эфиры, жиры и углеводы",
+      "subject": "chem",
+      "plannedWeek": 12,
+      "sequence": 31,
+      "prerequisites": [
+        "chem:11:0",
+        "chem:11:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:12:1",
+      "title": "Амины, анилин, аминокислоты и белки",
+      "subject": "chem",
+      "plannedWeek": 12,
+      "sequence": 32,
+      "prerequisites": [
+        "chem:11:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:12:2",
+      "title": "Цепочки 32 и смешанный контроль органики",
+      "subject": "chem",
+      "plannedWeek": 12,
+      "sequence": 33,
+      "prerequisites": [
+        "chem:12:0",
+        "chem:12:1",
+        "chem:9:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:13:0",
+      "title": "Полимеры, функциональные группы и свойства",
+      "subject": "chem",
+      "plannedWeek": 13,
+      "sequence": 34,
+      "prerequisites": [
+        "chem:9:0",
+        "chem:11:0",
+        "chem:12:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:13:1",
+      "title": "Установление формулы органики: задание 33",
+      "subject": "chem",
+      "plannedWeek": 13,
+      "sequence": 35,
+      "prerequisites": [
+        "chem:13:0",
+        "chem:1:2"
+      ],
+      "examLines": [
+        33
+      ],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:13:2",
+      "title": "Избыток/примеси/выход + материальный баланс",
+      "subject": "chem",
+      "plannedWeek": 13,
+      "sequence": 36,
+      "prerequisites": [
+        "chem:5:1",
+        "chem:1:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:3:2",
+      "title": "Алкины и арены: строение, свойства и условия реакций",
+      "subject": "chem",
+      "plannedWeek": 3,
+      "sequence": 37,
+      "prerequisites": [
+        "chem:9:1",
+        "chem:13:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:7:2",
+      "title": "Расчёты: смеси, выход, последовательные превращения",
+      "subject": "chem",
+      "plannedWeek": 7,
+      "sequence": 38,
+      "prerequisites": [
+        "chem:5:1",
+        "chem:5:2",
+        "chem:13:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:14:0",
+      "title": "Растворы, кристаллогидраты, растворимость",
+      "subject": "chem",
+      "plannedWeek": 14,
+      "sequence": 39,
+      "prerequisites": [
+        "chem:5:1",
+        "chem:7:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:4:2",
+      "title": "Спирты, фенол и альдегиды: распознавание и характерные реакции",
+      "subject": "chem",
+      "plannedWeek": 4,
+      "sequence": 40,
+      "prerequisites": [
+        "chem:11:0",
+        "chem:11:1",
+        "chem:14:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:14:1",
+      "title": "Смеси и последовательные реакции",
+      "subject": "chem",
+      "plannedWeek": 14,
+      "sequence": 41,
+      "prerequisites": [
+        "chem:7:2",
+        "chem:13:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:14:2",
+      "title": "Органика: цепочки 32 и расчётные элементы 33",
+      "subject": "chem",
+      "plannedWeek": 14,
+      "sequence": 42,
+      "prerequisites": [
+        "chem:12:2",
+        "chem:13:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:15:0",
+      "title": "Органическая структура и изомерия: повтор",
+      "subject": "chem",
+      "plannedWeek": 15,
+      "sequence": 43,
+      "prerequisites": [
+        "chem:10:2",
+        "chem:11:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:15:1",
+      "title": "Большие органические и неорганические цепочки",
+      "subject": "chem",
+      "plannedWeek": 15,
+      "sequence": 44,
+      "prerequisites": [
+        "chem:14:1",
+        "chem:12:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Неорганическая химия: классы, свойства и превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:15:2",
+      "title": "Высокий уровень: нестандартные условия",
+      "subject": "chem",
+      "plannedWeek": 15,
+      "sequence": 45,
+      "prerequisites": [
+        "chem:15:0",
+        "chem:15:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:16:0",
+      "title": "Проверка покрытия химического кодификатора",
+      "subject": "chem",
+      "plannedWeek": 16,
+      "sequence": 46,
+      "prerequisites": [
+        "chem:8:1",
+        "chem:12:2",
+        "chem:13:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:16:1",
+      "title": "Задания 29–33 под критерии оценивания",
+      "subject": "chem",
+      "plannedWeek": 16,
+      "sequence": 47,
+      "prerequisites": [
+        "chem:15:1",
+        "chem:5:2",
+        "chem:6:1"
+      ],
+      "examLines": [
+        29,
+        30,
+        31,
+        32,
+        33
+      ],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:16:2",
+      "title": "Комбинированные расчёты: фундамент задания 34",
+      "subject": "chem",
+      "plannedWeek": 16,
+      "sequence": 48,
+      "prerequisites": [
+        "chem:14:1",
+        "chem:13:2"
+      ],
+      "examLines": [
+        34
+      ],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:17:0",
+      "title": "Задание 34: смеси и материальный баланс",
+      "subject": "chem",
+      "plannedWeek": 17,
+      "sequence": 49,
+      "prerequisites": [
+        "chem:16:2"
+      ],
+      "examLines": [
+        34
+      ],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:17:1",
+      "title": "Задание 34: несколько реакций и ограничений",
+      "subject": "chem",
+      "plannedWeek": 17,
+      "sequence": 50,
+      "prerequisites": [
+        "chem:17:0"
+      ],
+      "examLines": [
+        34
+      ],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:17:2",
+      "title": "Контраст условий, неизвестные продукты и цепочки",
+      "subject": "chem",
+      "plannedWeek": 17,
+      "sequence": 51,
+      "prerequisites": [
+        "chem:17:1",
+        "chem:15:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:18:0",
+      "title": "Задания 29–30: ОВР и ионные уравнения",
+      "subject": "chem",
+      "plannedWeek": 18,
+      "sequence": 52,
+      "prerequisites": [
+        "chem:5:2",
+        "chem:6:1"
+      ],
+      "examLines": [
+        29,
+        30
+      ],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:18:1",
+      "title": "Задания 31–32: неорганика и органика",
+      "subject": "chem",
+      "plannedWeek": 18,
+      "sequence": 53,
+      "prerequisites": [
+        "chem:12:2",
+        "chem:6:2"
+      ],
+      "examLines": [
+        31,
+        32
+      ],
+      "fipiCategory": "Органическая химия: вещества, строение, свойства, превращения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:18:2",
+      "title": "Задания 33–34: расчёты, оформление, контроль",
+      "subject": "chem",
+      "plannedWeek": 18,
+      "sequence": 54,
+      "prerequisites": [
+        "chem:13:1",
+        "chem:17:1"
+      ],
+      "examLines": [
+        33,
+        34
+      ],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:19:0",
+      "title": "Нестандартные цепочки и неизвестные промежуточные вещества",
+      "subject": "chem",
+      "plannedWeek": 19,
+      "sequence": 55,
+      "prerequisites": [
+        "chem:18:0",
+        "chem:18:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:19:1",
+      "title": "Расчёты: ограничения, обратные задачи, альтернативные решения",
+      "subject": "chem",
+      "plannedWeek": 19,
+      "sequence": 56,
+      "prerequisites": [
+        "chem:17:2",
+        "chem:18:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:19:2",
+      "title": "Микс всех линий, скорость после точности",
+      "subject": "chem",
+      "plannedWeek": 19,
+      "sequence": 57,
+      "prerequisites": [
+        "chem:19:0",
+        "chem:19:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:20:0",
+      "title": "Промежуточный полный вариант и разбор",
+      "subject": "chem",
+      "plannedWeek": 20,
+      "sequence": 58,
+      "prerequisites": [
+        "chem:19:2",
+        "chem:8:2",
+        "chem:16:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:20:1",
+      "title": "Слабые коды: адресный ремонт",
+      "subject": "chem",
+      "plannedWeek": 20,
+      "sequence": 59,
+      "prerequisites": [
+        "chem:20:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:20:2",
+      "title": "Точность и оформление 29–34",
+      "subject": "chem",
+      "plannedWeek": 20,
+      "sequence": 60,
+      "prerequisites": [
+        "chem:20:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 1,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:21:0",
+      "title": "Mixed practice по всем четырём химическим потокам",
+      "subject": "chem",
+      "plannedWeek": 21,
+      "sequence": 61,
+      "prerequisites": [
+        "chem:20:0",
+        "chem:19:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:21:1",
+      "title": "Полуварианты и сложные части 2",
+      "subject": "chem",
+      "plannedWeek": 21,
+      "sequence": 62,
+      "prerequisites": [
+        "chem:20:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:21:2",
+      "title": "Коррекция системных ошибок",
+      "subject": "chem",
+      "plannedWeek": 21,
+      "sequence": 63,
+      "prerequisites": [
+        "chem:21:0",
+        "chem:21:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:22:0",
+      "title": "Полный вариант без жёсткого времени, подробный анализ",
+      "subject": "chem",
+      "plannedWeek": 22,
+      "sequence": 64,
+      "prerequisites": [
+        "chem:20:0",
+        "chem:21:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:22:1",
+      "title": "Граф реакций и контраст условий",
+      "subject": "chem",
+      "plannedWeek": 22,
+      "sequence": 65,
+      "prerequisites": [
+        "chem:15:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:22:2",
+      "title": "Сложные расчёты и неизвестные цепочки",
+      "subject": "chem",
+      "plannedWeek": 22,
+      "sequence": 66,
+      "prerequisites": [
+        "chem:17:1",
+        "chem:21:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "chem:23:0",
+      "title": "Варианты: точность, распознавание без подсказки",
+      "subject": "chem",
+      "plannedWeek": 23,
+      "sequence": 67,
+      "prerequisites": [
+        "chem:20:0",
+        "chem:22:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:23:1",
+      "title": "Задания 31–34 с ограничением времени",
+      "subject": "chem",
+      "plannedWeek": 23,
+      "sequence": 68,
+      "prerequisites": [
+        "chem:18:1"
+      ],
+      "examLines": [
+        31,
+        32,
+        33,
+        34
+      ],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:23:2",
+      "title": "Слабые линии и повтор важных реакций",
+      "subject": "chem",
+      "plannedWeek": 23,
+      "sequence": 69,
+      "prerequisites": [
+        "chem:22:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:24:0",
+      "title": "Полный вариант в экзаменационном режиме",
+      "subject": "chem",
+      "plannedWeek": 24,
+      "sequence": 70,
+      "prerequisites": [
+        "chem:23:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:24:1",
+      "title": "Разбор ошибок по критериям ФИПИ",
+      "subject": "chem",
+      "plannedWeek": 24,
+      "sequence": 71,
+      "prerequisites": [
+        "chem:24:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:24:2",
+      "title": "Адресный ремонт 29–34 и расчётов",
+      "subject": "chem",
+      "plannedWeek": 24,
+      "sequence": 72,
+      "prerequisites": [
+        "chem:24:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:25:0",
+      "title": "Смешанный контроль и скорость без потери точности",
+      "subject": "chem",
+      "plannedWeek": 25,
+      "sequence": 73,
+      "prerequisites": [
+        "chem:24:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Общая химия: реакции, растворы, равновесия, ОВР",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:25:1",
+      "title": "Нестандартные реакции и материальный баланс",
+      "subject": "chem",
+      "plannedWeek": 25,
+      "sequence": 74,
+      "prerequisites": [
+        "chem:23:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:25:2",
+      "title": "Вторая часть: оформление и самопроверка",
+      "subject": "chem",
+      "plannedWeek": 25,
+      "sequence": 75,
+      "prerequisites": [
+        "chem:24:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:26:0",
+      "title": "Финальный полноценный вариант",
+      "subject": "chem",
+      "plannedWeek": 26,
+      "sequence": 76,
+      "prerequisites": [
+        "chem:25:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:26:1",
+      "title": "Стабилизация слабых линий",
+      "subject": "chem",
+      "plannedWeek": 26,
+      "sequence": 77,
+      "prerequisites": [
+        "chem:26:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная химическая практика",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "chem:26:2",
+      "title": "Реакции, расчёты, ошибки; без нового крупного материала",
+      "subject": "chem",
+      "plannedWeek": 26,
+      "sequence": 78,
+      "prerequisites": [
+        "chem:26:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Количественные расчёты и задачи",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:1:0",
+      "title": "Диагностический вариант, карта сильных и слабых линий",
+      "subject": "math",
+      "plannedWeek": 1,
+      "sequence": 1,
+      "prerequisites": [],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:1:1",
+      "title": "Дроби, степени, корни и квадратные уравнения: базовые преобразования",
+      "subject": "math",
+      "plannedWeek": 1,
+      "sequence": 2,
+      "prerequisites": [],
+      "examLines": [],
+      "fipiCategory": "Алгебраические вычисления и преобразования",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:1:2",
+      "title": "Базовая геометрия, единичная окружность, mixed фундамент",
+      "subject": "math",
+      "plannedWeek": 1,
+      "sequence": 3,
+      "prerequisites": [
+        "math:1:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Геометрия, векторы и пространственные отношения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:2:0",
+      "title": "Вероятность: элементарные и сложные события №4–5",
+      "subject": "math",
+      "plannedWeek": 2,
+      "sequence": 4,
+      "prerequisites": [
+        "math:1:1"
+      ],
+      "examLines": [
+        4,
+        5
+      ],
+      "fipiCategory": "Вероятность и случайные величины",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:2:1",
+      "title": "Уравнения №7 и выражения №8",
+      "subject": "math",
+      "plannedWeek": 2,
+      "sequence": 5,
+      "prerequisites": [
+        "math:1:1"
+      ],
+      "examLines": [
+        7,
+        8
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:2:2",
+      "title": "Случайные величины и распределения №6; смешанная практика №4–8",
+      "subject": "math",
+      "plannedWeek": 2,
+      "sequence": 6,
+      "prerequisites": [
+        "math:2:0",
+        "math:2:1"
+      ],
+      "examLines": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "fipiCategory": "Вероятность и случайные величины",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:3:0",
+      "title": "Планиметрия №1, векторы №2, стереометрия №3",
+      "subject": "math",
+      "plannedWeek": 3,
+      "sequence": 7,
+      "prerequisites": [
+        "math:1:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3
+      ],
+      "fipiCategory": "Геометрия, векторы и пространственные отношения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:3:1",
+      "title": "Производная №9, графики №12",
+      "subject": "math",
+      "plannedWeek": 3,
+      "sequence": 8,
+      "prerequisites": [
+        "math:1:1"
+      ],
+      "examLines": [
+        9,
+        12
+      ],
+      "fipiCategory": "Функции, производные, графики",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:3:2",
+      "title": "Смешанный блок №1–13 и разбор ошибок",
+      "subject": "math",
+      "plannedWeek": 3,
+      "sequence": 9,
+      "prerequisites": [
+        "math:2:1",
+        "math:3:0",
+        "math:3:1"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:4:0",
+      "title": "Прикладные и текстовые задачи №10–11",
+      "subject": "math",
+      "plannedWeek": 4,
+      "sequence": 10,
+      "prerequisites": [
+        "math:1:1"
+      ],
+      "examLines": [
+        10,
+        11
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:4:1",
+      "title": "Финансовые и текстовые модели №13",
+      "subject": "math",
+      "plannedWeek": 4,
+      "sequence": 11,
+      "prerequisites": [
+        "math:1:1",
+        "math:4:0"
+      ],
+      "examLines": [
+        13
+      ],
+      "fipiCategory": "Личные и семейные финансы",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:5:0",
+      "title": "Слабые линии №1–13, стабильность",
+      "subject": "math",
+      "plannedWeek": 5,
+      "sequence": 12,
+      "prerequisites": [
+        "math:3:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:5:1",
+      "title": "Тригонометрические уравнения №14: формулы",
+      "subject": "math",
+      "plannedWeek": 5,
+      "sequence": 13,
+      "prerequisites": [
+        "math:1:2"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:4:2",
+      "title": "Первые уравнения №14 и контроль №1–13",
+      "subject": "math",
+      "plannedWeek": 4,
+      "sequence": 14,
+      "prerequisites": [
+        "math:1:2",
+        "math:5:1"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:5:2",
+      "title": "№14: отбор корней и оформление",
+      "subject": "math",
+      "plannedWeek": 5,
+      "sequence": 15,
+      "prerequisites": [
+        "math:1:2",
+        "math:5:1",
+        "math:4:2"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:6:0",
+      "title": "№1–13: независимые смешанные блоки",
+      "subject": "math",
+      "plannedWeek": 6,
+      "sequence": 16,
+      "prerequisites": [
+        "math:3:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:6:1",
+      "title": "№14: полный алгоритм, самостоятельные решения",
+      "subject": "math",
+      "plannedWeek": 6,
+      "sequence": 17,
+      "prerequisites": [
+        "math:5:2"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:6:2",
+      "title": "Базовые неравенства: ОДЗ, метод интервалов",
+      "subject": "math",
+      "plannedWeek": 6,
+      "sequence": 18,
+      "prerequisites": [
+        "math:1:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Неравенства и область допустимых значений",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:7:0",
+      "title": "№14: вариации и контроль из памяти",
+      "subject": "math",
+      "plannedWeek": 7,
+      "sequence": 19,
+      "prerequisites": [
+        "math:5:1",
+        "math:5:2"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:7:1",
+      "title": "Рациональные неравенства №16",
+      "subject": "math",
+      "plannedWeek": 7,
+      "sequence": 20,
+      "prerequisites": [
+        "math:6:2"
+      ],
+      "examLines": [
+        16
+      ],
+      "fipiCategory": "Неравенства и область допустимых значений",
+      "exerciseSets": 1,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:7:2",
+      "title": "№1–13: смешанный timed set",
+      "subject": "math",
+      "plannedWeek": 7,
+      "sequence": 21,
+      "prerequisites": [
+        "math:6:0"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:8:0",
+      "title": "Показательные и логарифмические неравенства №16",
+      "subject": "math",
+      "plannedWeek": 8,
+      "sequence": 22,
+      "prerequisites": [
+        "math:6:2",
+        "math:7:1",
+        "math:1:1"
+      ],
+      "examLines": [
+        16
+      ],
+      "fipiCategory": "Неравенства и область допустимых значений",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:8:1",
+      "title": "№14: задачи с ловушками",
+      "subject": "math",
+      "plannedWeek": 8,
+      "sequence": 23,
+      "prerequisites": [
+        "math:7:0",
+        "math:5:2"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:8:2",
+      "title": "Смешанная первая часть и геометрия",
+      "subject": "math",
+      "plannedWeek": 8,
+      "sequence": 24,
+      "prerequisites": [
+        "math:3:0",
+        "math:3:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Геометрия, векторы и пространственные отношения",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:9:0",
+      "title": "№16: рациональные/показательные/логарифмические",
+      "subject": "math",
+      "plannedWeek": 9,
+      "sequence": 25,
+      "prerequisites": [
+        "math:8:0",
+        "math:7:1"
+      ],
+      "examLines": [
+        16
+      ],
+      "fipiCategory": "Неравенства и область допустимых значений",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:9:1",
+      "title": "№14: 8/10 на полный балл, проверка оформления",
+      "subject": "math",
+      "plannedWeek": 9,
+      "sequence": 26,
+      "prerequisites": [
+        "math:8:1"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:9:2",
+      "title": "№1–13 под временем",
+      "subject": "math",
+      "plannedWeek": 9,
+      "sequence": 27,
+      "prerequisites": [
+        "math:8:2",
+        "math:2:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:10:0",
+      "title": "№16: контроль с интервалом",
+      "subject": "math",
+      "plannedWeek": 10,
+      "sequence": 28,
+      "prerequisites": [
+        "math:8:0",
+        "math:9:0"
+      ],
+      "examLines": [
+        16
+      ],
+      "fipiCategory": "Неравенства и область допустимых значений",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:10:1",
+      "title": "№1–13: скорость без потери точности",
+      "subject": "math",
+      "plannedWeek": 10,
+      "sequence": 29,
+      "prerequisites": [
+        "math:9:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:10:2",
+      "title": "Производная, графики и математические модели",
+      "subject": "math",
+      "plannedWeek": 10,
+      "sequence": 30,
+      "prerequisites": [
+        "math:3:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Математическое моделирование и оптимизация",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:11:0",
+      "title": "Финансовые/текстовые модели №13,17",
+      "subject": "math",
+      "plannedWeek": 11,
+      "sequence": 31,
+      "prerequisites": [
+        "math:4:1",
+        "math:3:1"
+      ],
+      "examLines": [
+        13
+      ],
+      "fipiCategory": "Личные и семейные финансы",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:11:1",
+      "title": "№16: ошибки ОДЗ и знаков",
+      "subject": "math",
+      "plannedWeek": 11,
+      "sequence": 32,
+      "prerequisites": [
+        "math:9:0"
+      ],
+      "examLines": [
+        16
+      ],
+      "fipiCategory": "Неравенства и область допустимых значений",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:11:2",
+      "title": "Смешанные №1–13 и №14",
+      "subject": "math",
+      "plannedWeek": 11,
+      "sequence": 33,
+      "prerequisites": [
+        "math:10:1",
+        "math:5:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:12:0",
+      "title": "№17: перевод условий в математическую модель",
+      "subject": "math",
+      "plannedWeek": 12,
+      "sequence": 34,
+      "prerequisites": [
+        "math:4:0",
+        "math:11:0"
+      ],
+      "examLines": [
+        17
+      ],
+      "fipiCategory": "Математическое моделирование и оптимизация",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:12:1",
+      "title": "№17: функции, ограничения, оптимизация",
+      "subject": "math",
+      "plannedWeek": 12,
+      "sequence": 35,
+      "prerequisites": [
+        "math:10:2",
+        "math:12:0"
+      ],
+      "examLines": [
+        17
+      ],
+      "fipiCategory": "Математическое моделирование и оптимизация",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:12:2",
+      "title": "№14 + №16: mixed, первая часть",
+      "subject": "math",
+      "plannedWeek": 12,
+      "sequence": 36,
+      "prerequisites": [
+        "math:9:0",
+        "math:5:2"
+      ],
+      "examLines": [
+        14,
+        16
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:13:0",
+      "title": "№17: производная и экстремум в модели",
+      "subject": "math",
+      "plannedWeek": 13,
+      "sequence": 37,
+      "prerequisites": [
+        "math:10:2",
+        "math:12:1"
+      ],
+      "examLines": [
+        17
+      ],
+      "fipiCategory": "Математическое моделирование и оптимизация",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:13:1",
+      "title": "№17: самостоятельное объяснение решения",
+      "subject": "math",
+      "plannedWeek": 13,
+      "sequence": 38,
+      "prerequisites": [
+        "math:12:1"
+      ],
+      "examLines": [
+        17
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:13:2",
+      "title": "№1–13, №14, №16: контроль",
+      "subject": "math",
+      "plannedWeek": 13,
+      "sequence": 39,
+      "prerequisites": [
+        "math:12:2",
+        "math:3:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:14:0",
+      "title": "№17: задачи с меняющимися условиями",
+      "subject": "math",
+      "plannedWeek": 14,
+      "sequence": 40,
+      "prerequisites": [
+        "math:13:0",
+        "math:13:1"
+      ],
+      "examLines": [
+        17
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:14:1",
+      "title": "№14 и №16: timed practice",
+      "subject": "math",
+      "plannedWeek": 14,
+      "sequence": 41,
+      "prerequisites": [
+        "math:9:1",
+        "math:9:0"
+      ],
+      "examLines": [
+        14,
+        16
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:14:2",
+      "title": "Полный смешанный набор и ошибки",
+      "subject": "math",
+      "plannedWeek": 14,
+      "sequence": 42,
+      "prerequisites": [
+        "math:14:0",
+        "math:14:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:15:0",
+      "title": "№17: применение моделей в новых условиях",
+      "subject": "math",
+      "plannedWeek": 15,
+      "sequence": 43,
+      "prerequisites": [
+        "math:12:2",
+        "math:14:2"
+      ],
+      "examLines": [
+        17
+      ],
+      "fipiCategory": "Математическое моделирование и оптимизация",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:15:1",
+      "title": "№1–13: устойчивость",
+      "subject": "math",
+      "plannedWeek": 15,
+      "sequence": 44,
+      "prerequisites": [
+        "math:11:0"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:15:2",
+      "title": "№14/16/17: отсроченный контроль",
+      "subject": "math",
+      "plannedWeek": 15,
+      "sequence": 45,
+      "prerequisites": [
+        "math:15:0"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:16:0",
+      "title": "Выбор одной специализации №15/18/20",
+      "subject": "math",
+      "plannedWeek": 16,
+      "sequence": 46,
+      "prerequisites": [
+        "math:3:0",
+        "math:3:1",
+        "math:8:0",
+        "math:12:1"
+      ],
+      "examLines": [
+        15
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:16:1",
+      "title": "Диагностические задачи специализации",
+      "subject": "math",
+      "plannedWeek": 16,
+      "sequence": 47,
+      "prerequisites": [
+        "math:16:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:16:2",
+      "title": "Контроль core №1–13,14,16,17",
+      "subject": "math",
+      "plannedWeek": 16,
+      "sequence": 48,
+      "prerequisites": [
+        "math:15:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:17:0",
+      "title": "Специализация: углубление только при хорошем ROI",
+      "subject": "math",
+      "plannedWeek": 17,
+      "sequence": 49,
+      "prerequisites": [
+        "math:16:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:17:1",
+      "title": "№14/16/17: смешанные задачи",
+      "subject": "math",
+      "plannedWeek": 17,
+      "sequence": 50,
+      "prerequisites": [
+        "math:14:1",
+        "math:14:0"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:17:2",
+      "title": "Первый полноформатный контроль",
+      "subject": "math",
+      "plannedWeek": 17,
+      "sequence": 51,
+      "prerequisites": [
+        "math:16:2",
+        "math:17:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:18:0",
+      "title": "Специализация или ремонт дорогих ошибок",
+      "subject": "math",
+      "plannedWeek": 18,
+      "sequence": 52,
+      "prerequisites": [
+        "math:17:0",
+        "math:15:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:18:1",
+      "title": "№1–13: быстрый смешанный блок",
+      "subject": "math",
+      "plannedWeek": 18,
+      "sequence": 53,
+      "prerequisites": [
+        "math:17:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:18:2",
+      "title": "№14/16/17 и управление временем",
+      "subject": "math",
+      "plannedWeek": 18,
+      "sequence": 54,
+      "prerequisites": [
+        "math:18:1"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:19:0",
+      "title": "Пробник и разбор, оценка нижней границы результата",
+      "subject": "math",
+      "plannedWeek": 19,
+      "sequence": 55,
+      "prerequisites": [
+        "math:18:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:19:1",
+      "title": "Точечный ремонт слабых заданий",
+      "subject": "math",
+      "plannedWeek": 19,
+      "sequence": 56,
+      "prerequisites": [
+        "math:19:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:19:2",
+      "title": "Вторая часть: оформление и проверка",
+      "subject": "math",
+      "plannedWeek": 19,
+      "sequence": 57,
+      "prerequisites": [
+        "math:19:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:20:0",
+      "title": "№1–13: скорость, точность, надёжность",
+      "subject": "math",
+      "plannedWeek": 20,
+      "sequence": 58,
+      "prerequisites": [
+        "math:19:0"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:20:1",
+      "title": "№14/16/17: устойчивое выполнение",
+      "subject": "math",
+      "plannedWeek": 20,
+      "sequence": 59,
+      "prerequisites": [
+        "math:18:2"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:20:2",
+      "title": "Экзаменационное распределение времени",
+      "subject": "math",
+      "plannedWeek": 20,
+      "sequence": 60,
+      "prerequisites": [
+        "math:20:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Вероятность и случайные величины",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:21:0",
+      "title": "Пробник и детальная коррекция",
+      "subject": "math",
+      "plannedWeek": 21,
+      "sequence": 61,
+      "prerequisites": [
+        "math:20:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:21:1",
+      "title": "Выбранная специализация или P1-пробел",
+      "subject": "math",
+      "plannedWeek": 21,
+      "sequence": 62,
+      "prerequisites": [
+        "math:20:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:21:2",
+      "title": "Смешанный контроль первой части",
+      "subject": "math",
+      "plannedWeek": 21,
+      "sequence": 63,
+      "prerequisites": [
+        "math:21:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:22:0",
+      "title": "Экзаменационная стратегия: порядок заданий",
+      "subject": "math",
+      "plannedWeek": 22,
+      "sequence": 64,
+      "prerequisites": [
+        "math:21:2"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:22:1",
+      "title": "Вторая часть под временем",
+      "subject": "math",
+      "plannedWeek": 22,
+      "sequence": 65,
+      "prerequisites": [
+        "math:21:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:22:2",
+      "title": "Работа над повторяющимися ошибками",
+      "subject": "math",
+      "plannedWeek": 22,
+      "sequence": 66,
+      "prerequisites": [
+        "math:22:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:23:0",
+      "title": "Полный вариант и разбор",
+      "subject": "math",
+      "plannedWeek": 23,
+      "sequence": 67,
+      "prerequisites": [
+        "math:22:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:23:1",
+      "title": "Слабые линии №1–13",
+      "subject": "math",
+      "plannedWeek": 23,
+      "sequence": 68,
+      "prerequisites": [
+        "math:22:2"
+      ],
+      "examLines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:23:2",
+      "title": "№14/16/17: контроль без подсказок",
+      "subject": "math",
+      "plannedWeek": 23,
+      "sequence": 69,
+      "prerequisites": [
+        "math:23:1"
+      ],
+      "examLines": [
+        14
+      ],
+      "fipiCategory": "Тригонометрические уравнения",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": true
+    },
+    {
+      "id": "math:24:0",
+      "title": "Полный вариант с измерением времени",
+      "subject": "math",
+      "plannedWeek": 24,
+      "sequence": 70,
+      "prerequisites": [
+        "math:23:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:24:1",
+      "title": "Повтор слабых навыков",
+      "subject": "math",
+      "plannedWeek": 24,
+      "sequence": 71,
+      "prerequisites": [
+        "math:23:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:24:2",
+      "title": "Проверка записи, ОДЗ, корней, единиц",
+      "subject": "math",
+      "plannedWeek": 24,
+      "sequence": 72,
+      "prerequisites": [
+        "math:24:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Неравенства и область допустимых значений",
+      "exerciseSets": 2,
+      "foxfordArticles": 1,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:25:0",
+      "title": "Стабильный результат, адресный ремонт",
+      "subject": "math",
+      "plannedWeek": 25,
+      "sequence": 73,
+      "prerequisites": [
+        "math:24:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:25:1",
+      "title": "Смешанные задания без подписей тем",
+      "subject": "math",
+      "plannedWeek": 25,
+      "sequence": 74,
+      "prerequisites": [
+        "math:24:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:25:2",
+      "title": "Контроль временных потерь и невнимательности",
+      "subject": "math",
+      "plannedWeek": 25,
+      "sequence": 75,
+      "prerequisites": [
+        "math:25:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:26:0",
+      "title": "Финальный вариант, разбор",
+      "subject": "math",
+      "plannedWeek": 26,
+      "sequence": 76,
+      "prerequisites": [
+        "math:25:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:26:1",
+      "title": "Оформление и самопроверка, лёгкие баллы",
+      "subject": "math",
+      "plannedWeek": 26,
+      "sequence": 77,
+      "prerequisites": [
+        "math:26:0"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    },
+    {
+      "id": "math:26:2",
+      "title": "Финальная стабилизация без дорогих новых тем",
+      "subject": "math",
+      "plannedWeek": 26,
+      "sequence": 78,
+      "prerequisites": [
+        "math:26:1"
+      ],
+      "examLines": [],
+      "fipiCategory": "Комплексная практика и работа с задачами",
+      "exerciseSets": 2,
+      "foxfordArticles": 0,
+      "verifiedBookPages": false
+    }
+  ]
+}

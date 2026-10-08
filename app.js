@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  const D=window.EGE_DATA,L=window.EGE_LOGIC,R=window.EGE_RESOURCES,U=window.EGE_UX,STORE="ege2027-local-progress-v1";
+  const D=window.EGE_DATA,L=window.EGE_LOGIC,C=window.EGE_CURRICULUM,R=window.EGE_RESOURCES,U=window.EGE_UX,STORE="ege2027-local-progress-v1";
   const $=(q)=>document.querySelector(q);
   const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const currentMonday=L.iso(L.monday(new Date()));
@@ -45,6 +45,17 @@
     return window.EGE_THEORY?.get(key,subject,title,authored(key,subject,title))||{};
   }
   function directExercises(key){return window.EGE_PRACTICE?.get(key)?.sources||[];}
+  function examMeta(key){
+    const m=window.EGE_FIPI?.get(key);
+    if(!m)return "";
+    const lineText=m.lines.length?"Задания № "+m.lines.join(", "):
+      "Номер конкретного задания не назначен";
+    const evidence=m.lines.length?
+      "Номера взяты из названия темы; сопоставление нужно сверить по спецификации.":
+      "Тематический раздел — редакционная классификация, не цитата кодификатора.";
+    return '<div class="exam-meta"><div class="study-kicker">ФИПИ · ПРОЕКТ ЕГЭ-2027</div>'+
+      '<strong>'+safe(m.section)+'</strong><p>'+safe(lineText)+'</p><small>'+safe(evidence)+'</small></div>';
+  }
   function resourceCards(subject,week,title,key){
     const sources=directExercises(key);
     const saved=key?(Array.isArray(state.customLinks[key])?state.customLinks[key]:[])
@@ -193,7 +204,7 @@
       '<h3>Что воспроизвести без подсказки</h3><p>'+safe(guide.doTask)+'</p></div>'+
       '<button type="button" class="btn" data-action="lesson-tab" data-tab="practice">Перейти к заданиям →</button></section>';
     html+='<section id="lesson-practice" class="lesson-section" role="tabpanel"'+(showTheory?" hidden":"")+'>'+
-      '<div class="study-chapter"><div class="study-kicker">КОНКРЕТНОЕ УЧЕБНОЕ ДЕЙСТВИЕ</div>'+
+      examMeta(key)+'<div class="study-chapter"><div class="study-kicker">КОНКРЕТНОЕ УЧЕБНОЕ ДЕЙСТВИЕ</div>'+
       '<h3>Что выполнить</h3><p>'+safe(guide.doTask)+'</p>'+
       '<p class="criterion"><strong>Критерий освоения:</strong> '+safe(guide.check)+'</p></div>'+
       '<div id="dialog-resources">'+resourceCards(subject,0,title,key)+'</div>'+resourceForm(key);
@@ -252,7 +263,8 @@
   }
   function taskCard(t,index,showBreak=true){
     const subjData=subj(t.subject),done=!!state.completed[t.id],skipped=!!state.skipped[t.id],checked=(state.steps[t.id]||[]).filter(Boolean).length;
-    const labels={new:"Новая тема",practice:"Практика",mixed:"Второй предмет",review:"Короткое повторение"};
+    const blockedPractice=t.phase==="practice"&&!C.topicStatus(state,t.topicKey).theory;
+    const labels={new:"Сначала теория",practice:"Практика после теории",integrated:"Теория → задачи",mixed:"Второй предмет",review:"Короткое повторение"};
     const originNote=t.isBacklog?'<span class="debt-origin">Не завершено '+safe(dformat(t.originDate))+'</span>':"";
     const rest=showBreak&&index===1?'<div class="break">Перерыв · 15 минут</div>':
       showBreak&&index===2?'<div class="break">Ужин и восстановление · 35 минут</div>':"";
@@ -261,21 +273,24 @@
       '<span class="chip">'+labels[t.kind]+'</span>'+originNote+quickCapture(t)+'</div>'+
       '<h3>'+safe(t.title)+'</h3><p class="task-goal"><strong>Задание:</strong> '+safe(authored(t.topicKey,t.subject,t.title).doTask)+'</p>'+pagePreview(t.topicKey)+'<div class="meta">'+t.minutes+' мин'+(checked?" · "+checked+"/"+stepsFor(t).length+" шагов":"")+(state.notes[t.id]?" · Есть заметка":"")+
       (skipped?" · Пропущено без переноса":"")+'</div></div>'+
-      '<div class="task-actions"><button class="btn small '+(done?"secondary":"")+'" data-action="detail" data-id="'+safe(t.id)+'">'+(done?"Посмотреть":"Начать →")+'</button>'+
-      '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'">Задания</button>'+
-      '<button class="check-button" data-action="toggle-task" data-id="'+safe(t.id)+'" aria-label="'+(done?"Отменить выполнение":"Отметить выполненным")+'">'+(done?"✓":"")+'</button>'+
+      '<div class="task-actions"><button class="btn small '+(done?"secondary":"")+'" data-action="detail" data-id="'+safe(t.id)+'"'+(blockedPractice?' disabled title="Сначала завершите теорию"':"")+'>'+(done?"Посмотреть":blockedPractice?"Сначала теория":"Начать →")+'</button>'+
+      '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'"'+(blockedPractice?' disabled':"")+'>Задания</button>'+
+      '<button class="check-button" data-action="toggle-task" data-id="'+safe(t.id)+'"'+(blockedPractice?' disabled':"")+' aria-label="'+(done?"Отменить выполнение":"Отметить выполненным")+'">'+(done?"✓":"")+'</button>'+
       (!done?'<button class="btn ghost small" data-action="skip-task" data-id="'+safe(t.id)+'">'+(skipped?"Вернуть":"Пропустить")+'</button>':"")+'</div></article>';
   }
   function ensureAssignments(day){
     if(day!==L.today()||!L.isStudyDay(day)||L.weekNumber(day,state.startDate)<0)return;
-    if(!Array.isArray(state.assignments[day])){
-      state.assignments[day]=L.pendingStudy(state,day).slice(0,3).map(x=>x.id);
+    if(!Array.isArray(state.curriculumAssignments?.[day])){
+      C.assign(state,day,state.startDate,L.planDay);
       save();
     }
   }
+  function currentAgenda(day,mode){
+    return C.agenda(state,day,mode,L.today(),L.planDay,L.studyAgenda);
+  }
   function renderToday(){
     ensureAssignments(date);
-    const week=L.weekNumber(date,state.startDate),mode=modeFor(date),blocks=L.studyAgenda(state,date,mode),debt=L.debtSummary(state,date),isActualToday=date===L.today();
+    const week=L.weekNumber(date,state.startDate),mode=modeFor(date),blocks=currentAgenda(date,mode),debt=C.debtSummary(state,date),isActualToday=date===L.today();
     const isRest=!L.isStudyDay(date);
     const shown=blocks;
     const done=shown.filter(x=>state.completed[x.id]).length,skipped=shown.filter(x=>state.skipped[x.id]).length,next=shown.find(x=>!state.completed[x.id]&&!state.skipped[x.id]);
@@ -285,7 +300,7 @@
     if(isRest)return html+'<div class="empty"><strong>Полный выходной</strong>Сегодня нет занятий, карточек, пробников и повторений. Суббота и воскресенье всегда свободны.</div>';
     if(week<0)return html+'<div class="empty"><strong>Программа ещё не началась</strong>Начало: '+dformat(state.startDate)+'. Дату можно изменить в настройках.</div>';
     if(week>=26&&!debt.total)html+='<div class="callout" style="margin-bottom:14px"><strong>Основная программа выполнена.</strong> Теперь смешанная практика, пробники и повторение.</div>';
-    if(isActualToday&&debt.overdue)html+='<section class="backlog card padding"><div><strong>Незавершённые занятия: '+debt.overdue+'</strong><p class="note">Показаны первые обязательные шаги, начиная с '+dformat(debt.oldest)+'. Следующие темы откроются после их выполнения. Не нужно выполнять весь список сегодня.</p></div><button class="btn secondary small" data-action="show-backlog">Вся очередь →</button></section>';
+    if(isActualToday&&debt.overdue)html+='<section class="backlog card padding"><div><strong>Темы, требующие завершения: '+debt.overdue+'</strong><p class="note">Это количество тем из ориентировочно пройденной части программы, а не число занятий на сегодня. Следующие темы открываются только после освоения необходимых основ.</p></div><button class="btn secondary small" data-action="show-backlog">Порядок и зависимости →</button></section>';
     if(isActualToday&&!debt.overdue&&!debt.total&&week<26)html+='<div class="callout">Обязательные занятия до сегодняшней даты завершены. Отличная возможность заняться повторением и отдыхом.</div>';
     html+='<section class="hero card">'+(next?'<div><div class="kicker">Следующее занятие</div><h2>'+safe(next.title)+'</h2><p>'+safe(U.taskGoal(next))+'</p><div class="row wrap">'+badge(next.subject)+'<span class="chip">'+next.minutes+' мин</span></div></div><button class="btn" data-action="detail" data-id="'+safe(next.id)+'">Начать →</button>':
       '<div><div class="kicker">Сегодня</div><h2>'+(mode==="off"?"Отдых":"Основная работа завершена")+'</h2><p>Никаких дополнительных часов ради галочек.</p></div>')+'</section>';
@@ -298,7 +313,7 @@
     html+='<div class="grid-2"><div class="stack"><div class="row between wrap"><h2 style="margin:0">План ЕГЭ</h2><div class="row wrap"><button class="btn secondary small" data-action="set-mode" data-mode="normal">160 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="light">90 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="short">35 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="off">Отдых</button><button class="btn ghost small" data-action="set-mode" data-mode="auto">Авто</button></div></div>';
     html+='<div class="schedule">'+(shown.length?shown.map((t,i)=>taskCard(t,i,mode==="normal")).join(""):'<div class="empty"><strong>Сегодня без ЕГЭ</strong>Отдых и школьные задания имеют приоритет. Пропущенное не нужно переносить на выходные.</div>')+'</div>';
     html+='<div class="card padding day-reflection"><label for="day-note"><strong>Итог дня</strong> <span class="note">· Одно предложение — по желанию</span></label><textarea id="day-note" maxlength="1200" placeholder="Что получилось? Что стоит повторить?">'+safe(state.dayNotes[date]||"")+'</textarea><span class="note">Сохранение при вводе. Необязательно.</span></div>'+
-    '<p class="note">Незавершённое не исчезает. Темы идут по порядку, но в день предлагается не более 160 минут, по выходным — отдых.</p></div>';
+    '<p class="note">Незавершённое не исчезает. Порядок задаётся графом необходимых знаний, практика открывается после теории; дневная норма и выходные сохраняются.</p></div>';
     html+='<div class="stack"><div class="card padding"><div class="row between"><h2>Прогресс сегодня</h2><span class="chip">'+Math.round(done/Math.max(1,shown.length)*100)+'%</span></div><div class="bar"><span style="width:'+Math.round(done/Math.max(1,shown.length)*100)+'%"></span></div><p class="note" style="margin-top:13px">Сначала новый материал и практика. Затем второй предмет. Повторения выбираются по готовой очереди.</p></div>';
     html+='<div class="card padding"><div class="row between"><h2>Очередь повторений</h2><button class="btn ghost small" data-view="reviews">Открыть →</button></div>';
     if(!due.length)html+='<p class="note">Пока нет просроченных или назначенных на сегодня проверок. Они появятся после отметки первых тем.</p>';
@@ -310,19 +325,24 @@
     return html;
   }
   function renderBacklog(){
-    const all=L.pendingStudy(state,L.today()),count=all.length;
-    let html=head("Реальная последовательность","Очередь незавершённого",
-      "Задания не исчезают с наступлением новой недели. Каждая отметка остаётся привязанной к исходной теме.");
-    html+='<div class="card padding"><h2>'+count+' обязательных блоков в очереди</h2>'+
-      '<p class="note">Занимайтесь в порядке списка и в пределах дневной нормы. Дополнительные часы и занятия в выходные не требуются. Повторения учитываются отдельно.</p>'+
+    const all=C.queue(state);
+    let html=head("Учебный маршрут","Последовательность без пропусков",
+      "Зависимости проверяются для всех 234 тем. Сначала необходимые знания, затем практика.");
+    html+='<div class="card padding"><h2>'+all.length+' тем ещё не подтверждены</h2>'+
+      '<p class="note">Готова — можно начать. Ожидает — сначала завершите указанные основы. Не нужно выполнять всю очередь за день.</p>'+
       '<div class="row wrap"><button class="btn" data-view="today">← Сегодня</button>'+
       '<button class="btn secondary" data-action="export">Скачать резервную копию</button></div></div>';
-    if(!count)return html+'<div class="empty"><strong>Очередь пуста</strong>Обязательные темы текущего курса завершены.</div>';
-    html+='<div class="backlog-list">'+all.slice(0,80).map((t,i)=>'<article class="backlog-row card"><span class="backlog-index">'+(i+1)+'</span>'+
-      '<div class="backlog-description">'+badge(t.subject)+'<strong>'+safe(t.title)+'</strong>'+
-      '<small>'+dformat(t.originDate)+' · '+safe(t.kind==="new"?"Изучение":t.kind==="practice"?"Практика":"Закрепление")+'</small></div>'+
-      '<button class="btn secondary small" data-action="detail" data-id="'+safe(t.id)+'">Открыть →</button></article>').join("")+'</div>';
-    if(count>80)html+='<p class="note">Показаны первые 80 из '+count+'. Следующие появятся по мере прохождения.</p>';
+    if(!all.length)return html+'<div class="empty"><strong>Теоретические темы и практика завершены.</strong></div>';
+    html+='<div class="backlog-list">'+all.slice(0,100).map((item,i)=>{
+      const prereq=item.missing.slice(0,3).map(key=>C.records[key]?.title||key).join("; ");
+      const phase=item.theory?"Теория пройдена · практика в очереди":"Теория → самостоятельная практика";
+      return '<article class="backlog-row card"><span class="backlog-index">'+(i+1)+'</span>'+
+        '<div class="backlog-description">'+badge(item.subject)+'<strong>'+safe(item.title)+'</strong>'+
+        '<small>'+safe(phase)+' · '+(item.ready?"Можно изучать":"Ожидает базу")+'</small>'+
+        (item.missing.length?'<p class="note"><strong>Сначала:</strong> '+safe(prereq)+'</p>':"")+'</div>'+
+        '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(item.id)+'">Тема →</button></article>';
+    }).join("")+'</div>';
+    if(all.length>100)html+='<p class="note">Показаны первые 100 из '+all.length+' тем.</p>';
     return html;
   }
   function renderWeek(){
@@ -330,25 +350,37 @@
     const sat=L.move(mon,5),sun=L.move(mon,6);
     let html=head("Календарный ориентир","Неделя "+(focusWeek+1),dformat(L.iso(mon))+" — "+dformat(L.iso(sun))+". Незаконченная работа сохраняется в очереди.",weekNav());
     html+='<div class="week-days">'+[0,1,2,3,4].map(i=>{
-      const day=L.iso(L.move(mon,i)),pair=D.patterns[focusWeek%2][i],blocks=L.planDay(day,state.startDate,state.reviews,modeFor(day)),
-      d=blocks.filter(x=>state.completed[x.id]).length,unclosed=blocks.filter(x=>x.kind!=="review"&&!state.completed[x.id]&&!state.skipped[x.id]).length;
+      const day=L.iso(L.move(mon,i));
+      const saved=state.curriculumAssignments?.[day];
+      const modern=Array.isArray(saved);
+      const blocks=day===L.today()?currentAgenda(day,modeFor(day)):
+        modern?saved:day<L.today()?L.planDay(day,state.startDate,state.reviews,modeFor(day)):[];
+      const d=blocks.filter(x=>state.completed[x.id]).length;
+      const remaining=blocks.filter(x=>x.kind!=="review"&&!state.completed[x.id]).length;
       return '<button class="week-day'+(day===date?" active":"")+'" data-action="pick-day" data-date="'+day+'">'+
-        '<span class="day-num">'+D.dayNames[i]+' · '+dformat(day)+'</span><strong>'+d+'/'+blocks.length+' блока</strong>'+(day<L.today()&&unclosed?'<span class="debt-origin">Осталось: '+unclosed+'</span>':"")+
-        pair.map(s=>'<div class="week-topic"><span style="color:'+subj(s).color+'">'+safe(subj(s).name)+'</span>'+safe(blocks.find(b=>b.subject===s&&b.kind!=="review")?.title||"")+'</div>').join("")+'</button>';
+        '<span class="day-num">'+D.dayNames[i]+' · '+dformat(day)+'</span><strong>'+
+        (blocks.length?d+'/'+blocks.length+' блока':'По готовности')+'</strong>'+
+        (day<L.today()&&remaining?'<span class="debt-origin">Осталось: '+remaining+'</span>':"")+
+        (blocks.length?blocks.filter(x=>x.kind!=="review").map(x=>'<div class="week-topic">'+
+          badge(x.subject)+safe(x.title)+'</div>').join(""):
+          '<div class="week-topic">Состав дня определится после проверки предыдущих тем</div>')+
+        '</button>';
     }).join("")+'</div>';
     html+='<div class="card padding" style="margin-top:19px"><div class="row between wrap"><h2>Темы недели</h2><span class="chip">Сб и Вс — выходные</span></div><div class="grid-3">'+D.subjectOrder.map(s=>{
       const data=subj(s);return '<div class="week-course"><div class="row">'+badge(s)+'</div>'+
-      data.weeks[focusWeek].map((t,i)=>{
-        const key=L.topicKey(s,focusWeek,i),guide=authored(key,s,t),articles=theoryFor(key,s,t).articles||[];
+      C.projectedWeek(s,focusWeek).map((topic,i)=>{
+        const t=topic.title;
+        const key=topic.id,guide=authored(key,s,t),articles=theoryFor(key,s,t).articles||[];
         return '<article class="week-lesson"><strong>'+safe(t)+'</strong>'+
           '<p class="note"><b>Изучить:</b> '+safe(guide.know)+'</p>'+pagePreview(key)+
+          '<p class="note">'+safe(window.EGE_FIPI?.get(key)?.section||"")+'</p>'+
           '<p class="note"><b>Выполнить:</b> '+safe(guide.doTask)+'</p>'+
           '<p class="note">'+(articles.length?"Есть статья Фоксфорда":"Краткий конспект")+
           ' · '+directExercises(key).length+' набора заданий</p>'+
           '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(key)+'">Разобрать тему →</button></article>';
       }).join("")+'</div>';
     }).join("")+'</div></div>';
-    return html+'<p class="note" style="margin-top:12px">Эта страница — календарная карта тем. Фактически изучаемые задания выбираются из очереди в разделе «Сегодня». Нажмите на день для просмотра его исходного плана. Химия с пятой недели — ориентировочное распределение.</p>';
+    return html+'<p class="note" style="margin-top:12px">Это ориентир маршрута с учётом зависимостей. Реальное занятие назначается в разделе «Сегодня» после проверки уже освоенных тем. Проекты КИМ-2027 и прежние исходные планы требуют периодической сверки.</p>';
   }
   function links(key,week,title){return externalLinks(R.forTopic(key,week??focusWeek,title||subj(key).weeks[week??focusWeek][0]));}
   function topicCard(topic){
@@ -383,7 +415,7 @@
       '<section id="topic-current-week"'+(searchQuery.trim()||searchPinned?' hidden':'')+'>'+
       '<div class="row wrap" style="margin:20px 0">'+D.subjectOrder.map(k=>'<button class="btn '+(focusSubject===k?'':'secondary')+'" data-action="subject" data-subject="'+k+'">'+safe(subj(k).name)+'</button>').join("")+'</div>'+
       '<div class="card padding"><div class="row between wrap"><div>'+badge(focusSubject)+'<h2 style="margin-top:12px">Неделя '+(week+1)+'</h2></div><span class="chip">Цель '+safe(s.target)+' баллов</span></div>'+
-      '<div class="subject-topics">'+s.weeks[week].map((title,index)=>topicCard({subject:focusSubject,week,index,title,key:L.topicKey(focusSubject,week,index)})).join("")+'</div>'+
+      '<div class="subject-topics">'+C.projectedWeek(focusSubject,week).map(topic=>topicCard({subject:focusSubject,week,index:topic.index,title:topic.title,key:topic.id})).join("")+'</div>'+
       '<hr class="divider"><h3>Что закреплять каждую неделю</h3><ul class="simple-list">'+R.weeklyEssentials(focusSubject,week).map(x=>'<li>'+safe(x)+'</li>').join("")+'</ul></div>';
     if(focusSubject==="chem")html+='<p class="note" style="margin-top:12px">После четвёртой недели темы химии основаны на доступном макроплане (приложена часть 1 из 10).</p>';
     return html+'</section>';
@@ -477,20 +509,41 @@
   }
   function lookup(id){
     const d=id.split(":")[0];
+    const assigned=state.curriculumAssignments?.[d];
+    const matched=Array.isArray(assigned)?assigned.find(x=>x.id===id):null;
+    if(matched)return matched;
     return L.planDay(d,state.startDate,state.reviews,"normal").find(x=>x.id===id)||
       L.planDay(d,state.startDate,state.reviews,"light").find(x=>x.id===id);
   }
   function completeTask(id){
     const b=lookup(id);if(!b)return;
-    if(state.completed[id])delete state.completed[id];
-    else {
-      const agenda=L.studyAgenda(state,L.today(),modeFor(L.today()));
-      const todayBlock=agenda.find(x=>x.id===id);
+    const modern=!!b.phase;
+    if(!state.completed[id]&&modern){
+      if(!C.readyForCompletion(state,b)){
+        const missing=C.unmet(state,b.topicKey).map(key=>C.records[key]?.title).filter(Boolean).slice(0,2);
+        notice(missing.length?"Сначала изучите необходимые темы: "+missing.join("; "):
+          "Сначала завершите теорию этой темы, затем переходите к практике.");
+        return;
+      }
+      if(b.phase==="practice"||b.phase==="integrated"){
+        const score=state.results[id];
+        if(!score||score.total<3||score.correct/score.total<.8){
+          notice("Для завершения практики решите минимум 3 задания и запишите результат от 80%.");
+          return;
+        }
+      }
+    }
+    if(state.completed[id]){
+      delete state.completed[id];
+      if(modern)C.markCompletion(state,b,false);
+    }else{
+      const todayBlock=currentAgenda(L.today(),modeFor(L.today())).find(x=>x.id===id);
       if(state.studyTimer?.taskId===id){
         pauseStudyTimer();state.studyTimer=null;
       }
       state.completed[id]=b.subject;delete state.skipped[id];
-      L.beginReview(state,b,L.today());
+      if(modern)C.markCompletion(state,b,true);
+      if(!modern||b.phase!=="theory")L.beginReview(state,b,L.today());
       const minutes=suggestedPause(todayBlock);
       if(minutes)state.restSuggestion={minutes,fromId:id,offeredOn:L.today()};
     }
@@ -593,7 +646,7 @@
         pauseStudyTimer();renderSession();
         alertUser("Пора завершить занятия: начинается защищённое время подготовки ко сну.");
       }else if(!t.notified&&currentTime(t.taskId)>=t.targetSeconds){
-        const assigned=L.studyAgenda(state,L.today(),modeFor(L.today())).find(x=>x.id===t.taskId);
+        const assigned=currentAgenda(L.today(),modeFor(L.today())).find(x=>x.id===t.taskId);
         const suggested=suggestedPause(assigned);
         pauseStudyTimer();
         state.studyTimer.notified=true;
@@ -639,16 +692,18 @@
   }
   function detail(id){
     const source=lookup(id);if(!source)return;
-    const assigned=L.studyAgenda(state,L.today(),modeFor(L.today())).find(x=>x.id===id);
+    const assigned=currentAgenda(L.today(),modeFor(L.today())).find(x=>x.id===id);
     const t=assigned||source;
     openTask=t;openTopicKey=t.topicKey;
     const note=state.notes[id]||"",priorScore=state.results[id],guide=authored(t.topicKey,t.subject,t.title);
+    const prereqs=t.topicKey?C.unmet(state,t.topicKey):[];
     lessonTab="theory";
     const week=Math.max(0,Math.min(25,L.weekNumber(id.split(":")[0],state.startDate)));
-    const kind={new:"Изучить",practice:"Решить самостоятельно",mixed:"Смешанная практика",review:"Проверить себя"}[t.kind];
+    const kind={new:"Изучить теорию",practice:"Решить после изучения теории",integrated:"Прочитать и решить",mixed:"Смешанная практика",review:"Проверить себя"}[t.kind];
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
       '<h2 style="margin:12px 0 5px">'+safe(t.title)+'</h2><p class="note">'+safe(kind)+' · '+t.minutes+' мин</p></div>'+
       '<button class="dialog-close" data-action="close-dialog" aria-label="Закрыть карточку">×</button></div>'+
+      dependencyPanel(t.topicKey)+
       '<div class="lesson-objective"><div class="study-kicker">ЦЕЛЬ ЗАНЯТИЯ</div><p>'+safe(guide.doTask)+'</p>'+
       '<small><strong>Проверка освоения:</strong> '+safe(guide.check)+'</small></div>'+
       '<div id="lesson-panel">'+lessonPanel(t.topicKey,t.subject,t.title,t,lessonTab)+'</div>'+
@@ -665,13 +720,26 @@
       '<button class="btn small" data-action="dialog-save-error">Сохранить ошибку</button></div></div>';
     $("#task-dialog").showModal();
   }
+  function dependencyPanel(id){
+    const list=window.EGE_CURRICULUM?.prerequisitePath(state,id,10)||[];
+    if(!list.length)return "";
+    return '<section class="dependency-panel" aria-label="Необходимая подготовка">'+
+      '<h3>Перед этой темой необходимо освоить</h3>'+
+      '<p>Теория и самостоятельная проверка каждой основы обязательны. Темы перечислены в правильном порядке — от основ к более сложным.</p>'+
+      '<ol>'+list.map(x=>'<li><span>'+safe(x.title)+'</span>'+
+         '<small>'+(!x.theoryDone?"Теория ещё не завершена":!x.practiceDone?"Нужна самостоятельная практика":"Освоено")+'</small>'+
+         '<button class="btn secondary small" data-action="open-prerequisite" data-key="'+safe(x.id)+'">Изучить →</button></li>').join("")+'</ol>'+
+      '</section>';
+  }
   function topicDetail(key){
     const t=U.topicByKey(key);if(!t)return;
     openTask=null;openTopicKey=key;lessonTab="theory";
     const [status]=reviewStatus(key),personal=state.topicNotes[key]||"",guide=authored(key,t.subject,t.title);
+    const missing=C.unmet(state,key);
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
       '<p class="note" style="margin:12px 0 4px">Неделя '+(t.week+1)+' · '+safe(status)+'</p>'+
       '<h2>'+safe(t.title)+'</h2></div><button class="dialog-close" data-action="close-dialog" aria-label="Закрыть">×</button></div>'+
+      dependencyPanel(key)+
       '<div class="lesson-objective"><div class="study-kicker">ЦЕЛЬ ТЕМЫ</div><p>'+safe(guide.doTask)+'</p></div>'+
       '<div id="lesson-panel">'+lessonPanel(key,t.subject,t.title,null,"theory")+'</div>'+
       '<div class="field" style="margin-top:18px"><label for="topic-note">Мои заметки по теме</label>'+
@@ -709,6 +777,7 @@
         save();notice("Проверка назначена на следующий учебный день.");render();break;
       }
       case "open-topic":topicDetail(b.dataset.key);break;
+      case "open-prerequisite":if($("#task-dialog")?.open)closeDialog();topicDetail(b.dataset.key);break;
       case "remediation-open":if($("#task-dialog")?.open)closeDialog();topicDetail(b.dataset.key);break;
       case "toggle-pins":searchPinned=!searchPinned;render();break;
       case "toggle-all-reviews":showAllReviews=!showAllReviews;render();break;
@@ -751,6 +820,11 @@
         const t=U.topicByKey(b.dataset.key);
         if(!t)break;
         if(!L.isStudyDay(L.today())){notice("В выходные учебные действия не планируются.");break;}
+        const progress=C.topicStatus(state,t.key);
+        if(!progress.ready||!progress.theory||!progress.practice){
+          notice("Повторение назначается после завершения теории и практики. Сначала пройдите необходимую базу в учебной очереди.");
+          break;
+        }
         if(!state.reviews[t.key]){L.beginReview(state,{subject:t.subject,title:t.title,topicKey:t.key},L.today());save();notice("Тема добавлена: контроль в ближайший учебный день.");}
         closeDialog();render();break;
       }

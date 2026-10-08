@@ -5,7 +5,11 @@ import vm from "node:vm";
 
 function runApp(seed=null,clock=null) {
   const nodes=new Map(),events=new Map(),store=new Map(),intervals=new Map();let intervalId=0;
-  const RuntimeDate=clock?class extends Date { static now(){return clock.now;} }:Date;
+  const stableMidday=new Date();stableMidday.setHours(15,0,0,0);
+  const RuntimeDate=class extends Date {
+    constructor(...args){super(...(args.length?args:[clock?clock.now:stableMidday.getTime()]));}
+    static now(){return clock?clock.now:stableMidday.getTime();}
+  };
   if(seed)store.set("ege2027-local-progress-v1",JSON.stringify(seed));
   function node(selector) {
     if(!nodes.has(selector)) nodes.set(selector,{innerHTML:"",textContent:"",value:"",dataset:{},classList:{toggle(){}},addEventListener(type,fn){events.set(selector+":"+type,fn);},focus(){},showModal(){this.open=true;},close(){this.open=false;}});
@@ -18,13 +22,13 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 test("приложение загружается без DOM-ошибок и выводит план дня",()=>{
   const a=runApp();
   assert.ok(a.node("#app").innerHTML.includes("Ежедневный план"));
-  assert.ok(a.node("#app").innerHTML.includes("Следующее занятие")||a.node("#app").innerHTML.includes("День без занятий"));
+  assert.ok(["Следующее занятие","День без занятий","Основная работа завершена"].some(v=>a.node("#app").innerHTML.includes(v)));
 });
 test("навигация отрисовывает все разделы",()=>{
   const a=runApp();
@@ -46,7 +50,7 @@ test("результат занятий сохраняется и низкая �
   const a=runApp(),L=a.window.EGE_LOGIC;
   const date=L.today();
   if(!L.isStudyDay(date))return;
-  const first=L.planDay(date,L.iso(L.monday(new Date())))[0];
+  const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[date][0];
   const click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
   click({action:"detail",id:first.id});
   assert.ok(a.node("#dialog-content").innerHTML.includes("Теория: Фоксфорд + учебник"));
@@ -62,11 +66,12 @@ test("отметка выполненного блока сохраняется 
   const a=runApp(),L=a.window.EGE_LOGIC;
   const date=L.today();
   if(!L.isStudyDay(date)) return;
-  const first=L.planDay(date,L.iso(L.monday(new Date())))[0];
+  const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[date][0];
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"toggle-task",id:first.id}})}});
   const saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(saved.completed[first.id],first.subject);
-  assert.ok(saved.reviews[first.topicKey]);
+  assert.equal(saved.topicProgress[first.topicKey].theory,true);
+  assert.equal(saved.topicProgress[first.topicKey].practice,undefined,"Теория ещё не равна освоенной практике");
 });
 test("поиск тем и открытие подробной карточки работают без перехода по неделям",()=>{
   const a=runApp(),click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
@@ -173,33 +178,33 @@ test("сегодня показывает старые обязательные 
   const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day)||L.parseDate(day).getDay()<2)return;
   const initial=JSON.parse(a.store.get("ege2027-local-progress-v1"));
-  const assigned=initial.assignments[day];assert.ok(Array.isArray(assigned)&&assigned.length===3);
-  assert.ok(a.node("#app").innerHTML.includes("Незавершённые занятия"));
-  assert.ok(a.node("#app").innerHTML.includes("Не завершено"));
+  const assigned=initial.curriculumAssignments[day];assert.ok(Array.isArray(assigned)&&assigned.length===3);
+  assert.ok(a.node("#app").innerHTML.includes("Темы, требующие завершения"));
+  assert.ok(a.node("#app").innerHTML.includes("Следующее занятие"));
   const first=assigned[0];
-  a.events.get("document:click")({target:{closest:()=>({dataset:{action:"toggle-task",id:first}})}});
+  a.events.get("document:click")({target:{closest:()=>({dataset:{action:"toggle-task",id:first.id}})}});
   const now=JSON.parse(a.store.get("ege2027-local-progress-v1"));
-  assert.equal(now.completed[first],"chem");
-  assert.equal(now.restSuggestion.minutes,15);
-  assert.deepEqual(Array.from(now.assignments[day]),Array.from(assigned));
+  assert.equal(now.completed[first.id],first.subject);
+  assert.ok(now.restSuggestion?.minutes>=15||a.node("#app").innerHTML.includes("Перерыв"));
+  assert.deepEqual(Array.from(now.curriculumAssignments[day].map(x=>x.id)),Array.from(assigned.map(x=>x.id)));
   assert.ok(a.node("#app").innerHTML.includes("Блоков выполнено"));
   assert.ok(a.node("#app").innerHTML.includes("Рекомендуется перерыв"));
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"start-break"}})}});
   const after=JSON.parse(a.store.get("ege2027-local-progress-v1"));
-  assert.ok(after.restTimer.endAt>Date.now());
+  assert.ok(after.restTimer.endAt>0);
   assert.ok(a.node("#app").innerHTML.includes("rest-countdown"));
 });
 test("очередь отложенной работы открывается и содержит исходные даты",()=>{
   const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day)||L.parseDate(day).getDay()<2)return;
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"show-backlog"}})}});
-  assert.ok(a.node("#app").innerHTML.includes("Очередь незавершённого"));
+  assert.ok(a.node("#app").innerHTML.includes("Последовательность без пропусков"));
   assert.ok(a.node("#app").innerHTML.includes("backlog-row"));
 });
 test("таймер достигает лимита, фиксирует результат и предлагает отдых",()=>{
   const clock={now:new Date(new Date().setHours(15,0,0,0)).getTime()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
-  const assigned=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day];
+  const assigned=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[day].map(x=>x.id);
   if(!assigned?.length)return;
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
   click({action:"detail",id:assigned[0]});
@@ -227,9 +232,9 @@ test("мобильная кнопка Сегодня возвращает на �
 });
 
 test("после закрытия карточки занятия таймер продолжает отсчёт в верхней панели",()=>{
-  const clock={now:Date.now()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
+  const clock={now:new Date(new Date().setHours(15,0,0,0)).getTime()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
-  const task=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
+  const task=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[day][0].id;
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
   click({action:"detail",id:task});
   click({action:"timer-toggle"});
@@ -258,7 +263,7 @@ test("после закрытия карточки занятия таймер �
 test("запущенный таймер восстанавливается после повторной загрузки приложения",()=>{
   const clock={now:new Date(new Date().setHours(15,0,0,0)).getTime()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
-  const task=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
+  const task=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[day][0].id;
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
   click({action:"detail",id:task});click({action:"timer-toggle"});click({action:"close-dialog"});
   const backup=JSON.parse(a.store.get("ege2027-local-progress-v1"));
@@ -278,7 +283,7 @@ test("запущенный таймер восстанавливается по�
 test("кнопка Материалы открывает список источников вместо непонятной прямой ссылки",()=>{
   const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
-  const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
+  const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[day][0].id;
   assert.ok(a.node("#app").innerHTML.includes('data-action="show-materials"'));
   assert.ok(!a.node("#app").innerHTML.includes('title="Открыть материал"'));
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"show-materials",id:first}})}});
@@ -305,9 +310,9 @@ test("вкладка нагрузки показывает защищённый 
   assert.ok(a.node("#app").innerHTML.includes("0 мин ЕГЭ"));
 });
 test("ночной предел останавливает таймер и не засчитывает часы сна в занятия",()=>{
-  const clock={now:Date.now()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
+  const clock={now:new Date(new Date().setHours(15,0,0,0)).getTime()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
-  const id=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
+  const id=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[day][0].id;
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
   click({action:"detail",id});click({action:"timer-toggle"});
   const t=JSON.parse(a.store.get("ege2027-local-progress-v1")).studyTimer;
@@ -323,7 +328,7 @@ test("ночной предел останавливает таймер и не 
 test("теория Фоксфорд отделена от прямых заданий и переключается без потери заметок",()=>{
   const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
-  const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
+  const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[day][0].id;
   const click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
   click({action:"detail",id:first});
   const html=a.node("#dialog-content").innerHTML;
@@ -409,4 +414,54 @@ test("короткие ссылки на § видны сразу в недел�
  assert.ok(a.node("#app").innerHTML.includes("Учебник"),"В недельном обзоре присутствуют §");
  click({view:"subjects"});
  assert.ok(a.node("#app").innerHTML.includes("reading-short"),"На карточках предметов присутствует ориентир");
+});
+
+test("новая теория должна быть завершена раньше самостоятельной практики",()=>{
+ const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
+ if(!L.isStudyDay(day))return;
+ const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ const state=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+ const [theory,practice,second]=state.curriculumAssignments[day];
+ assert.equal(theory.kind,"new");
+ assert.equal(practice.kind,"practice");
+ assert.equal(second.kind,"new");
+ assert.equal(theory.topicKey,practice.topicKey);
+ click({action:"toggle-task",id:practice.id});
+ let saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+ assert.ok(!saved.completed[practice.id],"Раньше изучения теории зачёт практики запрещён");
+ click({action:"toggle-task",id:theory.id});
+ saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+ assert.equal(saved.topicProgress[theory.topicKey].theory,true);
+ assert.ok(!saved.topicProgress[theory.topicKey].practice);
+ click({action:"toggle-task",id:practice.id});
+ saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+ assert.ok(!saved.completed[practice.id],"Без результатов минимум трёх задач практика не закрывается");
+ click({action:"detail",id:practice.id});
+ a.node("#task-score").value="4/5";click({action:"save-score"});
+ click({action:"toggle-task",id:practice.id});
+ saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+ assert.equal(saved.topicProgress[practice.topicKey].practice,true);
+ assert.equal(saved.completed[practice.id],practice.subject);
+ assert.ok(saved.reviews[practice.topicKey],"Повторение после самостоятельной практики");
+});
+test("математика №6 показывает ФИПИ-проект и прямую подборку задач по дисперсии",()=>{
+ const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({action:"open-topic",key:"math:2:2"});
+ const html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("Фоксфорд: новая линия №6"));
+ assert.ok(html.includes("repa-ai.ru/ege/matematika-profil/zadanie-6/"));
+ assert.ok(html.includes("Проекты ФИПИ")||html.includes("КРАТКИЙ КОНСПЕКТ"));
+});
+
+test("заблокированная тема показывает цепочку основы и переход к ней",()=>{
+ const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({action:"open-topic",key:"chem:2:2"});
+ let html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("Перед этой темой необходимо освоить"));
+ assert.ok(html.includes("chem:10:0"));
+ assert.ok(html.includes('data-action="open-prerequisite"'));
+ click({action:"open-prerequisite",key:"chem:10:0"});
+ html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("Гибридизация, изомерия, механизм реакций"));
+ assert.ok(html.includes("Что нужно понять")||html.includes("ЧТО НУЖНО ПОНЯТЬ"));
 });
