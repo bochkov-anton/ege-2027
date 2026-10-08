@@ -140,7 +140,8 @@
       assignments:o.assignments && typeof o.assignments==="object" && !Array.isArray(o.assignments)?o.assignments:{},
       restTimer:o.restTimer && typeof o.restTimer==="object" && Number.isFinite(o.restTimer.endAt)?o.restTimer:null,
       restSuggestion:o.restSuggestion && typeof o.restSuggestion==="object" ?o.restSuggestion:null,
-      notifyEnabled:o.notifyEnabled===true
+      notifyEnabled:o.notifyEnabled===true,
+      studyTimer:o.studyTimer && typeof o.studyTimer==="object" && /^\d{4}-\d{2}-\d{2}:\d$/.test(o.studyTimer.taskId||"") && Number.isFinite(o.studyTimer.elapsedSeconds) && o.studyTimer.elapsedSeconds>=0 && (!o.studyTimer.startedAt || Number.isFinite(o.studyTimer.startedAt)) ? o.studyTimer : null
     };
   }
   function dueItems(reviews,date) {

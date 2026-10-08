@@ -1,0 +1,20 @@
+
+/* Таймер теперь существует вне модального окна: виден после его закрытия. */
+.study-session[hidden]{display:none!important}
+.study-session{position:sticky;top:0;z-index:13;background:#eff3ff;border-bottom:1px solid #d4def7;box-shadow:0 3px 14px rgba(45,63,115,.08)}
+.study-session-inner{display:flex;align-items:center;gap:10px;max-width:1170px;margin:0 auto;padding:10px clamp(16px,4.2vw,60px)}
+.study-session-copy{display:grid;gap:2px;flex:1;min-width:0}
+.study-session-label{font-size:10px;font-weight:800;color:#5265ac;text-transform:uppercase;letter-spacing:.5px}
+.study-session-copy strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:#334467}
+.study-session-clock{font-size:22px;color:#344f9c;font-weight:850;min-width:70px;text-align:center;font-variant-numeric:tabular-nums}
+.resource-help{padding:12px 14px;border:1px solid #dde6fa;background:#f5f8ff;border-radius:12px;font-size:12px;line-height:1.55}
+.resource-help strong{display:block;color:#32466f;margin-bottom:5px;font-size:13px}
+.resource-help p{color:#64718a;margin:0}
+.resource-help a{font-weight:750}
+@media(max-width:720px){
+ .study-session-inner{padding:9px 12px;gap:6px;flex-wrap:wrap}
+ .study-session-copy{width:calc(100% - 100px);flex:1 0 50%;max-width:none}
+ .study-session-clock{font-size:20px}
+ .study-session .btn{min-height:38px;font-size:11px}
+ .study-session .btn:last-child{margin-left:auto}
+}

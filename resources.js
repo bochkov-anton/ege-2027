@@ -36,7 +36,7 @@ const official={
   }
 };
 const shared=[
-  item("ФИПИ: проекты КИМ ЕГЭ-2027 — демоверсия и критерии","https://fipi.ru/ege/demoversii-specifikacii-kodifikatory","Актуализация экзамена"),
+  item("ФИПИ: демоверсии, спецификации, критерии — проверяйте год","https://fipi.ru/ege/demoversii-specifikacii-kodifikatory","Актуализация экзамена"),
   item("ФИПИ: открытый банк заданий","https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege","Официальный банк")
 ];
 const practice={

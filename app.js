@@ -8,7 +8,7 @@
   try{state=L.safeState(JSON.parse(localStorage.getItem(STORE)||"null"),currentMonday);}
   catch{state=L.safeState(null,currentMonday);}
   let view="today",date=L.today(),focusWeek=Math.max(0,Math.min(25,L.weekNumber(date,state.startDate))),focusSubject="bio",searchQuery="",searchSubject="all",searchPinned=false,openTopicKey=null,schoolExpanded=false,showAllReviews=false;
-  let openTask=null,timerSeconds=0,timerHandle=null,timerStartedAt=0,noticeHandle=null,sessionAlarmShown=false;
+  let openTask=null,noticeHandle=null;
   function save(){try{localStorage.setItem(STORE,JSON.stringify(state));}catch{notice("Не удалось сохранить: скачайте резервную копию JSON.");}}
   function notice(msg){$("#notice").textContent=msg;clearTimeout(noticeHandle);noticeHandle=setTimeout(()=>$("#notice").textContent="",3600);}
   function subj(key){return D.subjects[key]||D.subjects.bio;}
@@ -28,7 +28,8 @@
   }
   function resourceCards(subject,week,title,key){
     const saved=key?(Array.isArray(state.customLinks[key])?state.customLinks[key]:[]).filter(x=>U.safeHttpUrl(x.url)&&typeof x.title==="string").slice(0,12):[];
-    return '<div class="resources-box">'+[...saved.map(x=>({...x,user:true})),...R.forTopic(subject,Math.min(25,week),title)].map(x=>
+    return '<div class="resource-help"><strong>Где изучать и решать</strong><p>Выберите источник из списка. PDF ФИПИ — тематические материалы 2026 года, а не готовое индивидуальное домашнее задание. Если PDF не открылся на планшете, перейдите в <a href="https://fipi.ru/navigator-podgotovki/navigator-ege" target="_blank" rel="noopener noreferrer">официальный Навигатор ФИПИ ↗</a> и найдите предмет.</p></div>'+
+      '<div class="resources-box">'+[...saved.map(x=>({...x,user:true})),...R.forTopic(subject,Math.min(25,week),title)].map(x=>
       '<div class="resource-line"><div class="resource-copy"><div class="resource-type">'+safe(x.user?"Моя ссылка":U.resourceKind(x))+'</div><a target="_blank" rel="noopener noreferrer" href="'+safe(x.url)+'">'+safe(x.title)+' ↗</a><small>'+safe(x.user?"Добавлена вручную":U.resourceHint(x))+'</small></div>'+
       (x.user&&key?'<button type="button" class="btn ghost small" data-action="remove-resource" data-topic="'+safe(key)+'" data-url="'+safe(x.url)+'" title="Удалить ссылку">×</button>':'')+'</div>'
     ).join("")+'</div>';
@@ -60,9 +61,6 @@
     const subjData=subj(t.subject),done=!!state.completed[t.id],skipped=!!state.skipped[t.id],checked=(state.steps[t.id]||[]).filter(Boolean).length;
     const labels={new:"Новая тема",practice:"Практика",mixed:"Второй предмет",review:"Короткое повторение"};
     const originNote=t.isBacklog?'<span class="debt-origin">Не завершено '+safe(dformat(t.originDate))+'</span>':"";
-    const week=Math.max(0,Math.min(25,L.weekNumber(t.id.split(":")[0],state.startDate)));
-    const own=t.topicKey?(Array.isArray(state.customLinks[t.topicKey])?state.customLinks[t.topicKey]:[]).find(x=>x&&U.safeHttpUrl(x.url)):null;
-    const link=own|| (t.topicKey?R.forTopic(t.subject,week,t.title)[0]:null);
     const rest=showBreak&&index===1?'<div class="break">Перерыв · 15 минут</div>':
       showBreak&&index===2?'<div class="break">Ужин и восстановление · 35 минут</div>':"";
     return rest+'<article class="task '+(done?"done":skipped?"skipped":"")+'" style="--subject:'+subjData.color+'">'+
@@ -71,7 +69,7 @@
       '<h3>'+safe(t.title)+'</h3><p class="task-goal">'+safe(U.taskGoal(t))+'</p><div class="meta">'+t.minutes+' мин'+(checked?" · "+checked+"/"+stepsFor(t).length+" шагов":"")+(state.notes[t.id]?" · Есть заметка":"")+
       (skipped?" · Пропущено без переноса":"")+'</div></div>'+
       '<div class="task-actions"><button class="btn small '+(done?"secondary":"")+'" data-action="detail" data-id="'+safe(t.id)+'">'+(done?"Посмотреть":"Начать →")+'</button>'+
-      (link?'<a class="btn ghost small" href="'+safe(link.url)+'" target="_blank" rel="noopener noreferrer" title="Открыть материал">Материал ↗</a>':"")+
+      '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'">Материалы</button>'+
       '<button class="check-button" data-action="toggle-task" data-id="'+safe(t.id)+'" aria-label="'+(done?"Отменить выполнение":"Отметить выполненным")+'">'+(done?"✓":"")+'</button>'+
       (!done?'<button class="btn ghost small" data-action="skip-task" data-id="'+safe(t.id)+'">'+(skipped?"Вернуть":"Пропустить")+'</button>':"")+'</div></article>';
   }
@@ -262,6 +260,7 @@
     $("#review-badge").textContent=n?n:"";
     document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
     $("#app").innerHTML=({today:renderToday,week:renderWeek,subjects:renderSubjects,reviews:renderReviews,progress:renderProgress,settings:renderSettings,backlog:renderBacklog}[view]||renderToday)();
+    renderSession();
     window.EGE_ANDROID?.updateUI?.();
   }
   function lookup(id){
@@ -275,6 +274,9 @@
     else {
       const agenda=L.studyAgenda(state,L.today(),modeFor(L.today()));
       const todayBlock=agenda.find(x=>x.id===id);
+      if(state.studyTimer?.taskId===id){
+        pauseStudyTimer();state.studyTimer=null;
+      }
       state.completed[id]=b.subject;delete state.skipped[id];
       L.beginReview(state,b,L.today());
       const minutes=suggestedPause(todayBlock);
@@ -287,9 +289,63 @@
     if(v==="today"){date=L.today();focusWeek=Math.max(0,Math.min(25,L.weekNumber(date,state.startDate)));}
     view=v;render();
   }
-  function clockDisplay(seconds){const x=Math.max(0,Math.floor(seconds));return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");}
-  function currentTime(){return timerSeconds+(timerHandle?Math.floor((Date.now()-timerStartedAt)/1000):0);}
-  function stopTimer(){if(timerHandle){timerSeconds=currentTime();clearInterval(timerHandle);timerHandle=null;}if(openTask){state.timeSpent[openTask.id]=timerSeconds;save();}}
+  function clockDisplay(seconds){
+    const x=Math.max(0,Math.floor(Number(seconds)||0));
+    return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");
+  }
+  function currentTime(id){
+    const t=state.studyTimer;
+    if(t&&(!id||t.taskId===id)){
+      const started=Number(t.startedAt)||0;
+      return Math.max(0,Number(t.elapsedSeconds)||0)+(started?Math.max(0,Math.floor((Date.now()-started)/1000)):0);
+    }
+    return id?Math.max(0,Number(state.timeSpent[id])||0):0;
+  }
+  function pauseStudyTimer(){
+    const t=state.studyTimer;if(!t)return;
+    t.elapsedSeconds=currentTime(t.taskId);
+    t.startedAt=null;
+    state.timeSpent[t.taskId]=t.elapsedSeconds;
+    save();
+  }
+  function startStudyTimer(task){
+    const other=state.studyTimer;
+    if(other?.taskId!==task.id&&other?.startedAt){
+      if(!confirm("Сейчас идёт другое занятие. Остановить его таймер и перейти к этому?"))return false;
+      pauseStudyTimer();
+    }
+    if(!state.studyTimer||state.studyTimer.taskId!==task.id){
+      state.studyTimer={taskId:task.id,elapsedSeconds:Math.max(0,Number(state.timeSpent[task.id])||0),
+        startedAt:null,targetSeconds:task.minutes*60,notified:false};
+    }
+    if(!state.studyTimer.startedAt)state.studyTimer.startedAt=Date.now();
+    save();renderSession();updateTimerDisplays();return true;
+  }
+  function timerButtonLabel(id){
+    const t=state.studyTimer;
+    if(!t||t.taskId!==id)return t?.startedAt?"Переключить таймер":"Старт";
+    return t.startedAt?"Пауза":"Продолжить";
+  }
+  function renderSession(){
+    const area=$("#study-session");if(!area)return;
+    const t=state.studyTimer;
+    if(!t){area.hidden=true;area.innerHTML="";return;}
+    const b=lookup(t.taskId),title=b?.title||"Занятие";
+    area.hidden=false;
+    area.innerHTML='<div class="study-session-inner"><div class="study-session-copy"><span class="study-session-label">'+
+      (t.startedAt?"Идёт занятие":"Таймер на паузе")+'</span><strong>'+safe(title)+'</strong></div>'+
+      '<span class="study-session-clock" id="study-clock">'+clockDisplay(currentTime(t.taskId))+'</span>'+
+      '<button type="button" class="btn secondary small" data-action="session-toggle">'+(t.startedAt?"Пауза":"Продолжить")+'</button>'+
+      '<button type="button" class="btn ghost small" data-action="session-open" data-id="'+safe(t.taskId)+'">Открыть</button></div>';
+  }
+  function updateTimerDisplays(){
+    const t=state.studyTimer,elapsed=t?currentTime(t.taskId):0;
+    const bar=$("#study-clock");if(bar&&t)bar.textContent=clockDisplay(elapsed);
+    if(openTask){
+      const clock=$("#timer-clock");if(clock)clock.textContent=clockDisplay(currentTime(openTask.id));
+      const button=$("#timer-button");if(button)button.textContent=timerButtonLabel(openTask.id);
+    }
+  }
   function alertUser(message){
     notice(message);
     const alert=$("#timer-alert");if(alert){alert.hidden=false;alert.textContent=message;}
@@ -308,18 +364,21 @@
     return task.slot===0?15:(task.slot===1&&mode==="normal"?35:0);
   }
   function checkTimers(){
-    if(timerHandle&&openTask){
-      const elapsed=currentTime(),el=$("#timer-clock");
-      if(el)el.textContent=clockDisplay(elapsed);
-      if(!sessionAlarmShown&&elapsed>=openTask.minutes*60){
-        sessionAlarmShown=true;stopTimer();
-        const suggested=suggestedPause(openTask);
-        if(suggested){state.restSuggestion={minutes:suggested,fromId:openTask.id,offeredOn:L.today()};save();}
+    const t=state.studyTimer;
+    if(t?.startedAt){
+      if(!t.notified&&currentTime(t.taskId)>=t.targetSeconds){
+        const assigned=L.studyAgenda(state,L.today(),modeFor(L.today())).find(x=>x.id===t.taskId);
+        const suggested=suggestedPause(assigned);
+        pauseStudyTimer();
+        state.studyTimer.notified=true;
+        if(suggested)state.restSuggestion={minutes:suggested,fromId:t.taskId,offeredOn:L.today()};
+        save();renderSession();
         alertUser("Время занятия закончилось. Пора сделать перерыв и отдохнуть.");
-        const a=$("#timer-alert");if(a&&suggested)a.innerHTML+=' <button type="button" class="btn small" data-action="start-break">Начать перерыв '+suggested+' минут</button>';
-        const b=$("#timer-button");if(b)b.textContent="Продолжить";
+        const alert=$("#timer-alert");
+        if(alert&&suggested)alert.innerHTML+=' <button type="button" class="btn small" data-action="start-break">Начать перерыв '+suggested+' минут</button>';
       }
     }
+    updateTimerDisplays();
     if(state.restTimer?.endAt && state.restTimer.startedOn===L.today()){
       const seconds=Math.max(0,Math.ceil((state.restTimer.endAt-Date.now())/1000));
       const clock=$("#rest-countdown");if(clock)clock.textContent=clockDisplay(seconds);
@@ -356,8 +415,7 @@
     const source=lookup(id);if(!source)return;
     const assigned=L.studyAgenda(state,L.today(),modeFor(L.today())).find(x=>x.id===id);
     const t=assigned||source;
-    openTask=t;openTopicKey=t.topicKey;sessionAlarmShown=false;
-    timerSeconds=Number(state.timeSpent[id])||0;timerStartedAt=0;clearInterval(timerHandle);timerHandle=null;
+    openTask=t;openTopicKey=t.topicKey;
     const note=state.notes[id]||"",priorScore=state.results[id],guide=U.topicGuide(t.subject,t.title);
     const steps=stepsFor(t),checks=state.steps[id]||[];
     const week=Math.max(0,Math.min(25,L.weekNumber(id.split(":")[0],state.startDate)));
@@ -369,11 +427,11 @@
       '<p class="note" style="margin-top:8px"><strong>Как проверить себя:</strong> '+safe(guide.check)+'</p></div>'+
       '<h3 style="margin-top:18px">План действий <span class="note">· Отмечайте по мере выполнения</span></h3>'+
       '<div class="step-list">'+steps.map((v,i)=>'<label class="step-line"><input type="checkbox" data-action="toggle-step" data-step="'+i+'"'+(checks[i]?' checked':'')+'><span>'+safe(v)+'</span></label>').join("")+'</div>'+
-      '<h3 style="margin-top:18px">Материалы и практика</h3><p class="note">Сначала учебный материал, затем самостоятельные задания. Официальные PDF могут относиться к 2026 году.</p>'+
+      '<h3 style="margin-top:18px">Материалы и практика</h3><p class="note">Сначала изучите объяснение, затем перейдите к практическим заданиям. Ссылки открываются в Chrome и требуют интернета.</p>'+
       '<div id="dialog-resources">'+resourceCards(t.subject,week,t.title,t.topicKey)+'</div>'+resourceForm(t.topicKey)+
-      '<div class="timer-box"><div><div class="stat-caption">УЧЕБНЫЙ ТАЙМЕР · цель '+t.minutes+' минут</div><div class="timer" id="timer-clock">'+clockDisplay(timerSeconds)+'</div>'+
-      '<p class="note">Напомним о перерыве при достижении лимита — пока приложение открыто.</p></div>'+
-      '<div class="row"><button class="btn secondary small" data-action="timer-toggle" id="timer-button">Старт</button><button class="btn ghost small" data-action="timer-reset">Сброс</button></div></div>'+
+      '<div class="timer-box"><div><div class="stat-caption">УЧЕБНЫЙ ТАЙМЕР · цель '+t.minutes+' минут</div><div class="timer" id="timer-clock">'+clockDisplay(currentTime(id))+'</div>'+
+      '<p class="note">Таймер продолжает идти после закрытия карточки. Время учитывается по часам планшета.</p></div>'+
+      '<div class="row"><button class="btn secondary small" data-action="timer-toggle" id="timer-button">'+timerButtonLabel(id)+'</button><button class="btn ghost small" data-action="timer-reset">Сброс</button></div></div>'+
       '<div id="timer-alert" class="timer-alert" role="status" aria-live="assertive" hidden></div>'+
       '<div class="field" style="margin-top:16px"><label for="task-note">Быстрая запись</label><textarea id="task-note" maxlength="2000" placeholder="Какая ошибка? Какой метод? Что повторить позже?">'+safe(note)+'</textarea><span class="note" id="saved-label">Сохраняется при наборе</span></div>'+
       '<div class="result-box"><div class="field"><label for="task-score">Результат</label><input id="task-score" placeholder="Например, 8/10" inputmode="text" value="'+safe(priorScore?priorScore.correct+"/"+priorScore.total:"")+'"></div>'+
@@ -388,7 +446,7 @@
   }
   function topicDetail(key){
     const t=U.topicByKey(key);if(!t)return;
-    stopTimer();openTask=null;openTopicKey=key;
+    openTask=null;openTopicKey=key;
     const [status]=reviewStatus(key),personal=state.topicNotes[key]||"",guide=U.topicGuide(t.subject,t.title);
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
       '<p class="note" style="margin:12px 0 4px">Неделя '+(t.week+1)+' · '+safe(status)+'</p>'+
@@ -404,7 +462,7 @@
       (state.reviews[key]?'<button class="btn secondary" data-view="reviews">Открыть повторения</button>':"")+'</div></div>';
     $("#task-dialog").showModal();
   }
-  function closeDialog(){stopTimer();$("#task-dialog").close();openTask=null;openTopicKey=null;}
+  function closeDialog(){$("#task-dialog").close();openTask=null;openTopicKey=null;}
   function addError(subject,title,description,kind="other",topicKey=null){
     if(!description.trim()||!title.trim())return false;
     state.errors.unshift({id:String(Date.now())+"-"+Math.random().toString(36).slice(2,7),subject,title,description,kind,topicKey,date:L.today(),done:false});
@@ -487,6 +545,12 @@
       }
       case "toggle-task":completeTask(b.dataset.id);break;
       case "detail":detail(b.dataset.id);break;
+      case "show-materials":{
+        detail(b.dataset.id);
+        const section=$("#dialog-resources");
+        if(section?.scrollIntoView)section.scrollIntoView({block:"center",behavior:"smooth"});
+        break;
+      }
       case "set-mode":{const info=schoolInfo(date);state.school[date]={...info,manualMode:b.dataset.mode};save();render();break;}
       case "start-topic":{
         const s=b.dataset.subject,i=Number(b.dataset.index),key=L.topicKey(s,focusWeek,i);
@@ -533,19 +597,27 @@
         break;
       }
       case "timer-toggle":{
-        if(timerHandle){stopTimer();b.textContent="Продолжить";}
-        else{
-          sessionAlarmShown=false;
-          timerStartedAt=Date.now();
-          timerHandle=setInterval(()=>{const el=$("#timer-clock");if(el)el.textContent=clockDisplay(currentTime());},1000);
-          b.textContent="Пауза";
-        }
+        if(!openTask)break;
+        if(state.studyTimer?.taskId===openTask.id&&state.studyTimer.startedAt){
+          pauseStudyTimer();renderSession();updateTimerDisplays();
+        }else startStudyTimer(openTask);
         break;
       }
+      case "session-toggle":{
+        const t=state.studyTimer;if(!t)break;
+        if(t.startedAt)pauseStudyTimer();
+        else {t.startedAt=Date.now();save();}
+        renderSession();updateTimerDisplays();break;
+      }
+      case "session-open":{
+        if($("#task-dialog").open)closeDialog();
+        detail(b.dataset.id);break;
+      }
       case "timer-reset":{
-        clearInterval(timerHandle);timerHandle=null;timerStartedAt=0;timerSeconds=0;
-        if(openTask){state.timeSpent[openTask.id]=0;save();}
-        sessionAlarmShown=false;$("#timer-clock").textContent="00:00";$("#timer-button").textContent="Старт";break;
+        if(!openTask)break;
+        if(state.studyTimer?.taskId===openTask.id)state.studyTimer=null;
+        state.timeSpent[openTask.id]=0;save();
+        renderSession();updateTimerDisplays();break;
       }
     }
   });
@@ -613,7 +685,7 @@
     }catch{notice("Не удалось прочитать резервную копию JSON.");}finally{ev.target.value="";}
   });
   $("#jump-today").addEventListener("click",()=>{date=L.today();focusWeek=Math.max(0,Math.min(25,L.weekNumber(date,state.startDate)));setView("today");});
-  $("#task-dialog").addEventListener("close",()=>{stopTimer();openTask=null;openTopicKey=null;});
+  $("#task-dialog").addEventListener("close",()=>{openTask=null;openTopicKey=null;});
   $("#quick-search").addEventListener("click",searchAction);
   document.addEventListener("keydown",ev=>{
     if(ev.key==="/"&&!ev.altKey&&!ev.ctrlKey&&!ev.metaKey&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName)){
