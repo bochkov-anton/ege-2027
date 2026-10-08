@@ -44,23 +44,23 @@ test("service worker не перехватывает чужие сайты и з
   const events={},responses=new Map(),cacheMap=new Map();
   const scope="https://example.org/study/";
   const ctx=vm.createContext({
-    self:{registration:{scope},location:{origin:"https://example.org"},addEventListener:(name,cb)=>{events[name]=cb;},clients:{claim:()=>Promise.resolve()}},
+    self:{registration:{scope},location:{origin:"https://example.org"},addEventListener:(name,cb)=>{events[name]=cb;},skipWaiting:async()=>true,clients:{claim:()=>Promise.resolve()}},
     caches:{open:async(name)=>({
-      addAll:async(entries)=>entries.forEach(e=>cacheMap.set(e,{ok:true,url:e})),
-      match:async key=>cacheMap.get(key),
+      addAll:async(entries)=>entries.forEach(e=>cacheMap.set(new URL(e.url||e,scope).pathname,{ok:true,url:e.url||e})),
+      match:async key=>cacheMap.get(new URL(key.url||key,scope).pathname),
       put:async(key,value)=>cacheMap.set(key,value)}),
-      match:async key=>cacheMap.get(key.url||key),
+      match:async key=>cacheMap.get(new URL(key.url||key,scope).pathname),
       keys:async()=>["ege-2027-shell-v1-android"],
       delete:async()=>true},
     fetch:async req=>({ok:true,url:req.url,clone(){return this;}}),
-    URL,Response,
+    URL,Request,Response,
   });
   vm.runInContext(source("sw.js"),ctx,{filename:"sw.js"});
   assert.equal(typeof events.install,"function");
   assert.equal(typeof events.fetch,"function");
   let promise;
   events.install({waitUntil:p=>promise=p});await promise;
-  assert.ok(cacheMap.has("./android.css"));
+  assert.ok(cacheMap.has("/study/android.css"));
   const external={request:{method:"GET",url:"https://fipi.ru/books",mode:"navigate"},respondWith(){responses.set("external",true);}};
   events.fetch(external);assert.equal(responses.has("external"),false);
   const post={request:{method:"POST",url:scope+"save",mode:"cors"},respondWith(){responses.set("post",true);}};

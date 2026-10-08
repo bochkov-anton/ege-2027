@@ -9,7 +9,7 @@
   const standalone=()=>window.matchMedia?.("(display-mode: standalone)")?.matches || navigator.standalone===true;
   const $=q=>document.querySelector(q);
   let installEvent=null;
-  let swRegistration=null;
+  let swRegistration=null,activeVersion="";
   function dismissIsSaved(){try{return sessionStorage.getItem("ege-hide-install-help")==="1";}catch{return false;}}
   function info(message){
     const box=$("#android-status");
@@ -32,8 +32,42 @@
     const status=$("#android-connection");
     if(status){status.textContent=navigator.onLine?"Сеть доступна":"Без интернета";status.dataset.online=String(navigator.onLine);}
     const s=$("#android-offline-status");
-    if(s)s.textContent=swRegistration?.active?"Основные страницы доступны офлайн. Внешние PDF и сайты требуют интернета.":
-      secure?"Офлайн-режим подготовится после первой успешной загрузки страницы.":"Офлайн-установка доступна только по HTTPS.";
+    if(s)s.textContent=swRegistration?.active?
+      "Офлайн доступен"+(activeVersion?" · версия "+activeVersion:"")+". Внешние материалы требуют интернета.":
+      secure?"Офлайн-режим подготовится после первой загрузки.":"Офлайн-установка доступна только по HTTPS.";
+  }
+  function readVersion(){
+    const worker=navigator.serviceWorker?.controller||swRegistration?.active;
+    if(!worker||typeof MessageChannel==="undefined")return;
+    try{
+      const channel=new MessageChannel();
+      channel.port1.onmessage=e=>{
+        if(typeof e.data?.version==="string"&&/^[a-f0-9]{12}$/.test(e.data.version)){
+          activeVersion=e.data.version;updateUI();
+        }
+        channel.port1.close();
+      };
+      worker.postMessage({type:"EGE_VERSION"},[channel.port2]);
+    }catch{/* Some Android WebViews restrict message channels. */}
+  }
+  async function checkForUpdates(manual=false){
+    if(!secure||!("serviceWorker" in navigator)){
+      if(manual)info("Проверка обновлений доступна только по HTTPS.");return;
+    }
+    if(!navigator.onLine){
+      if(manual)info("Нет интернета. Офлайн-версия и прогресс сохранены.");return;
+    }
+    try{
+      const reg=swRegistration||await navigator.serviceWorker.getRegistration("./");
+      if(!reg){if(manual)info("Офлайн-приложение ещё не установлено: обновите вкладку.");return;}
+      if(manual)info("Проверяем свежую версию сайта…");
+      await reg.update();
+      if(reg.waiting)reg.waiting.postMessage({type:"EGE_APPLY_UPDATE"});
+      readVersion();
+      if(manual)info(reg.installing||reg.waiting?"Загружается обновление. Страница автоматически перезапустится.":"Проверка выполнена. При наличии новой версии страница перезапустится автоматически.");
+    }catch{
+      if(manual)info("Не удалось проверить обновления. Проверьте сеть и повторите попытку.");
+    }
   }
   async function install(){
     if(standalone()){info("Приложение уже установлено.");return;}
@@ -84,6 +118,7 @@
     document.addEventListener("click",event=>{
       const b=event.target.closest("button[data-android]");if(!b)return;
       if(b.dataset.android==="install")install();
+      else if(b.dataset.android==="check-update")checkForUpdates(true);
       else if(b.dataset.android==="share")shareBackup();
       else if(b.dataset.android==="dismiss"){
         try{sessionStorage.setItem("ege-hide-install-help","1");}catch{}
@@ -93,15 +128,22 @@
     });
     window.addEventListener("beforeinstallprompt",event=>{event.preventDefault();installEvent=event;updateUI();});
     window.addEventListener("appinstalled",()=>{installEvent=null;updateUI();});
-    window.addEventListener("online",updateUI);window.addEventListener("offline",updateUI);
+    window.addEventListener("online",()=>{updateUI();checkForUpdates();});
+    window.addEventListener("offline",updateUI);
+    document.addEventListener("visibilitychange",()=>{
+      if(document.visibilityState==="visible")checkForUpdates();
+    });
+    window.addEventListener("pageshow",()=>checkForUpdates());
     if("serviceWorker" in navigator && secure){
-      navigator.serviceWorker.register("./sw.js",{scope:"./"}).then(reg=>{
-        swRegistration=reg;updateUI();
+      navigator.serviceWorker.register("./sw.js",{scope:"./",updateViaCache:"none"}).then(reg=>{
+        swRegistration=reg;updateUI();readVersion();
+        reg.addEventListener?.("updatefound",()=>{info("Загружается новая версия. Данные сохраняются.");});
+        checkForUpdates();
       }).catch(()=>{info("Не удалось включить офлайн-режим. Проверьте HTTPS и обновите страницу.");updateUI();});
     }
     updateUI();
   }
-  window.EGE_ANDROID={install,shareBackup,updateUI};
+  window.EGE_ANDROID={install,shareBackup,updateUI,checkForUpdates};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initialize,{once:true});
   else initialize();
 })();

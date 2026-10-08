@@ -18,6 +18,23 @@
   <link rel="stylesheet" href="./wellbeing.css">
   <link rel="stylesheet" href="./lessons.css">
   <link rel="stylesheet" href="./textbooks.css">
+  <script>
+    // Independent bootstrap: works even when an older worker serves an outdated android.js.
+    // Once the replacement worker controls this tab, reload exactly once without clearing data.
+    (function(){
+      if(!("serviceWorker" in navigator))return;
+      const hadController=!!navigator.serviceWorker.controller;
+      let reloaded=false;
+      navigator.serviceWorker.addEventListener("controllerchange",()=>{
+        if(hadController&&!reloaded){reloaded=true;window.location.reload();}
+      });
+      // Do not rely on the old cached android.js to discover this new release.
+      if(navigator.onLine!==false&&typeof navigator.serviceWorker.getRegistration==="function"){
+        Promise.resolve(navigator.serviceWorker.getRegistration("./"))
+          .then(reg=>reg?.update?.()).catch(()=>{});
+      }
+    })();
+  </script>
   <script defer src="./data.js"></script>
   <script defer src="./wellbeing.js"></script>
   <script defer src="./logic.js"></script>

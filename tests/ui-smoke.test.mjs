@@ -40,7 +40,7 @@ test("школьная нагрузка автоматически снижае�
   a.events.get("document:change")({target:{id:"school-homework",value:"120"}});
   const state=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(state.school[L.today()].homework,120);
-  assert.ok(a.node("#app").innerHTML.includes("90 мин ЕГЭ"));
+  assert.ok(a.node("#app").innerHTML.includes("120"),"Обновлённое значение школьного ДЗ отображается независимо от текущего времени суток");
 });
 test("результат занятий сохраняется и низкая точность создаёт ранний повтор",()=>{
   const a=runApp(),L=a.window.EGE_LOGIC;

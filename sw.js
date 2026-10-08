@@ -1,7 +1,6 @@
-/* PWA: кэширует только статические файлы приложения.
- * Личные данные не отправляются на сервер и не кэшируются service worker.
- * При смене версии меняйте CACHE_NAME. */
-const CACHE_NAME="ege-2027-shell-3bd9f33e3a14";
+/* Offline app shell. One immutable cache per release; no personal data leaves localStorage.
+ * A successful install activates automatically and requests a client reload. */
+const CACHE_NAME="ege-2027-shell-8f3ec52f3de8";
 const SCOPE=self.registration.scope;
 const APP_SHELL=[
   "./","./index.html","./style.css","./ux.css","./android.css","./flow.css","./session.css","./wellbeing.css","./lessons.css","./textbooks.css",
@@ -10,31 +9,49 @@ const APP_SHELL=[
   "./icons/icon-192.png","./icons/icon-512.png"
 ];
 self.addEventListener("install",event=>{
-  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)));
+  event.waitUntil((async()=>{
+    const cache=await caches.open(CACHE_NAME);
+    // Bypass the local browser HTTP cache; old PWA files have the same public URLs.
+    // The new worker activates only after the entire app shell downloads successfully.
+    await cache.addAll(APP_SHELL.map(path=>new Request(new URL(path,SCOPE),{cache:"reload"})));
+    await self.skipWaiting();
+  })());
 });
 self.addEventListener("activate",event=>{
-  event.waitUntil(
-    caches.keys()
-      .then(keys=>Promise.all(keys.filter(key=>key.startsWith("ege-2027-shell-")&&key!==CACHE_NAME).map(key=>caches.delete(key))))
-      .then(()=>self.clients.claim())
-  );
+  event.waitUntil((async()=>{
+    const keys=await caches.keys();
+    await Promise.all(keys.filter(key=>key.startsWith("ege-2027-shell-")&&key!==CACHE_NAME).map(key=>caches.delete(key)));
+    await self.clients.claim();
+  })());
+});
+self.addEventListener("message",event=>{
+  if(event.data?.type==="EGE_VERSION")event.ports?.[0]?.postMessage({version:CACHE_NAME.slice("ege-2027-shell-".length)});
+  if(event.data?.type==="EGE_APPLY_UPDATE")event.waitUntil(self.skipWaiting());
 });
 self.addEventListener("fetch",event=>{
   const req=event.request;
   if(req.method!=="GET")return;
-  const url=new URL(req.url);
-  if(url.origin!==self.location.origin || !url.pathname.startsWith(new URL(SCOPE).pathname))return;
+  const url=new URL(req.url),scope=new URL(SCOPE);
+  if(url.origin!==scope.origin||!url.pathname.startsWith(scope.pathname))return;
   if(req.mode==="navigate"){
-    event.respondWith(
-      fetch(req).then(response=>{
-        if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE_NAME).then(c=>c.put("./index.html",copy)));}
+    event.respondWith((async()=>{
+      try{
+        const response=await fetch(req);
+        if(response.ok){
+          const cache=await caches.open(CACHE_NAME);
+          event.waitUntil(cache.put("./index.html",response.clone()));
+        }
         return response;
-      }).catch(()=>caches.match("./index.html").then(r=>r||Response.error()))
-    );
+      }catch{
+        const cache=await caches.open(CACHE_NAME);
+        return await cache.match("./index.html")||Response.error();
+      }
+    })());
     return;
   }
-  event.respondWith(
-    caches.match(req,{ignoreSearch:true})
-      .then(cached=>cached||fetch(req))
-  );
+  event.respondWith((async()=>{
+    // Never serve arbitrary files from an older ege-2027-shell cache.
+    const cache=await caches.open(CACHE_NAME);
+    return await cache.match(req,{ignoreSearch:true})||fetch(req);
+  })());
 });

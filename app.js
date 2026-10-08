@@ -439,10 +439,11 @@
   function renderSettings(){
     return head("Локальные данные","Настройки","Всё сохраняется на этом устройстве. Не забывайте делать резервные копии.")+
       '<div class="card padding android-section"><h2>Установка на Android</h2>'+
-      '<p class="android-device-note">Откройте опубликованный HTTPS-адрес один раз через Chrome. После установки можно запускать с иконки, как обычное приложение. Основные страницы работают без интернета, а внешние PDF и банки заданий — при наличии сети.</p>'+
+      '<p class="android-device-note">Сайт в Chrome и установленная PWA — одна программа. Обновления проверяются при запуске, восстановлении сети и возвращении к приложению. Когда новая версия готова, страница обновляется без удаления прогресса. Без интернета работает последняя сохранённая версия.</p>'+
       '<div class="android-status-row"><span class="android-offline-indicator" id="android-connection">Проверка сети</span><span class="chip" id="android-offline-status">Проверка офлайн-режима…</span></div>'+
       '<p class="note" id="android-install-hint">Для установки нужен HTTPS-адрес.</p>'+
       '<div class="row wrap"><button class="btn" type="button" id="android-install-btn" data-android="install">Как установить</button>'+
+      '<button class="btn secondary" type="button" data-android="check-update">Проверить обновления</button>'+
       '<button class="btn secondary" type="button" data-view="progress">Мой прогресс →</button></div>'+
       '<details class="android-help"><summary>Как добавить иконку на экран телефона или планшета</summary>'+
       '<ol><li>Откройте HTTPS-ссылку в Google Chrome на Android.</li>'+
