@@ -1,0 +1,47 @@
+/* Сенсорные цели и экран Android: компактно, но не мелко. */
+@media(pointer:coarse){
+  .btn,.dialog-close,.check-button,.week-day,.nav button,.mobile-nav button{min-height:44px}
+  button,input,textarea,select{touch-action:manipulation}
+  .task-actions .btn{min-height:42px}
+  .step-line{min-height:49px;padding-block:13px}
+  .review-actions .btn{min-height:43px}
+}
+html{-webkit-tap-highlight-color:transparent}
+body{overscroll-behavior-y:contain}
+#android-pwa-banner[hidden],#android-install-btn[hidden]{display:none!important}
+.android-pwa-banner{margin:13px auto 0;width:calc(100% - 34px);max-width:1060px;
+  border-radius:15px;padding:12px 14px;background:#eaf0ff;border:1px solid #cfdcff;
+  display:flex;align-items:center;gap:10px;box-sizing:border-box}
+.android-pwa-copy{display:grid;gap:2px;flex:1;min-width:0}
+.android-pwa-copy strong{font-size:13px;color:#374c92}
+.android-pwa-copy span{font-size:11px;color:#6375a7}
+.android-pwa-banner>.btn{white-space:nowrap}
+.android-banner-close{border:0;background:transparent;color:#5367a6;font-size:25px;min-width:40px;min-height:40px}
+.android-section{margin-bottom:15px}
+.android-section h2{margin-bottom:6px}
+.android-section .btn{white-space:normal;line-height:1.35}
+.android-section .row{align-items:stretch}
+.android-status-row{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0}
+.android-offline-indicator{color:#486b55;background:#eaf6ee;padding:4px 9px;border-radius:22px;font-size:11px}
+.android-offline-indicator[data-online="false"]{background:#fdf4e4;color:#a67b29}
+.android-help{margin-top:12px;border-top:1px solid #e5e9f1;padding-top:12px}
+.android-help ol{margin:8px 0 0;padding-left:19px;color:#687589;font-size:12px}
+.android-help li{margin-bottom:7px}
+.android-device-note{font-size:12px;line-height:1.55;color:#6a7588}
+@media(max-width:760px){
+  body{padding-bottom:env(safe-area-inset-bottom,0px)}
+  .mobile-nav{grid-template-columns:repeat(5,minmax(0,1fr));padding-top:4px}
+  .mobile-nav button{font-size:11px;line-height:1.15;padding:12px 2px;min-width:0}
+  .content{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+  .topbar{padding-top:env(safe-area-inset-top,0px);height:calc(60px + env(safe-area-inset-top,0px))}
+  dialog{max-height:calc(100dvh - 24px);width:calc(100vw - 18px);overflow:auto}
+  .android-pwa-banner{width:calc(100% - 26px);padding:10px;gap:6px}
+  .android-pwa-banner>.btn{padding:9px 10px;font-size:11px}
+  .android-pwa-copy span{font-size:10px}
+  .metric{padding:12px 9px}
+}
+@media(min-width:761px) and (max-width:1024px){
+  .main .content{padding-inline:25px}
+  .grid-2{grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr)}
+  .sidebar{width:210px}
+}

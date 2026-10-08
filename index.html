@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#5567de">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <meta name="description" content="Личный локальный план подготовки к ЕГЭ 2027">
+  <title>ЕГЭ 2027 — учебный планировщик</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./ux.css">
+  <link rel="stylesheet" href="./android.css">
+  <link rel="stylesheet" href="./flow.css">
+  <script defer src="./data.js"></script>
+  <script defer src="./logic.js"></script>
+  <script defer src="./resources.js"></script>
+  <script defer src="./experience.js"></script>
+  <script defer src="./app.js"></script>
+  <script defer src="./android.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-logo">Е<span>27</span></div><div><b>Мой ЕГЭ</b><small>Планировщик 2027</small></div></div>
+      <div class="nav-caption">МОЯ ПОДГОТОВКА</div>
+      <nav id="nav-desktop" class="nav" aria-label="Основное меню">
+        <button type="button" data-view="today" class="active"><span class="nav-symbol">▦</span> Сегодня</button>
+        <button type="button" data-view="week"><span class="nav-symbol">▤</span> Неделя</button>
+        <button type="button" data-view="subjects"><span class="nav-symbol">◫</span> Предметы</button>
+        <button type="button" data-view="reviews"><span class="nav-symbol">↻</span> Повторения <span class="small-count" id="review-badge"></span></button>
+        <button type="button" data-view="progress"><span class="nav-symbol">▥</span> Прогресс</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-message"><span class="dot"></span><strong>Пн — Пт</strong><span>Сб и Вс — полный отдых</span></div>
+        <button type="button" class="settings-nav" data-view="settings">⚙ Настройки и резервная копия</button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-label">Личная система подготовки <span class="mini-sep">/</span> <strong id="top-section">Сегодня</strong></div>
+        <div class="top-actions"><button class="btn ghost small" type="button" id="quick-search" aria-label="Быстрый поиск темы">⌕ Найти тему</button><span class="top-date" id="top-date"></span><button class="btn ghost small" type="button" id="jump-today">На сегодня ↗</button></div>
+      </header>
+      <div id="notice" role="status" aria-live="polite"></div>
+      <section id="android-pwa-banner" class="android-pwa-banner" aria-label="Установка приложения" hidden></section>
+      <div id="app" class="content"></div>
+    </main>
+  </div>
+  <nav class="mobile-nav" aria-label="Мобильное меню">
+    <button type="button" data-view="today">Сегодня</button>
+    <button type="button" data-view="week">Неделя</button>
+    <button type="button" data-view="subjects">Темы</button>
+    <button type="button" data-view="reviews">Повторы</button>
+    <button type="button" data-view="settings">Ещё</button>
+  </nav>
+  <dialog id="task-dialog" aria-label="Учебное занятие"><div id="dialog-content"></div></dialog>
+  <input id="import-input" type="file" accept="application/json,.json" hidden>
+</body>
+</html>

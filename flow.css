@@ -1,0 +1,28 @@
+/* Поток последовательного обучения и отдыха — интерфейс планшета */
+.backlog{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 17px;background:#fff8e9;border:1px solid #f0dfb8}
+.backlog strong{font-size:14px;color:#7b5216}
+.backlog p{margin:6px 0 0;max-width:640px}
+.debt-origin{display:inline-flex;align-items:center;padding:3px 8px;border-radius:18px;color:#956327;background:#fff2d8;font-size:10px;font-weight:750}
+.backlog-list{display:grid;gap:8px;margin-top:14px}
+.backlog-row{display:flex;align-items:center;gap:15px;padding:13px 17px}
+.backlog-index{flex:0 0 30px;height:30px;display:grid;place-items:center;border-radius:30px;background:#f0f3fd;color:#5263b6;font-weight:800}
+.backlog-description{display:grid;gap:5px;flex:1;min-width:0}
+.backlog-description strong{font-size:13px;line-height:1.45}
+.backlog-description small{font-size:11px;color:#818da2}
+.backlog-row>.btn{white-space:nowrap}
+.rest-banner{display:flex;align-items:center;gap:12px;background:#eaf5ee;border:1px solid #bad7c4;margin-bottom:16px}
+.rest-banner>div{flex:1}
+.rest-banner strong{font-size:14px;color:#286346}
+.rest-banner p{margin:6px 0 0}
+.rest-clock{font-size:23px;font-weight:850;color:#2f7b56;font-variant-numeric:tabular-nums;letter-spacing:.5px}
+.timer-alert[hidden]{display:none!important}
+.timer-alert{padding:12px 15px;background:#ecf8ed;border:1px solid #a6dab6;color:#23633b;border-radius:11px;font-weight:750;font-size:13px;margin:10px 0}
+@media(max-width:720px){
+ #notice{bottom:calc(86px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 30px);width:max-content;text-align:center}
+ .backlog,.rest-banner{flex-wrap:wrap;padding:14px}
+ .backlog button,.rest-banner>.btn{min-height:43px}
+ .rest-clock{font-size:21px}
+ .backlog-row{gap:9px;padding:12px}
+ .backlog-row .btn{font-size:11px}
+ .backlog-index{flex-basis:25px;height:25px;font-size:11px}
+}
