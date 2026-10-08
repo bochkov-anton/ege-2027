@@ -10,7 +10,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = [
     "index.html", ".nojekyll", "style.css", "ux.css", "android.css", "flow.css", "session.css", "wellbeing.css", "lessons.css", "textbooks.css",
-    "data.js", "wellbeing.js", "logic.js", "resources.js", "topic-practice.js", "lesson-content.js", "theory-core.js", "textbooks.js", "experience.js", "app.js",
+    "data.js", "wellbeing.js", "logic.js", "resources.js", "topic-practice.js", "lesson-content.js", "theory-core.js", "textbooks.js", "verified-tocs.js", "page-assignments.js", "reading-guide.js", "experience.js", "app.js",
     "android.js", "sw.js", "manifest.webmanifest",
     "icons/icon-192.png", "icons/icon-512.png",
 ]
@@ -22,7 +22,7 @@ for rel in ASSETS:
     files[rel] = path.read_bytes()
 
 stamp = sha256(b"".join(name.encode() + b"\x00" + files[name] for name in sorted(files) if name != "sw.js")).hexdigest()[:12]
-files["sw.js"] = files["sw.js"].replace(b"ege-2027-shell-v6-textbook-library", ("ege-2027-shell-" + stamp).encode())
+files["sw.js"] = files["sw.js"].replace(b"ege-2027-shell-v7-verified-pages", ("ege-2027-shell-" + stamp).encode())
 
 OUT = ROOT / "ege-2027-android-pwa.zip"
 with ZipFile(OUT, "w", compression=ZIP_DEFLATED, compresslevel=9) as archive:

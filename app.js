@@ -59,30 +59,93 @@
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать адрес</button></div></div></div>').join(""):'<p class="note">Подтверждённая подборка пока отсутствует; используйте учебную задачу ниже.</p>')+'</div>'+
       (saved.length?'<details class="personal-links"><summary>Мои дополнительные ссылки ('+saved.length+')</summary>'+saved.map(x=>sourceActions({...x,user:true},key)).join("")+'</details>':"");
   }
-  function textbookPanel(key,subject,title){
-    const matches=window.EGE_TEXTBOOKS?.get(key,subject,title)||[];
-    const focus=authored(key,subject,title).know;
-    if(!matches.length)return '<p class="note">Для этой темы ещё нет подтверждённой книги.</p>';
-    return '<section class="textbook-section"><div class="textbook-section-head">'+
-      '<div class="study-kicker">ОСНОВНАЯ ТЕОРИЯ · УЧЕБНИК</div><strong>Углублённое объяснение в учебнике</strong>'+
-      '<p>Фоксфорд — кратко разобраться. Учебник — изучить системно и подробно. Выберите один основной учебник; читать оба полностью не требуется. Номер параграфа может меняться между изданиями.</p></div>'+
-      matches.map(book=>{
-        const stored=state.textbookPlaces?.[key+"::"+book.bookId]||"";
+  function textbookSection(key,subject,title){
+    const books=window.EGE_TEXTBOOKS?.get(key,subject,title)||[];
+    if(!books.length)return '<p class="note">Учебники для этой темы ещё не сопоставлены.</p>';
+    return '<section class="textbook-section" aria-label="Учебники для углублённого изучения">'+
+      '<div class="textbook-section-head"><strong>Учебник · подробная теория</strong>'+
+      '<p>Фоксфорд — быстро разобраться, учебник — подробно изучить определения, рисунки, доказательства и разобранные задачи. Прочитайте нужный раздел учебника, затем самостоятельно выполните практику.</p></div>'+
+      books.map(book=>{
+        const placeId="book-place-"+key.replace(/:/g,"-")+"-"+book.bookId;
+        const old=state.textbookPlaces?.[key+"|"+book.bookId]||"";
         return '<article class="textbook-card"><div class="textbook-role">'+safe(book.role)+'</div>'+
           '<h3 class="textbook-title">'+safe(book.title)+'</h3>'+
-          '<div class="textbook-meta">'+safe(book.authors)+' · '+safe(book.grade)+' кл. · '+safe(book.level)+
-          (book.isbn?' · ISBN '+safe(book.isbn):'')+'</div>'+
-          '<div class="textbook-section-hint"><strong>Искать в оглавлении: '+safe(book.section)+'</strong>'+
-          '<p class="textbook-focus"><strong>Найти и изучить:</strong> '+safe(focus)+'</p>'+
-          '<span class="textbook-confidence">Раздел — смысловой ориентир, номер параграфа и страницы НЕ проверены для вашего издания.</span></div>'+
-          '<div class="textbook-links"><a class="btn secondary small" href="'+safe(book.official)+'" target="_blank" rel="noopener noreferrer">Издатель / электронная версия ↗</a>'+
-          '<a class="btn small" href="'+safe(book.yandex)+'" target="_blank" rel="noopener noreferrer">Найти учебник в Яндексе ↗</a>'+
-          '<a class="btn ghost small" href="'+safe(book.yandexSection)+'" target="_blank" rel="noopener noreferrer">Найти тему в учебнике ↗</a></div>'+
-          '<div class="textbook-place"><label for="textbook-place-'+safe(book.bookId)+'">Мой параграф / страницы (для моего издания)</label>'+
-          '<input id="textbook-place-'+safe(book.bookId)+'" type="text" data-action="textbook-place" data-key="'+safe(key)+'" '+
-          'data-book="'+safe(book.bookId)+'" maxlength="100" placeholder="Например, § 7, с. 40–47" value="'+safe(stored)+'">'+
-          '<small>Сохраняется только на планшете и входит в JSON-резервную копию. Не публикуется в GitHub.</small></div></article>';
+          '<div class="textbook-meta">'+safe(book.authors)+' · '+safe(book.level)+' · '+safe(book.year)+
+          (book.isbn?' · ISBN '+safe(book.isbn):"")+'</div>'+
+          '<div class="textbook-section-hint"><div class="textbook-section-label">Что искать по оглавлению:</div>'+
+          '<strong>'+safe(book.section)+'</strong><div class="note">Ориентир по содержанию, не подтверждённое название параграфа. Тема раздела должна совпадать с заданием карточки.</div></div>'+
+          '<div class="textbook-links">'+
+          '<a class="btn secondary small" href="'+safe(book.official)+'" target="_blank" rel="noopener noreferrer">Издание у издателя →</a>'+
+          '<a class="btn secondary small" href="'+safe(book.yandex)+'" target="_blank" rel="noopener noreferrer">Найти книгу в Яндексе →</a>'+
+          '<a class="btn ghost small" href="'+safe(book.yandexSection)+'" target="_blank" rel="noopener noreferrer">Поиск параграфа →</a></div>'+
+          '<div class="textbook-place"><label for="'+safe(placeId)+'">Мой экземпляр: параграф / страницы (необязательно)</label>'+
+          '<input type="text" maxlength="80" id="'+safe(placeId)+'" data-bookmark="'+safe(book.bookId)+'" data-key="'+safe(key)+'" '+
+          'placeholder="Например: § 8, стр. 41–48" value="'+safe(old)+'">'+
+          '<small>Найдите номер в оглавлении именно вашего издания и сохраните здесь — он останется на планшете. Страницы не назначаются автоматически без проверки.</small></div></article>';
       }).join("")+'</section>';
+  }
+  function verifiedReadingPanel(key){
+    const data=window.EGE_READING?.get(key)||{entries:[],unverified:[]};
+    const sections=data.entries||[];
+    if(!sections.length){
+      const lesson=window.EGE_LESSONS?.get(key);
+      const title=String(lesson?.title||"");
+      const isDiagnostic=/вариант|пробник|диагност|стабилиз|слаб|смешан|контрол|ошиб|экзаменацион|повтор|стратег|скорост|специализац|кодификатор|покрыт|полувариант|ремонт|надежност|надёжност|итог/i.test(title);
+      if(isDiagnostic)return '<div class="reading-unverified"><strong>Повторение или диагностика — фиксированного нового § нет.</strong>'+
+        '<p>Сначала выполните проверочные задания. Затем возвращайтесь к теоретическим темам с конкретными страницами именно по тем ошибкам, которые обнаружены. Не надо читать учебник целиком.</p></div>';
+      return '<div class="reading-unverified"><strong>Точный § и страницы для этой темы пока не подтверждены.</strong>'+
+        '<p>Для этой узкой темы требуется дополнительное оглавление именно выбранного издания. Не будем выдавать произвольный § за проверенный. Свои страницы можно записать ниже.</p></div>';
+    }
+    const grouped=new Map();
+    for(const s of sections){if(!grouped.has(s.editionId))grouped.set(s.editionId,[]);
+      grouped.get(s.editionId).push(s);}
+    return '<section class="verified-reading" aria-label="Подтверждённые параграфы и страницы">'+
+      '<h3>Параграфы и страницы — проверены по оглавлению</h3>'+
+      '<p class="note">Номера ниже относятся ТОЛЬКО к указанному году издания и ISBN. У другой редакции страницы могут отличаться. Последняя страница диапазона рассчитана по началу следующего §.</p>'+
+      [...grouped.values()].map(items=>{
+        const ref=items[0];
+        return '<div class="verified-edition"><div class="study-kicker">ПРОВЕРЕННОЕ ИЗДАНИЕ · '+safe(ref.year)+'</div>'+
+          '<strong>'+safe(ref.editionTitle)+'</strong><small>ISBN '+safe(ref.isbn||"не указан")+'</small>'+
+          '<ol>'+items.map(x=>'<li><strong>'+safe(x.marker||"§")+' '+safe(x.number)+'. '+safe(x.title)+'</strong>'+
+              '<div class="reading-pages">С. '+safe(x.pagesLabel)+'</div></li>').join("")+'</ol>'+
+          '<div class="row wrap"><a class="btn secondary small" href="'+safe(ref.source)+'" target="_blank" rel="noopener noreferrer">Посмотреть источник оглавления ↗</a>'+
+          '<a class="btn ghost small" href="'+safe(ref.search)+'" target="_blank" rel="noopener noreferrer">Найти именно это издание ↗</a></div>'+
+          '</div>';
+      }).join("")+'</section>';
+  }
+  function textbookPanel(key,subject,title){
+    const matches=window.EGE_TEXTBOOKS?.get(key,subject,title)||[];
+    const learningFocus=authored(key,subject,title).know;
+    if(!matches.length)return '<div class="foxford-missing"><strong>Для темы нет подтверждённой библиографии.</strong>'+
+      '<p>Используйте краткий конспект и отметьте необходимость подобрать полноценное издание.</p></div>';
+    return '<section class="textbook-section" aria-label="Основное чтение по учебнику">'+
+      '<div class="textbook-section-head"><div class="study-kicker">ОСНОВНАЯ ТЕОРИЯ · УЧЕБНИК</div>'+
+      '<strong>Углублённое изучение по учебнику</strong>'+
+      '<p>Фоксфорд — быстро понять тему. Учебник — прочитать систематическое объяснение и примеры. '+
+      'Выберите один основной учебник, не нужно читать оба полностью. Содержание и страницы могут различаться по изданиям.</p></div>'+
+      matches.map((book,i)=>{
+        const storageKey=key+'::'+book.bookId;
+        const personal=state.textbookPlaces?.[storageKey]||'';
+        return '<article class="textbook-card"><div class="textbook-role">'+safe(book.role)+'</div>'+
+          '<h3 class="textbook-title">'+safe(book.title)+'</h3>'+
+          '<div class="textbook-meta">'+safe(book.authors)+' · '+safe(book.grade)+' класс · '+safe(book.level)+
+          (book.isbn?' · ISBN '+safe(book.isbn):'')+'</div>'+
+          '<div class="textbook-section-hint"><div class="textbook-section-label">Искать в содержании: '+safe(book.section)+'</div>'+
+          '<span>Ориентир по теме, а не подтверждённый номер параграфа.</span>'+ 
+          '<p class="textbook-focus"><strong>Найти и изучить:</strong> '+safe(learningFocus)+'</p></div>'+
+          '<div class="textbook-links">'+
+            '<a class="btn secondary small" href="'+safe(book.official)+'" target="_blank" rel="noopener noreferrer">Издатель / электронная версия ↗</a>'+
+            '<a class="btn small" href="'+safe(book.yandex)+'" target="_blank" rel="noopener noreferrer">Найти учебник в Яндексе ↗</a>'+
+            '<a class="btn ghost small" href="'+safe(book.yandexSection)+'" target="_blank" rel="noopener noreferrer">Найти тему в учебнике ↗</a>'+
+          '</div>'+
+          '<div class="textbook-place">'+
+            '<label for="textbook-place-'+safe(book.bookId)+'">Мой параграф / страницы (именно в моей редакции)</label>'+
+            '<input id="textbook-place-'+safe(book.bookId)+'" type="text" data-action="textbook-place" '+
+            'data-key="'+safe(key)+'" data-book="'+safe(book.bookId)+'" maxlength="100" '+
+            'placeholder="Например: § 7, с. 40–47" value="'+safe(personal)+'" />'+
+            '<small>Указывайте после проверки оглавления. Запись хранится только на планшете; не загружается на GitHub.</small>'+
+          '</div></article>';
+      }).join('')+'</section>';
   }
   function lessonPanel(key,subject,title,task=null,initial="theory"){
     const guide=authored(key,subject,title),info=theoryFor(key,subject,title);
@@ -100,6 +163,7 @@
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать ссылку</button></div>').join("")+'</div>';
     else html+='<div class="foxford-missing"><strong>Точная статья Фоксфорда для этой узкой темы ещё не подтверждена.</strong>'+
       '<p>Не подменяем теорию кодификатором или неподходящей статьёй. Используйте конспект ниже.</p></div>';
+    html+=verifiedReadingPanel(key);
     html+=textbookPanel(key,subject,title);
     html+='<div class="study-chapter"><div class="study-kicker">КРАТКИЙ КОНСПЕКТ · ОФЛАЙН</div>'+
       '<h3>Объяснение</h3><p>'+safe(info.explanation||guide.know)+'</p>'+
@@ -808,11 +872,11 @@
     if(el.id==="task-note"&&openTask){state.notes[openTask.id]=el.value;save();}
     if(el.id==="topic-note"&&openTopicKey){state.topicNotes[openTopicKey]=el.value;save();}
     if(el.dataset?.action==="textbook-place"){
-      const key=el.dataset.key,book=el.dataset.book,lesson=window.EGE_LESSONS?.get(key);
+      const key=el.dataset.key,book=el.dataset.book;
+      const lesson=window.EGE_LESSONS?.get(key);
       if(lesson&&window.EGE_TEXTBOOKS?.get(key,lesson.subject,lesson.title).some(x=>x.bookId===book)){
         if(!state.textbookPlaces)state.textbookPlaces={};
-        state.textbookPlaces[key+"::"+book]=String(el.value||"").slice(0,100);
-        save();
+        state.textbookPlaces[key+"::"+book]=String(el.value||"").slice(0,100);save();
       }
     }
     if(el.id==="day-note"){state.dayNotes[date]=el.value;save();}

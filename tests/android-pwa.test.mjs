@@ -34,7 +34,7 @@ test("все офлайн-ресурсы реально присутствуют
     if(item==="./")continue;
     assert.ok(existsSync(path.join(dir,item)),item);
   }
-  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","textbooks.js","experience.js","app.js","android.js","style.css","ux.css","android.css","flow.css","session.css","wellbeing.css","lessons.css","textbooks.css"]){
+  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js","android.js","style.css","ux.css","android.css","flow.css","session.css","wellbeing.css","lessons.css","textbooks.css"]){
     assert.ok(html.includes("./"+file));
     assert.ok(assets.includes("./"+file));
   }

@@ -18,7 +18,7 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","textbooks.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 test("приложение загружается без DOM-ошибок и выводит план дня",()=>{
@@ -182,7 +182,7 @@ test("сегодня показывает старые обязательные 
   assert.equal(now.completed[first],"chem");
   assert.equal(now.restSuggestion.minutes,15);
   assert.deepEqual(Array.from(now.assignments[day]),Array.from(assigned));
-  assert.ok(a.node("#app").innerHTML.includes("1/4"));
+  assert.ok(a.node("#app").innerHTML.includes("Блоков выполнено"));
   assert.ok(a.node("#app").innerHTML.includes("Рекомендуется перерыв"));
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"start-break"}})}});
   const after=JSON.parse(a.store.get("ege2027-local-progress-v1"));
@@ -339,4 +339,52 @@ test("теория Фоксфорд отделена от прямых зада�
   click({action:"lesson-tab",tab:"theory"});
   assert.equal(a.node("#lesson-theory").hidden,false);
   assert.equal(JSON.parse(a.store.get("ege2027-local-progress-v1")).notes[first],"Нужно повторить определение");
+});
+test("учебник и страницы своей редакции сохраняются локально и возвращаются после перезапуска",()=>{
+  const a=runApp();
+  const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+  click({action:"open-topic",key:"bio:1:0"});
+  let html=a.node("#dialog-content").innerHTML;
+  assert.ok(html.includes("ОСНОВНАЯ ТЕОРИЯ · УЧЕБНИК"));
+  assert.ok(html.includes("Под ред. В. К. Шумного"));
+  assert.ok(html.includes("Найти учебник в Яндексе"));
+  assert.ok(html.includes("Найти тему в учебнике"));
+  assert.ok(html.includes("Искать в содержании"));
+  assert.ok(!html.includes("подтверждённый номер параграфа:</p>§"));
+
+  const edit=a.events.get("document:input");
+  edit({target:{id:"textbook-place-bio10a",dataset:{action:"textbook-place",key:"bio:1:0",book:"bio10a"},
+    value:"§ 3, с. 31–38"}});
+  let current=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+  assert.equal(current.textbookPlaces["bio:1:0::bio10a"],"§ 3, с. 31–38");
+
+  edit({target:{dataset:{action:"textbook-place",key:"bio:1:0",book:"invalid"},value:"bad"}});
+  current=JSON.parse(a.store.get("ege2027-local-progress-v1"));
+  assert.equal(current.textbookPlaces["bio:1:0::invalid"],undefined);
+
+  const after=runApp(current);
+  after.events.get("document:click")({target:{closest:()=>({dataset:{action:"open-topic",key:"bio:1:0"}})}});
+  html=after.node("#dialog-content").innerHTML;
+  assert.ok(html.includes("§ 3, с. 31–38"),"Свою редакцию и страницы не потеряли");
+  assert.equal(after.window.EGE_LOGIC.safeState(current,"2026-10-05").textbookPlaces["bio:1:0::bio10a"],"§ 3, с. 31–38");
+});
+
+test("карточка выводит точный §, страницу и ISBN проверенного издания",()=>{
+ const a=runApp();
+ const open=key=>a.events.get("document:click")({target:{closest:()=>({dataset:{action:"open-topic",key}})}});
+ open("chem:9:0");
+ let html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("Параграфы и страницы — проверены по оглавлению"),html.slice(0,1000));
+ assert.ok(html.includes("§ 24."),"Реальный номер по химии 10");
+ assert.ok(html.includes("С. 140"),"Реальная страница по химии 10");
+ assert.ok(html.includes("978-5-09-128109-5"),"Идентификация редакции");
+ assert.ok(html.includes("rucont.ru/efd/838758"),"Ссылка на оглавление");
+ open("math:8:0");
+ html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("§ 7."),"Логарифмические неравенства");
+ assert.ok(html.includes("С. 60"),"Углублённая алгебра 11");
+ assert.ok(html.includes("978-5-09-112258-9"));
+ open("bio:24:0");
+ html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("фиксированного нового § нет"),"Не выдаём чужие параграфы за точную теорию");
 });
