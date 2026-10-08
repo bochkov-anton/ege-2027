@@ -84,6 +84,27 @@
           '<small>Найдите номер в оглавлении именно вашего издания и сохраните здесь — он останется на планшете. Страницы не назначаются автоматически без проверки.</small></div></article>';
       }).join("")+'</section>';
   }
+  function remediationPanel(key){
+    const subject=key.split(":")[0];
+    const selected=window.EGE_READING?.remedialReading(state,key,subject,3)||[];
+    if(!selected.length)return '<p class="note"><strong>Пока нет зарегистрированных слабых тем.</strong> Решите диагностические задания и запишите ошибки или результат. После этого приложение покажет конкретные параграфы для исправления затруднений.</p>';
+    return '<div class="remediation-list"><h4>Индивидуальные параграфы по вашим ошибкам</h4>'+
+      selected.map(item=>{
+        const topic=U.topicByKey(item.topicKey);
+        const sections=item.reading.map(x=>'<li>'+safe(x.marker||"§")+' '+safe(x.number)+' · '+safe(x.title)+
+          ' — <strong>с. '+safe(x.pagesLabel)+'</strong> ('+safe(x.year)+')</li>').join("");
+        return '<article class="remediation-row"><strong>'+safe(topic?.title||item.topicKey)+'</strong>'+
+          '<small>'+safe(item.reason)+'</small><ul>'+sections+'</ul>'+
+          '<button type="button" class="btn secondary small" data-action="remediation-open" data-key="'+safe(item.topicKey)+'">Открыть исходную тему →</button></article>';
+      }).join("")+'</div>';
+  }
+  function pagePreview(key){
+    const entries=window.EGE_READING?.get(key)?.entries||[];
+    if(!entries.length)return '<p class="reading-short reading-short-unmapped">Повторение · нужные страницы после проверки ошибок</p>';
+    const sample=entries.slice(0,2).map(x=>(x.marker||"§")+" "+x.number+" — с. "+x.pagesLabel).join("; ");
+    return '<p class="reading-short"><strong>Учебник '+safe(entries[0].year)+':</strong> '+safe(sample)+
+      (entries.length>2?" · ещё "+(entries.length-2):"")+'</p>';
+  }
   function verifiedReadingPanel(key){
     const data=window.EGE_READING?.get(key)||{entries:[],unverified:[]};
     const sections=data.entries||[];
@@ -92,7 +113,8 @@
       const title=String(lesson?.title||"");
       const isDiagnostic=/вариант|пробник|диагност|стабилиз|слаб|смешан|контрол|ошиб|экзаменацион|повтор|стратег|скорост|специализац|кодификатор|покрыт|полувариант|ремонт|надежност|надёжност|итог/i.test(title);
       if(isDiagnostic)return '<div class="reading-unverified"><strong>Повторение или диагностика — фиксированного нового § нет.</strong>'+
-        '<p>Сначала выполните проверочные задания. Затем возвращайтесь к теоретическим темам с конкретными страницами именно по тем ошибкам, которые обнаружены. Не надо читать учебник целиком.</p></div>';
+        '<p>Сначала выполните проверочные задания. После фиксации затруднений будут предложены точные параграфы соответствующих теоретических тем. Не надо читать учебник целиком.</p>'+
+        remediationPanel(key)+'</div>';
       return '<div class="reading-unverified"><strong>Точный § и страницы для этой темы пока не подтверждены.</strong>'+
         '<p>Для этой узкой темы требуется дополнительное оглавление именно выбранного издания. Не будем выдавать произвольный § за проверенный. Свои страницы можно записать ниже.</p></div>';
     }
@@ -156,7 +178,7 @@
     html+='<section id="lesson-theory" class="lesson-section" role="tabpanel"'+(showTheory?"":" hidden")+'>'+
       '<div class="study-chapter"><div class="study-kicker">ЧТО НУЖНО ПОНЯТЬ</div><p>'+safe(guide.know)+'</p></div>';
     const articles=info.articles||[];
-    if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">СТАТЬЯ УЧЕБНИКА ФОКСФОРДА</div>'+
+    if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">ФОКСФОРД · КРАТКОЕ ОБЪЯСНЕНИЕ</div>'+
       articles.map(x=>'<div class="foxford-item"><strong>'+safe(x.title)+'</strong>'+
       '<p class="note">Прочитайте объяснения и разобранные примеры. Затем выполните задания самостоятельно.</p>'+
       '<a class="btn" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Читать теорию Фоксфорда →</a>'+
@@ -237,7 +259,7 @@
     return rest+'<article class="task '+(done?"done":skipped?"skipped":"")+'" style="--subject:'+subjData.color+'">'+
       '<div class="task-icon">'+safe(subjData.icon)+'</div><div class="task-copy"><div class="row wrap">'+badge(t.subject)+
       '<span class="chip">'+labels[t.kind]+'</span>'+originNote+quickCapture(t)+'</div>'+
-      '<h3>'+safe(t.title)+'</h3><p class="task-goal"><strong>Задание:</strong> '+safe(authored(t.topicKey,t.subject,t.title).doTask)+'</p><div class="meta">'+t.minutes+' мин'+(checked?" · "+checked+"/"+stepsFor(t).length+" шагов":"")+(state.notes[t.id]?" · Есть заметка":"")+
+      '<h3>'+safe(t.title)+'</h3><p class="task-goal"><strong>Задание:</strong> '+safe(authored(t.topicKey,t.subject,t.title).doTask)+'</p>'+pagePreview(t.topicKey)+'<div class="meta">'+t.minutes+' мин'+(checked?" · "+checked+"/"+stepsFor(t).length+" шагов":"")+(state.notes[t.id]?" · Есть заметка":"")+
       (skipped?" · Пропущено без переноса":"")+'</div></div>'+
       '<div class="task-actions"><button class="btn small '+(done?"secondary":"")+'" data-action="detail" data-id="'+safe(t.id)+'">'+(done?"Посмотреть":"Начать →")+'</button>'+
       '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'">Задания</button>'+
@@ -269,8 +291,8 @@
       '<div><div class="kicker">Сегодня</div><h2>'+(mode==="off"?"Отдых":"Основная работа завершена")+'</h2><p>Никаких дополнительных часов ради галочек.</p></div>')+'</section>';
     if(isActualToday)html+=breakPanel();
     if(next)html+='<section class="lesson-roadmap card padding"><h2>Как проходит занятие</h2>'+
-      '<div class="roadmap-steps"><span>1. Изучить объяснение Фоксфорда</span>'+
-      '<span>2. Решить задания по теме</span><span>3. Проверить результат и записать ошибки</span></div></section>';
+      '<div class="roadmap-steps"><span>1. Фоксфорд → учебник: найти § и страницы</span>'+
+      '<span>2. Решить конкретные задания по теме</span><span>3. Проверить и записать ошибки</span></div></section>';
     html+=schoolPanel(date,mode);
     html+='<div class="metric-strip"><div class="card metric"><b>'+done+'/'+shown.length+'</b><span>Блоков выполнено</span></div><div class="card metric"><b>'+Math.floor(totalTime(shown)/60)+' ч '+String(totalTime(shown)%60).padStart(2,"0")+'</b><span>Чистое время</span></div><div class="card metric"><b>'+due.length+'</b><span>Повторений сейчас</span></div></div>';
     html+='<div class="grid-2"><div class="stack"><div class="row between wrap"><h2 style="margin:0">План ЕГЭ</h2><div class="row wrap"><button class="btn secondary small" data-action="set-mode" data-mode="normal">160 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="light">90 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="short">35 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="off">Отдых</button><button class="btn ghost small" data-action="set-mode" data-mode="auto">Авто</button></div></div>';
@@ -319,7 +341,7 @@
       data.weeks[focusWeek].map((t,i)=>{
         const key=L.topicKey(s,focusWeek,i),guide=authored(key,s,t),articles=theoryFor(key,s,t).articles||[];
         return '<article class="week-lesson"><strong>'+safe(t)+'</strong>'+
-          '<p class="note"><b>Изучить:</b> '+safe(guide.know)+'</p>'+
+          '<p class="note"><b>Изучить:</b> '+safe(guide.know)+'</p>'+pagePreview(key)+
           '<p class="note"><b>Выполнить:</b> '+safe(guide.doTask)+'</p>'+
           '<p class="note">'+(articles.length?"Есть статья Фоксфорда":"Краткий конспект")+
           ' · '+directExercises(key).length+' набора заданий</p>'+
@@ -336,7 +358,7 @@
     return '<article class="topic topic-compact lesson-topic"><small>'+badge(topic.subject)+' <span>· Неделя '+(topic.week+1)+'</span></small>'+
       '<div class="topic-title">'+star+safe(topic.title)+'</div>'+
       '<p class="note"><strong>Научиться:</strong> '+safe(guide.doTask)+'</p>'+
-      '<p class="note"><strong>Критерий:</strong> '+safe(guide.check)+'</p>'+
+      '<p class="note"><strong>Критерий:</strong> '+safe(guide.check)+'</p>'+pagePreview(topic.key)+
       '<span class="note '+statusClass+'">'+safe(label)+'</span>'+
       '<span class="note">'+(foxford?"Есть статья Фоксфорда":"Есть офлайн-конспект")+' · '+count+' подборки задач</span>'+
       '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(topic.key)+'">Теория и задания →</button></article>';
@@ -686,6 +708,7 @@
         save();notice("Проверка назначена на следующий учебный день.");render();break;
       }
       case "open-topic":topicDetail(b.dataset.key);break;
+      case "remediation-open":if($("#task-dialog")?.open)closeDialog();topicDetail(b.dataset.key);break;
       case "toggle-pins":searchPinned=!searchPinned;render();break;
       case "toggle-all-reviews":showAllReviews=!showAllReviews;render();break;
       case "pin-topic":{

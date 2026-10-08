@@ -388,3 +388,25 @@ test("карточка выводит точный §, страницу и ISBN 
  html=a.node("#dialog-content").innerHTML;
  assert.ok(html.includes("фиксированного нового § нет"),"Не выдаём чужие параграфы за точную теорию");
 });
+
+test("при диагностике после ошибки выводятся § и страницы для адресного повторения",()=>{
+ const initial=runApp(),saved=JSON.parse(initial.store.get("ege2027-local-progress-v1"));
+ saved.errors.unshift({id:"err-remedial",subject:"bio",title:"Плоские черви",topicKey:"bio:13:1",description:"ошибка в систематике",kind:"concept",done:false});
+ const a=runApp(saved),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({action:"open-topic",key:"bio:24:0"});
+ let html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("Индивидуальные параграфы по вашим ошибкам"));
+ assert.ok(html.includes("Плоские, круглые, кольчатые черви"));
+ assert.ok(html.includes("с. "));
+ assert.ok(html.includes('data-action="remediation-open"'));
+ click({action:"remediation-open",key:"bio:13:1"});
+ html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("Параграфы и страницы — проверены"));
+});
+test("короткие ссылки на § видны сразу в недельном и предметном обзоре",()=>{
+ const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({view:"week"});
+ assert.ok(a.node("#app").innerHTML.includes("Учебник"),"В недельном обзоре присутствуют §");
+ click({view:"subjects"});
+ assert.ok(a.node("#app").innerHTML.includes("reading-short"),"На карточках предметов присутствует ориентир");
+});

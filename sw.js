@@ -1,7 +1,7 @@
 /* PWA: кэширует только статические файлы приложения.
  * Личные данные не отправляются на сервер и не кэшируются service worker.
  * При смене версии меняйте CACHE_NAME. */
-const CACHE_NAME="ege-2027-shell-v7-verified-pages";
+const CACHE_NAME="ege-2027-shell-3bd9f33e3a14";
 const SCOPE=self.registration.scope;
 const APP_SHELL=[
   "./","./index.html","./style.css","./ux.css","./android.css","./flow.css","./session.css","./wellbeing.css","./lessons.css","./textbooks.css",

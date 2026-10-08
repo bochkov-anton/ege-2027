@@ -37,7 +37,7 @@ test("контрольные номера из оглавлений не пер�
  for(const [id,n,start] of pairs)assert.equal(ed.section(id,n)?.page,start,id+" §"+n);
  assert.ok(ed.editions.chemPaper10.isbn!==ed.editions.chemPaper11.isbn);
 });
-test("168 из 234 учебных карточек имеют проверенную привязку, остаток честно обозначен",()=>{
+test("160 из 234 учебных карточек имеют проверенную привязку, остаток честно обозначен",()=>{
  let verified=0,unmapped=0;
  for(const sub of W.EGE_DATA.subjectOrder)for(let wi=0;wi<26;wi++)for(let i=0;i<3;i++){
    const k=sub+":"+(wi+1)+":"+i,r=W.EGE_READING.get(k);
@@ -55,12 +55,70 @@ test("168 из 234 учебных карточек имеют проверенн
      }
    }else unmapped++;
  }
- assert.equal(verified,168);
- assert.equal(unmapped,66);
+ assert.equal(verified,160);
+ assert.equal(unmapped,74);
 });
 test("прямые темы химии, биологии и математики имеют номер и страницу",()=>{
  for(const key of ["bio:1:2","bio:6:1","bio:21:0","chem:1:0","chem:9:0","math:5:1","math:8:0"]){
    const r=W.EGE_READING.get(key);
    assert.ok(r.verified&&r.entries.length>0,key);
+ }
+});
+
+test("повторение выбирает страницы из зарегистрированных ошибок, слабых результатов и повторов",()=>{
+ const state={
+  errors:[
+    {subject:"bio",topicKey:"bio:13:0",done:false},
+    {subject:"bio",topicKey:"bio:9:0",done:true},
+    {subject:"chem",topicKey:"chem:9:0",done:false},
+    {subject:"bio",topicKey:"bio:24:0",done:false},
+    {subject:"bio",topicKey:"bad:9:0",done:false}],
+  results:{"one":{subject:"bio",topicKey:"bio:17:1",correct:3,total:8},
+           "two":{subject:"bio",topicKey:"bio:20:1",correct:9,total:10},
+           "three":{subject:"math",topicKey:"math:5:1",correct:1,total:9}},
+  reviews:{"bio:21:0":{subject:"bio",stage:0},"bio:11:1":{subject:"bio",stage:3}}
+ };
+ const arr=W.EGE_READING.remedialReading(state,"bio:24:0","bio",3);
+ assert.equal(arr.length,3);
+ assert.equal(arr[0].topicKey,"bio:13:0");
+ assert.equal(arr[0].reason,"Записанная нерешённая ошибка");
+ assert.ok(arr.some(v=>v.topicKey==="bio:17:1"));
+ assert.ok(arr.some(v=>v.topicKey==="bio:21:0"));
+ assert.ok(arr.every(v=>v.topicKey.startsWith("bio:")&&v.reading.every(x=>x.page>0)));
+ assert.equal(W.EGE_READING.remedialReading({},"bio:24:0","bio").length,0);
+ assert.equal(W.EGE_READING.remedialReading(state,"bio:13:0","chem").length,1);
+});
+test("рекомендации по слабым темам не содержат выдуманных ссылок и лишних задач",()=>{
+ const invalid={errors:[{topicKey:"bio:99:0",subject:"bio"},{topicKey:"bio:5:0",subject:"bio",done:false}],
+ results:{"t":{subject:"bio",topicKey:"bio:6:0",correct:0,total:2}}};
+ const found=W.EGE_READING.remedialReading(invalid,"bio:24:0","bio",6);
+ assert.equal(found.length,1);
+ assert.equal(found[0].topicKey,"bio:5:0");
+ assert.ok(found[0].reading.length<4);
+ assert.equal(W.EGE_READING.remedialReading(invalid,"bio:24:0","bio",0).length,0);
+});
+
+test("редакторская проверка: тригонометрия ≠ геометрическая окружность",()=>{
+ const entries=W.EGE_READING.get("math:1:2").entries;
+ assert.ok(entries.some(x=>x.editionId==="mathPaper10"&&x.number===17),"Радианная мера угла обязательна");
+ assert.ok(entries.some(x=>x.editionId==="mathPaper10"&&x.number===18),"Тригонометрические функции обязательны");
+ assert.ok(entries.some(x=>x.editionId==="geo2026"),"Базовая геометрия представлена отдельно");
+});
+test("адресное повторение не выдаёт общие страницы по производной за исправление всех заданий №1–13",()=>{
+ const info=W.EGE_READING.get("math:10:1");
+ assert.equal(info.entries.length,0);
+ const f=W.EGE_READING.get("chem:3:0").entries;
+ assert.ok(f.some(x=>x.editionId==="chemPaper11"&&x.number===66),"pH должен вести к ионному произведению воды");
+});
+test("объём чтения вычисляется только по соседним страницам того же ISBN",()=>{
+ for(const sub of W.EGE_DATA.subjectOrder)for(let week=1;week<=26;week++)for(let index=0;index<3;index++){
+ const r=W.EGE_READING.get(sub+":"+week+":"+index);
+ for(const e of r.entries){
+  const source=W.EGE_VERIFIED_TOC.editions[e.editionId];
+  assert.equal(e.isbn,source.isbn);
+  assert.equal(e.year,source.year);
+  assert.ok(source.sections.some(s=>s.page===e.page&&s.title===e.title));
+  if(e.endPage!==null)assert.ok(source.sections.some(s=>s.page===e.endPage+1));
+ }
  }
 });

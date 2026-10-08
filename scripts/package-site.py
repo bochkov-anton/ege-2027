@@ -4,6 +4,7 @@
 Личные заметки и прогресс в архив не включаются.
 """
 from hashlib import sha256
+import re
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
@@ -22,7 +23,15 @@ for rel in ASSETS:
     files[rel] = path.read_bytes()
 
 stamp = sha256(b"".join(name.encode() + b"\x00" + files[name] for name in sorted(files) if name != "sw.js")).hexdigest()[:12]
-files["sw.js"] = files["sw.js"].replace(b"ege-2027-shell-v7-verified-pages", ("ege-2027-shell-" + stamp).encode())
+# Service worker должен меняться НЕ только в ZIP, но и в GitHub Pages:
+# это запускает обновление уже установленной Android-PWA без удаления localStorage.
+cache_name = ("ege-2027-shell-" + stamp).encode()
+pattern = rb'const CACHE_NAME="ege-2027-shell-[a-zA-Z0-9_-]+";'
+files["sw.js"], replacements = re.subn(pattern, b'const CACHE_NAME="' + cache_name + b'";', files["sw.js"])
+if replacements != 1:
+    raise SystemExit("Service worker cache marker missing or duplicated")
+if (ROOT / "sw.js").read_bytes() != files["sw.js"]:
+    (ROOT / "sw.js").write_bytes(files["sw.js"])
 
 OUT = ROOT / "ege-2027-android-pwa.zip"
 with ZipFile(OUT, "w", compression=ZIP_DEFLATED, compresslevel=9) as archive:
