@@ -18,7 +18,7 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","textbooks.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 test("приложение загружается без DOM-ошибок и выводит план дня",()=>{
@@ -49,7 +49,7 @@ test("результат занятий сохраняется и низкая �
   const first=L.planDay(date,L.iso(L.monday(new Date())))[0];
   const click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
   click({action:"detail",id:first.id});
-  assert.ok(a.node("#dialog-content").innerHTML.includes("1. Теория Фоксфорд"));
+  assert.ok(a.node("#dialog-content").innerHTML.includes("Теория: Фоксфорд + учебник"));
   assert.ok(a.node("#dialog-content").innerHTML.includes("2. Задания и проверка"));
   a.node("#task-score").value="2/10";
   click({action:"save-score"});
@@ -327,7 +327,7 @@ test("теория Фоксфорд отделена от прямых зада�
   const click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
   click({action:"detail",id:first});
   const html=a.node("#dialog-content").innerHTML;
-  assert.ok(html.includes("Теория Фоксфорд"));
+  assert.ok(html.includes("Теория: Фоксфорд + учебник"));
   assert.ok(html.includes("КРАТКИЙ КОНСПЕКТ"));
   assert.ok(html.includes("Задания и проверка"));
   assert.ok(html.includes("category_id="));

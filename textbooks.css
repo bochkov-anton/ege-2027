@@ -1,0 +1,19 @@
+.textbook-section{display:grid;gap:12px;margin:10px 0 14px}
+.textbook-section-head{padding:15px;background:#eaf3fb;border:1px solid #cfe1f1;border-radius:13px}
+.textbook-section-head strong{font-size:14px;color:#294c72}
+.textbook-section-head p{font-size:12px;line-height:1.7;color:#526b83;margin:8px 0 0}
+.textbook-card{border:1px solid #d7e2eb;background:#fff;border-radius:14px;padding:15px;display:grid;gap:9px}
+.textbook-role{color:#466b97;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.55px}
+.textbook-title{font-size:14px;font-weight:780;line-height:1.5;color:#283c54;margin:0}
+.textbook-meta{color:#6e7b8c;font-size:11px;line-height:1.6}
+.textbook-section-hint{background:#f4f8fc;border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.6}
+.textbook-section-hint strong{color:#31546f}
+.textbook-section-hint>span{color:#897033;font-size:11px;line-height:1.5}
+.textbook-focus{margin:8px 0;color:#304b68;font-size:12px;line-height:1.65}
+.textbook-links{display:flex;flex-wrap:wrap;gap:7px}
+.textbook-links a{min-height:42px;display:inline-flex;align-items:center;justify-content:center}
+.textbook-place{display:grid;gap:6px;border-top:1px solid #e6ebf1;padding-top:9px}
+.textbook-place label{font-size:11px;font-weight:760;color:#51677d}
+.textbook-place input{font-size:13px;min-height:43px;width:100%;max-width:420px;border:1px solid #ced9e6;padding:8px 11px;border-radius:9px}
+.textbook-place small{font-size:10px;color:#697e8f;line-height:1.5}
+@media(max-width:650px){.textbook-links{display:grid;grid-template-columns:1fr}.textbook-links a{width:100%;white-space:normal;padding:8px;text-align:center}.textbook-section-head,.textbook-card{padding:13px}}

@@ -59,11 +59,36 @@
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать адрес</button></div></div></div>').join(""):'<p class="note">Подтверждённая подборка пока отсутствует; используйте учебную задачу ниже.</p>')+'</div>'+
       (saved.length?'<details class="personal-links"><summary>Мои дополнительные ссылки ('+saved.length+')</summary>'+saved.map(x=>sourceActions({...x,user:true},key)).join("")+'</details>':"");
   }
+  function textbookPanel(key,subject,title){
+    const matches=window.EGE_TEXTBOOKS?.get(key,subject,title)||[];
+    const focus=authored(key,subject,title).know;
+    if(!matches.length)return '<p class="note">Для этой темы ещё нет подтверждённой книги.</p>';
+    return '<section class="textbook-section"><div class="textbook-section-head">'+
+      '<div class="study-kicker">ОСНОВНАЯ ТЕОРИЯ · УЧЕБНИК</div><strong>Углублённое объяснение в учебнике</strong>'+
+      '<p>Фоксфорд — кратко разобраться. Учебник — изучить системно и подробно. Выберите один основной учебник; читать оба полностью не требуется. Номер параграфа может меняться между изданиями.</p></div>'+
+      matches.map(book=>{
+        const stored=state.textbookPlaces?.[key+"::"+book.bookId]||"";
+        return '<article class="textbook-card"><div class="textbook-role">'+safe(book.role)+'</div>'+
+          '<h3 class="textbook-title">'+safe(book.title)+'</h3>'+
+          '<div class="textbook-meta">'+safe(book.authors)+' · '+safe(book.grade)+' кл. · '+safe(book.level)+
+          (book.isbn?' · ISBN '+safe(book.isbn):'')+'</div>'+
+          '<div class="textbook-section-hint"><strong>Искать в оглавлении: '+safe(book.section)+'</strong>'+
+          '<p class="textbook-focus"><strong>Найти и изучить:</strong> '+safe(focus)+'</p>'+
+          '<span class="textbook-confidence">Раздел — смысловой ориентир, номер параграфа и страницы НЕ проверены для вашего издания.</span></div>'+
+          '<div class="textbook-links"><a class="btn secondary small" href="'+safe(book.official)+'" target="_blank" rel="noopener noreferrer">Издатель / электронная версия ↗</a>'+
+          '<a class="btn small" href="'+safe(book.yandex)+'" target="_blank" rel="noopener noreferrer">Найти учебник в Яндексе ↗</a>'+
+          '<a class="btn ghost small" href="'+safe(book.yandexSection)+'" target="_blank" rel="noopener noreferrer">Найти тему в учебнике ↗</a></div>'+
+          '<div class="textbook-place"><label for="textbook-place-'+safe(book.bookId)+'">Мой параграф / страницы (для моего издания)</label>'+
+          '<input id="textbook-place-'+safe(book.bookId)+'" type="text" data-action="textbook-place" data-key="'+safe(key)+'" '+
+          'data-book="'+safe(book.bookId)+'" maxlength="100" placeholder="Например, § 7, с. 40–47" value="'+safe(stored)+'">'+
+          '<small>Сохраняется только на планшете и входит в JSON-резервную копию. Не публикуется в GitHub.</small></div></article>';
+      }).join("")+'</section>';
+  }
   function lessonPanel(key,subject,title,task=null,initial="theory"){
     const guide=authored(key,subject,title),info=theoryFor(key,subject,title);
     const showTheory=initial!=="practice",checks=task?(state.steps[task.id]||[]):[];
     let html='<nav class="lesson-tabs" aria-label="Разделы темы" role="tablist">'+
-      '<button type="button" role="tab" aria-selected="'+showTheory+'" class="lesson-tab'+(showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="theory">1. Теория Фоксфорд</button>'+
+      '<button type="button" role="tab" aria-selected="'+showTheory+'" class="lesson-tab'+(showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="theory">1. Теория: Фоксфорд + учебник</button>'+
       '<button type="button" role="tab" aria-selected="'+!showTheory+'" class="lesson-tab'+(!showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="practice">2. Задания и проверка</button></nav>';
     html+='<section id="lesson-theory" class="lesson-section" role="tabpanel"'+(showTheory?"":" hidden")+'>'+
       '<div class="study-chapter"><div class="study-kicker">ЧТО НУЖНО ПОНЯТЬ</div><p>'+safe(guide.know)+'</p></div>';
@@ -75,6 +100,7 @@
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать ссылку</button></div>').join("")+'</div>';
     else html+='<div class="foxford-missing"><strong>Точная статья Фоксфорда для этой узкой темы ещё не подтверждена.</strong>'+
       '<p>Не подменяем теорию кодификатором или неподходящей статьёй. Используйте конспект ниже.</p></div>';
+    html+=textbookPanel(key,subject,title);
     html+='<div class="study-chapter"><div class="study-kicker">КРАТКИЙ КОНСПЕКТ · ОФЛАЙН</div>'+
       '<h3>Объяснение</h3><p>'+safe(info.explanation||guide.know)+'</p>'+
       '<div class="worked-example"><strong>Разобранный пример</strong><p>'+safe(info.example||guide.doTask)+'</p></div>'+
@@ -781,6 +807,14 @@
     const el=ev.target;
     if(el.id==="task-note"&&openTask){state.notes[openTask.id]=el.value;save();}
     if(el.id==="topic-note"&&openTopicKey){state.topicNotes[openTopicKey]=el.value;save();}
+    if(el.dataset?.action==="textbook-place"){
+      const key=el.dataset.key,book=el.dataset.book,lesson=window.EGE_LESSONS?.get(key);
+      if(lesson&&window.EGE_TEXTBOOKS?.get(key,lesson.subject,lesson.title).some(x=>x.bookId===book)){
+        if(!state.textbookPlaces)state.textbookPlaces={};
+        state.textbookPlaces[key+"::"+book]=String(el.value||"").slice(0,100);
+        save();
+      }
+    }
     if(el.id==="day-note"){state.dayNotes[date]=el.value;save();}
     if(el.id==="topic-search"){
       searchQuery=el.value;

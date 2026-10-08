@@ -133,6 +133,7 @@
       results:o.results && typeof o.results==="object" && !Array.isArray(o.results)?o.results:{},
       steps:o.steps && typeof o.steps==="object" && !Array.isArray(o.steps)?o.steps:{},
       topicNotes:o.topicNotes && typeof o.topicNotes==="object" && !Array.isArray(o.topicNotes)?o.topicNotes:{},
+      textbookPlaces:o.textbookPlaces && typeof o.textbookPlaces==="object" && !Array.isArray(o.textbookPlaces)?o.textbookPlaces:{},
       dayNotes:o.dayNotes && typeof o.dayNotes==="object" && !Array.isArray(o.dayNotes)?o.dayNotes:{},
       customLinks:o.customLinks && typeof o.customLinks==="object" && !Array.isArray(o.customLinks)?o.customLinks:{},
       skipped:o.skipped && typeof o.skipped==="object" && !Array.isArray(o.skipped)?o.skipped:{},
