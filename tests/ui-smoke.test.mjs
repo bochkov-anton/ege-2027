@@ -197,7 +197,7 @@ test("очередь отложенной работы открывается и
   assert.ok(a.node("#app").innerHTML.includes("backlog-row"));
 });
 test("таймер достигает лимита, фиксирует результат и предлагает отдых",()=>{
-  const clock={now:Date.now()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
+  const clock={now:new Date(new Date().setHours(15,0,0,0)).getTime()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
   const assigned=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day];
   if(!assigned?.length)return;
@@ -256,7 +256,7 @@ test("после закрытия карточки занятия таймер �
   assert.equal(a.node("#study-clock").textContent,"01:00","paused time must be stable");
 });
 test("запущенный таймер восстанавливается после повторной загрузки приложения",()=>{
-  const clock={now:Date.now()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
+  const clock={now:new Date(new Date().setHours(15,0,0,0)).getTime()},a=runApp(null,clock),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day))return;
   const task=JSON.parse(a.store.get("ege2027-local-progress-v1")).assignments[day][0];
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
