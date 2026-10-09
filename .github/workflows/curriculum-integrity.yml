@@ -1,0 +1,29 @@
+name: Curriculum integrity
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify all tests
+        run: node --test
+      - name: Verify curriculum graph and source coverage
+        run: |
+          node scripts/audit-curriculum-complete.mjs
+          node scripts/audit-subtopic-coverage.mjs
+          node scripts/export-study-source-routes.mjs
+      - name: Verify PWA cache version
+        run: |
+          python3 scripts/package-site.py
+          node --test tests/service-worker-cache.test.mjs
+          git diff --exit-code -- sw.js
