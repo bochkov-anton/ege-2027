@@ -516,9 +516,12 @@
   function renderSubjects(){
     const s=subj(focusSubject),week=focusWeek;
     let html=head("Библиотека","Найти и открыть тему","Поиск по всем 234 темам, неделям и трём предметам.",weekNav());
-    html+='<div class="card padding topic-search-card"><label for="topic-search"><strong>Название темы</strong></label>'+
+    html+='<div class="card padding topic-search-card" role="search" aria-label="Поиск учебных тем"><label for="topic-search"><strong>Название темы</strong></label>'+
       '<div class="topic-search-row"><input id="topic-search" type="search" autocomplete="off" placeholder="Например: митоз, растворы, уравнения..." value="'+safe(searchQuery)+'">'+
       '<select id="search-subject" aria-label="Фильтр по предмету">'+[['all','Все предметы'],...D.subjectOrder.map(k=>[k,subj(k).name])].map(([k,title])=>'<option value="'+k+'"'+(searchSubject===k?' selected':'')+'>'+safe(title)+'</option>').join("")+'</select></div>'+
+      '<div class="search-suggestions" aria-label="Быстрые запросы">'+
+      ['Генетика','ОВР','Логарифмы','Клетка'].map(q=>'<button type="button" class="search-suggestion" data-action="search-suggestion" data-query="'+safe(q)+'">'+safe(q)+'</button>').join("")+
+      (searchQuery?'<button type="button" class="search-suggestion clear-search" data-action="clear-search">Очистить поиск ×</button>':"")+'</div>'+
       '<div class="row wrap" style="margin-top:10px"><button class="btn '+(searchPinned?"":"secondary")+' small" data-action="toggle-pins">☆ Мои закладки ('+Object.keys(state.pinned).filter(k=>state.pinned[k]).length+')</button><span class="note">Введите название или выберите закладки</span></div></div>'+
       '<div id="topic-results">'+topicSearchResults()+'</div>'+
       '<section id="topic-current-week"'+(searchQuery.trim()||searchPinned?' hidden':'')+'>'+
@@ -912,6 +915,19 @@
       case "open-topic":topicDetail(b.dataset.key);break;
       case "open-prerequisite":if($("#task-dialog")?.open)closeDialog();topicDetail(b.dataset.key);break;
       case "remediation-open":if($("#task-dialog")?.open)closeDialog();topicDetail(b.dataset.key);break;
+      case "search-suggestion":
+        searchQuery=b.dataset.query||"";
+        searchPinned=false;
+        searchSubject="all";
+        setView("subjects");
+        $("#topic-search")?.focus?.();
+        break;
+      case "clear-search":
+        searchQuery="";
+        searchPinned=false;
+        render();
+        $("#topic-search")?.focus?.();
+        break;
       case "toggle-pins":searchPinned=!searchPinned;render();break;
       case "toggle-all-reviews":showAllReviews=!showAllReviews;render();break;
       case "pin-topic":{

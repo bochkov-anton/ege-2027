@@ -64,6 +64,19 @@ test("повторения требуют сначала сформулиров�
  assert.ok(h.includes('Открыть объяснение и материалы'));
  assert.ok(!h.includes('>Уверенно</button>'));
 });
+test("быстрые запросы библиотеки находят темы и позволяют очистить фильтр",()=>{
+ const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({view:"subjects"});
+ assert.ok(a.node("#app").innerHTML.includes('role="search"'));
+ assert.ok(a.node("#app").innerHTML.includes('data-action="search-suggestion"'));
+ click({action:"search-suggestion",query:"Логарифмы"});
+ assert.ok(a.node("#app").innerHTML.includes('value="Логарифмы"'));
+ assert.ok(a.node("#app").innerHTML.includes("Результаты поиска"));
+ assert.ok(a.node("#app").innerHTML.includes("Очистить поиск"));
+ click({action:"clear-search"});
+ assert.ok(!a.node("#app").innerHTML.includes('value="Логарифмы"'));
+ assert.ok(a.node("#app").innerHTML.includes('id="topic-current-week"'));
+});
 test("неделя позволяет сворачивать предметы без потери всех девяти тем",()=>{
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
  click({view:"week"});

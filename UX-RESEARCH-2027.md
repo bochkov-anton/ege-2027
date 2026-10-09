@@ -34,7 +34,8 @@
 
 ## 3. Реализация по файлам
 
-- `app.js`: `focus-board`, `daily-facts`, `day-mode`, `task-more`, `recall-check`, `week-course`.
+- `app.js`: `focus-board`, `daily-facts`, `day-mode`, `task-more`, `recall-check`, `week-course`, `search-suggestion`, `clear-search`.
+- Библиотека всех 234 тем имеет быстрые запросы (генетика, ОВР, логарифмы, клетка), фильтр предмета и очистку поиска без изменения результатов обучения.
 - `tablet-ui.css`: таблица брейкпоинтов, адаптивная сетка главного экрана, достаточный размер кнопок, управление раскрытием, `focus-visible`, `prefers-reduced-motion`.
 - `tests/ui-smoke.test.mjs`: проверка DOM-семантики, главного действия, последовательности повторения, сохранения состояния и расписания.
 - `tests/tablet-ui.test.mjs`: публикация и структура адаптивных CSS.

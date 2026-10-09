@@ -1,6 +1,6 @@
 /* Offline app shell. One immutable cache per release; no personal data leaves localStorage.
  * A successful install activates automatically and requests a client reload. */
-const CACHE_NAME="ege-2027-shell-7f8e1bad4924";
+const CACHE_NAME="ege-2027-shell-5c3ca0d789cc";
 const SCOPE=self.registration.scope;
 const APP_SHELL=[
   "./","./index.html","./style.css","./ux.css","./android.css","./tablet-ui.css","./flow.css","./session.css","./wellbeing.css","./lessons.css","./textbooks.css",
