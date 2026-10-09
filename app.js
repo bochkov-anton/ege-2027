@@ -357,9 +357,11 @@
       '<h3>'+safe(t.title)+'</h3><p class="task-goal"><strong>Задание:</strong> '+safe(authored(t.topicKey,t.subject,t.title).doTask)+'</p>'+pagePreview(t.topicKey)+'<div class="meta">'+t.minutes+' мин'+(checked?" · "+checked+"/"+stepsFor(t).length+" шагов":"")+(state.notes[t.id]?" · Есть заметка":"")+
       (skipped?" · Пропущено без переноса":"")+'</div></div>'+
       '<div class="task-actions"><button class="btn small '+(done?"secondary":"")+'" data-action="detail" data-id="'+safe(t.id)+'"'+(blockedPractice?' disabled title="Сначала завершите теорию"':"")+'>'+(done?"Посмотреть":blockedPractice?"Сначала теория":"Начать →")+'</button>'+
-      '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'"'+(blockedPractice?' disabled':"")+'>Задания</button>'+
       '<button class="check-button" data-action="toggle-task" data-id="'+safe(t.id)+'"'+(blockedPractice?' disabled':"")+' aria-label="'+(done?"Отменить выполнение":"Отметить выполненным")+'">'+(done?"✓":"")+'</button>'+
-      (!done?'<button class="btn ghost small" data-action="skip-task" data-id="'+safe(t.id)+'">'+(skipped?"Вернуть":"Пропустить")+'</button>':"")+'</div></article>';
+      '<details class="task-more"><summary aria-label="Дополнительные действия">Ещё</summary><div class="task-more-actions">'+
+      '<button class="btn ghost small" data-action="show-materials" data-id="'+safe(t.id)+'"'+(blockedPractice?' disabled':"")+'>Открыть задания</button>'+
+      (!done?'<button class="btn ghost small" data-action="skip-task" data-id="'+safe(t.id)+'">'+(skipped?"Вернуть занятие":"Пропустить занятие")+'</button>':"")+
+      '</div></details></div></article>';
   }
   function ensureAssignments(day){
     if(day!==L.today()||!L.isStudyDay(day)||L.weekNumber(day,state.startDate)<0)return;
@@ -385,19 +387,38 @@
     if(week>=26&&!debt.total)html+='<div class="callout" style="margin-bottom:14px"><strong>Основная программа выполнена.</strong> Теперь смешанная практика, пробники и повторение.</div>';
     if(isActualToday&&debt.overdue)html+='<section class="backlog card padding"><div><strong>Темы, требующие завершения: '+debt.overdue+'</strong><p class="note">Это количество тем из ориентировочно пройденной части программы, а не число занятий на сегодня. Следующие темы открываются только после освоения необходимых основ.</p></div><button class="btn secondary small" data-action="show-backlog">Порядок и зависимости →</button></section>';
     if(isActualToday&&!debt.overdue&&!debt.total&&week<26)html+='<div class="callout">Обязательные занятия до сегодняшней даты завершены. Отличная возможность заняться повторением и отдыхом.</div>';
-    html+='<section class="hero card">'+(next?'<div><div class="kicker">Следующее занятие</div><h2>'+safe(next.title)+'</h2><p>'+safe(U.taskGoal(next))+'</p><div class="row wrap">'+badge(next.subject)+'<span class="chip">'+next.minutes+' мин</span></div></div><button class="btn" data-action="detail" data-id="'+safe(next.id)+'">Начать →</button>':
-      '<div><div class="kicker">Сегодня</div><h2>'+(mode==="off"?"Отдых":"Основная работа завершена")+'</h2><p>Никаких дополнительных часов ради галочек.</p></div>')+'</section>';
+    const progressPercent=shown.length?Math.round(done/shown.length*100):0;
+    html+='<section class="focus-board card" aria-label="Главное на сегодня">'+
+      '<div class="focus-main"><div class="focus-eyebrow"><span class="focus-pulse" aria-hidden="true"></span>'+
+      (next?"Следующее занятие":"Сегодня")+' · '+(done+1>shown.length?shown.length:done+1)+' из '+shown.length+'</div>'+
+      (next?'<h2>'+safe(next.title)+'</h2><p class="focus-goal">'+safe(U.taskGoal(next))+'</p>'+
+        '<div class="focus-meta">'+badge(next.subject)+'<span class="chip">'+next.minutes+' минут</span>'+
+          '<span class="chip">Теория → самостоятельная практика → проверка</span></div>':
+        '<h2>'+(mode==="off"?"Время отдохнуть":"Основная работа завершена")+'</h2>'+
+        '<p class="focus-goal">Не нужно добавлять занятия ради заполнения календаря. Повторите материал в следующий учебный день.</p>')+
+      '<div class="focus-actions">'+(next?'<button class="btn focus-primary" data-action="detail" data-id="'+safe(next.id)+'">Открыть занятие <span aria-hidden="true">→</span></button>':"")+
+      (due.length&&isActualToday?'<button class="btn secondary" data-view="reviews">Повторить по памяти · '+due.length+'</button>':"")+
+      '<button class="btn ghost" data-view="week">План недели</button></div></div>'+
+      '<aside class="focus-progress" aria-label="Прогресс дня">'+
+        '<span class="focus-progress-label">Выполнено сегодня</span><strong>'+done+' <small>/ '+shown.length+'</small></strong>'+
+        '<div class="bar focus-progress-bar" role="progressbar" aria-label="Выполненные занятия" aria-valuemin="0" aria-valuemax="'+shown.length+'" aria-valuenow="'+done+'"><span style="width:'+progressPercent+'%"></span></div>'+
+        '<div class="focus-progress-meta">'+(shown.length-done)+' осталось · '+totalTime(shown)+' мин в плане</div>'+
+        '<p>Спокойный темп важнее дополнительных галочек.</p></aside></section>';
     if(isActualToday)html+=breakPanel();
-    if(next)html+='<section class="lesson-roadmap card padding"><h2>Как проходит занятие</h2>'+
-      '<div class="roadmap-steps"><span>1. Фоксфорд → учебник: найти § и страницы</span>'+
-      '<span>2. Решить конкретные задания по теме</span><span>3. Проверить и записать ошибки</span></div></section>';
     html+=schoolPanel(date,mode);
-    html+='<div class="metric-strip"><div class="card metric"><b>'+done+'/'+shown.length+'</b><span>Блоков выполнено</span></div><div class="card metric"><b>'+Math.floor(totalTime(shown)/60)+' ч '+String(totalTime(shown)%60).padStart(2,"0")+'</b><span>Чистое время</span></div><div class="card metric"><b>'+due.length+'</b><span>Повторений сейчас</span></div></div>';
-    html+='<div class="grid-2"><div class="stack"><div class="row between wrap"><h2 style="margin:0">План ЕГЭ</h2><div class="row wrap"><button class="btn secondary small" data-action="set-mode" data-mode="normal">160 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="light">90 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="short">35 мин</button><button class="btn secondary small" data-action="set-mode" data-mode="off">Отдых</button><button class="btn ghost small" data-action="set-mode" data-mode="auto">Авто</button></div></div>';
+    html+='<div class="daily-facts" aria-label="Краткая сводка"><span><strong>'+Math.floor(totalTime(shown)/60)+' ч '+String(totalTime(shown)%60).padStart(2,"0")+'</strong> планового времени</span>'+
+      '<span><strong>'+due.length+'</strong> повторений к проверке</span>'+
+      '<span><strong>'+skipped+'</strong> пропущено без зачёта</span></div>';
+    html+='<div class="grid-2"><div class="stack"><div class="row between wrap"><h2 style="margin:0">План ЕГЭ</h2>'+
+      '<details class="day-mode"><summary>Нагрузка · '+({normal:"160 мин",light:"90 мин",short:"35 мин",off:"отдых"}[mode]||"автоматически")+'</summary>'+
+      '<div class="day-mode-options" role="group" aria-label="Выбор учебной нагрузки">'+
+      [['normal','160 мин'],['light','90 мин'],['short','35 мин'],['off','Отдых'],['auto','Авто']].map(([value,label])=>
+        '<button class="btn '+(schoolInfo(date).manualMode===value?'':'secondary')+' small" data-action="set-mode" data-mode="'+value+'" aria-pressed="'+(schoolInfo(date).manualMode===value)+'">'+label+'</button>').join("")+
+      '</div></details></div>';
     html+='<div class="schedule">'+(shown.length?shown.map((t,i)=>taskCard(t,i,mode==="normal")).join(""):'<div class="empty"><strong>Сегодня без ЕГЭ</strong>Отдых и школьные задания имеют приоритет. Пропущенное не нужно переносить на выходные.</div>')+'</div>';
     html+='<div class="card padding day-reflection"><label for="day-note"><strong>Итог дня</strong> <span class="note">· Одно предложение — по желанию</span></label><textarea id="day-note" maxlength="1200" placeholder="Что получилось? Что стоит повторить?">'+safe(state.dayNotes[date]||"")+'</textarea><span class="note">Сохранение при вводе. Необязательно.</span></div>'+
     '<p class="note">Незавершённое не исчезает. Порядок задаётся графом необходимых знаний, практика открывается после теории; дневная норма и выходные сохраняются.</p></div>';
-    html+='<div class="stack"><div class="card padding"><div class="row between"><h2>Прогресс сегодня</h2><span class="chip">'+Math.round(done/Math.max(1,shown.length)*100)+'%</span></div><div class="bar"><span style="width:'+Math.round(done/Math.max(1,shown.length)*100)+'%"></span></div><p class="note" style="margin-top:13px">Сначала новый материал и практика. Затем второй предмет. Повторения выбираются по готовой очереди.</p></div>';
+    html+='<div class="stack">';
     html+='<div class="card padding"><div class="row between"><h2>Очередь повторений</h2><button class="btn ghost small" data-view="reviews">Открыть →</button></div>';
     if(!due.length)html+='<p class="note">Пока нет просроченных или назначенных на сегодня проверок. Они появятся после отметки первых тем.</p>';
     else html+='<div class="stack gap-small">'+due.slice(0,3).map(r=>'<div class="soft"><div style="font-size:11px;color:var(--muted)">'+safe(subj(r.subject).name)+'</div><strong style="font-size:12px">'+safe(r.title)+'</strong></div>').join("")+'</div>';
@@ -455,7 +476,7 @@
         '</button>';
     }).join("")+'</div>';
     html+='<div class="card padding" style="margin-top:19px"><div class="row between wrap"><h2>Темы недели</h2><span class="chip">Сб и Вс — выходные</span></div><div class="grid-3">'+D.subjectOrder.map(s=>{
-      const data=subj(s);return '<div class="week-course"><div class="row">'+badge(s)+'</div>'+
+      const data=subj(s);return '<details class="week-course"'+(s==="math"?"":" open")+'><summary class="week-course-summary">'+badge(s)+'<span>3 темы · открыть список</span></summary>'+
       C.projectedWeek(s,focusWeek).map((topic,i)=>{
         const t=topic.title;
         const key=topic.id,guide=authored(key,s,t),articles=theoryFor(key,s,t).articles||[];
@@ -466,7 +487,7 @@
           '<p class="note">'+(articles.length?"Есть статья Фоксфорда":"Краткий конспект")+
           ' · '+directExercises(key).length+' набора заданий</p>'+
           '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(key)+'">Разобрать тему →</button></article>';
-      }).join("")+'</div>';
+      }).join("")+'</details>';
     }).join("")+'</div></div>';
     return html+'<p class="note" style="margin-top:12px">Это ориентир маршрута с учётом зависимостей. Реальное занятие назначается в разделе «Сегодня» после проверки уже освоенных тем. Проекты КИМ-2027 и прежние исходные планы требуют периодической сверки.</p>';
   }
@@ -513,7 +534,20 @@
     const errors=state.errors.filter(x=>!x.done);
     let html=head("Закрепление","Повторения и ошибки","Ответьте без подсказки, затем оцените реальный результат. В выходные ничего не назначается.");
     html+='<div class="grid-2"><section class="stack"><div class="row between"><h2>Пора повторить</h2><span class="chip">'+due.length+' тем</span></div>';
-    html+=due.length&&!restDay?due.slice(0,showAllReviews?due.length:6).map(r=>'<div class="review-item">'+badge(r.subject)+'<div class="review-item-main"><h3>'+safe(r.title)+'</h3><div class="meta">Назначено: '+dformat(r.due)+' · Успешных проверок: '+(r.successes||0)+'</div></div><div class="review-actions"><button class="btn ghost" data-action="open-topic" data-key="'+safe(r.key)+'">Тема ↗</button><button class="btn danger" data-action="rate" data-key="'+safe(r.key)+'" data-rate="hard">Сложно</button><button class="btn secondary" data-action="rate" data-key="'+safe(r.key)+'" data-rate="medium">Нормально</button><button class="btn" data-action="rate" data-key="'+safe(r.key)+'" data-rate="easy">Уверенно</button></div></div>').join(""):(restDay?'<div class="empty"><strong>Сегодня выходной</strong>Повторения можно выполнить в понедельник. Суббота и воскресенье свободны.</div>':'<div class="empty"><strong>Очередь пока пуста</strong>После изучения темы появится контроль на следующий учебный день.</div>');
+    html+=due.length&&!restDay?due.slice(0,showAllReviews?due.length:6).map(r=>{
+      const question=authored(r.key,r.subject,r.title).check;
+      return '<article class="review-item review-recall">'+badge(r.subject)+'<div class="review-item-main">'+
+        '<h3>'+safe(r.title)+'</h3><p class="meta">Назначено: '+dformat(r.due)+
+        ' · Успешных проверок: '+(r.successes||0)+'</p>'+
+        '<details class="recall-check"><summary>Проверить себя без подсказки</summary>'+
+        '<div class="recall-body"><span class="study-kicker">ВОСПРОИЗВЕДЕНИЕ ПО ПАМЯТИ</span>'+
+        '<p>'+safe(question)+'</p><p class="note">Сначала ответьте самостоятельно или запишите решение. Затем оцените результат. «Уверенно» — только если ответ получился без подсказки.</p>'+
+        '<div class="review-actions"><button class="btn danger" data-action="rate" data-key="'+safe(r.key)+'" data-rate="hard">Не получилось</button>'+
+        '<button class="btn secondary" data-action="rate" data-key="'+safe(r.key)+'" data-rate="medium">С подсказкой</button>'+
+        '<button class="btn" data-action="rate" data-key="'+safe(r.key)+'" data-rate="easy">Самостоятельно</button></div></div></details>'+
+        '<button class="btn ghost small recall-materials" data-action="open-topic" data-key="'+safe(r.key)+'">Открыть объяснение и материалы ↗</button>'+
+        '</div></article>';
+    }).join(""):(restDay?'<div class="empty"><strong>Сегодня выходной</strong>Повторения можно выполнить в понедельник. Суббота и воскресенье свободны.</div>':'<div class="empty"><strong>Очередь пока пуста</strong>После изучения темы появится контроль на следующий учебный день.</div>');
     if(due.length>6&&!restDay)html+='<div class="callout"><strong>Не нужно закрывать все '+due.length+' повторений сегодня.</strong><p class="note" style="margin:8px 0">Начните с 2–3 тем, остальные останутся в очереди. Не увеличивайте дневную нагрузку.</p><button class="btn ghost small" data-action="toggle-all-reviews">'+(showAllReviews?"Показать только первые 6":"Показать всю очередь")+'</button></div>';
     html+='<div class="card padding"><h2>Следующие проверки</h2>'+(upcoming.length?upcoming.map(([key,v])=>'<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line);gap:16px"><span style="font-size:12px">'+safe(v.title)+'</span><span class="note nowrap">'+dformat(v.due)+'</span></div>').join(""):'<p class="note">Нет запланированных проверок.</p>')+'</div></section>';
     html+='<section class="stack"><div class="card padding"><h2>Добавить ошибку</h2><form id="add-error-form" class="stack gap-small"><div class="field"><label>Предмет</label><select name="subject">'+D.subjectOrder.map(s=>'<option value="'+s+'">'+safe(subj(s).name)+'</option>').join("")+'</select></div><div class="field"><label>Тема или задание</label><input name="title" maxlength="180" placeholder="Например: ОВР, задание 29" required></div><div class="field"><label>Что исправить</label><textarea name="description" maxlength="800" placeholder="Конкретный пробел и корректирующее действие" required></textarea></div><button class="btn" type="submit">Добавить в работу</button></form></div>';

@@ -203,6 +203,124 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
   .topbar{height:56px}
   #task-dialog{max-height:calc(100dvh - 12px)}
 }
+/* Contextual task actions and weekly overview: secondary controls are deferred. */
+.task{position:relative}
+.task:has(.task-more[open]){z-index:9}
+.task-actions{overflow:visible}
+.task-more{position:relative;min-width:64px}
+.task-more>summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;
+ min-height:44px;padding:9px 11px;color:#425887;font-size:12px;font-weight:750;
+ border:1px solid #dfe6f1;background:#f7f9fc;border-radius:10px;cursor:pointer}
+.task-more>summary::-webkit-details-marker{display:none}
+.task-more>summary::after{content:"⌄";padding-left:6px}
+.task-more[open]>summary{background:#eaf0ff;color:#304ba6}
+.task-more-actions{position:absolute;right:0;top:calc(100% + 7px);z-index:20;
+ min-width:194px;display:grid;gap:7px;border:1px solid #d8e1f0;
+ padding:10px;background:#fff;border-radius:13px;box-shadow:0 12px 24px rgba(35,53,100,.15)}
+.task-more-actions .btn{width:100%;justify-content:flex-start;white-space:normal;text-align:left}
+.week-course{min-width:0;border:1px solid #e3eaf5;border-radius:13px;padding:9px 12px;
+ background:#fff}
+.week-course-summary{display:flex;gap:8px;align-items:center;justify-content:space-between;
+ font-size:12px;cursor:pointer;font-weight:760;color:#526480;min-height:46px;line-height:1.4}
+.week-course-summary::-webkit-details-marker{display:none}
+.week-course-summary span:last-child{font-size:11px;color:#667b96}
+.week-course[open] .week-course-summary{padding-bottom:8px;border-bottom:1px solid #e8edf6;margin-bottom:8px}
+.week-course .week-lesson{padding:12px 3px;border-bottom:1px solid #eef2f7;min-width:0}
+.week-course .week-lesson:last-child{border-bottom:0}
+.week-course .week-lesson>strong{font-size:13px;line-height:1.5}
+.week-course .week-lesson .btn{max-width:100%;white-space:normal}
+@media(max-width:760px){
+ .task-more-actions{min-width:190px;right:0}
+ .week-course{padding:9px 12px}
+ .week-course-summary{flex-wrap:wrap;gap:5px}
+}
+/* Focus-first home: a single next action, calm progress and flexible daily load. */
+.focus-board{
+  display:grid;grid-template-columns:minmax(0,1.55fr) minmax(230px,.65fr);
+  gap:0;overflow:hidden;border:1px solid #dfe6f4;
+  border-radius:22px;margin:0 0 16px;
+  box-shadow:0 14px 38px rgba(46,69,125,.065);
+  background:var(--paper);
+}
+.focus-main{min-width:0;padding:clamp(20px,3vw,33px);
+  background:linear-gradient(124deg,#f1f4ff 0%,#fbfcff 74%,#fff 100%)}
+.focus-eyebrow{display:flex;align-items:center;gap:9px;color:#4056a1;font-weight:850;
+  font-size:11px;text-transform:uppercase;letter-spacing:.07em;margin:0 0 12px}
+.focus-pulse{height:9px;width:9px;flex:none;background:#647ade;border-radius:50%}
+.focus-main h2{font-size:clamp(21px,2.3vw,30px);line-height:1.2;max-width:670px;
+  letter-spacing:-.65px;color:#273856;margin:0 0 12px}
+.focus-goal{font-size:14px;line-height:1.75;color:#53647f;max-width:600px;margin:0 0 17px}
+.focus-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.focus-meta .chip{font-size:12px;background:#e7ecf8;color:#405372;padding:7px 10px}
+.focus-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:23px}
+.focus-actions .btn{min-height:48px;font-size:13px}
+.focus-actions .focus-primary{background:#425aca;padding-inline:20px;
+  box-shadow:0 6px 12px rgba(55,75,166,.15)}
+.focus-actions .focus-primary:hover{background:#3449ac}
+.focus-progress{background:#f8faff;border-left:1px solid #e8edf8;min-width:0;
+  display:flex;flex-direction:column;justify-content:center;padding:22px 24px}
+.focus-progress-label{font-size:12px;color:#546789;font-weight:750}
+.focus-progress>strong{font-size:49px;letter-spacing:-2px;line-height:1.1;color:#2b416f;margin:9px 0 14px}
+.focus-progress>strong small{font-size:21px;letter-spacing:0;color:#8a96ab}
+.focus-progress-bar{height:11px;background:#e0e8fa}
+.focus-progress-meta{font-size:12px;margin-top:11px;color:#536586;font-weight:750}
+.focus-progress>p{font-size:12px;line-height:1.6;color:#7b879c;margin:19px 0 0}
+.daily-facts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 21px}
+.daily-facts span{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #e3e9f3;
+  padding:9px 12px;border-radius:12px;color:#52647b;font-size:12px}
+.daily-facts strong{color:#2b3d5d;font-size:14px}
+.day-mode{min-width:0;position:relative}
+.day-mode summary{list-style:none;display:flex;align-items:center;gap:7px;cursor:pointer;
+  color:#485b92;background:#eef2fb;border:1px solid #dfe6f4;padding:11px 14px;
+  border-radius:11px;min-height:44px;font-weight:750;font-size:12px}
+.day-mode summary::after{content:"⌄";font-size:17px;line-height:1}
+.day-mode[open] summary{border-radius:11px 11px 0 0}
+.day-mode summary::-webkit-details-marker{display:none}
+.day-mode-options{display:flex;flex-wrap:wrap;gap:7px;border:1px solid #dfe6f4;
+  border-top:0;border-radius:0 0 11px 11px;padding:10px;background:#fff}
+.day-mode-options .btn{flex:1 1 83px;font-size:12px;min-height:44px}
+.day-reflection{margin-top:6px}
+.review-recall{align-items:flex-start;gap:15px}
+.review-recall .review-item-main h3{font-size:15px;margin:3px 0 6px;color:#243859}
+.review-recall .review-item-main .meta{font-size:12px}
+.recall-check{margin:13px 0 9px;border:1px solid #dfe5f3;border-radius:13px;min-width:0;background:#fff}
+.recall-check>summary{min-height:49px;padding:13px 16px;font-weight:760;color:#374f9f;
+  background:#f1f5ff;cursor:pointer;line-height:1.5;list-style:none}
+.recall-check>summary::-webkit-details-marker{display:none}
+.recall-check>summary::after{content:"+";float:right;font-size:18px}
+.recall-check[open]>summary::after{content:"−"}
+.recall-body{padding:16px;background:#fff}
+.recall-body>p:first-of-type{font-size:15px;font-weight:720;color:#273959;line-height:1.7;margin:8px 0 12px}
+.recall-body .note{font-size:12px;line-height:1.7;color:#63728a}
+.recall-body .review-actions{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.recall-body .review-actions .btn{flex:1 1 145px;min-height:46px;font-size:12px}
+.recall-materials{font-size:12px;margin-top:2px}
+@media(max-width:980px){
+ .focus-board{grid-template-columns:1fr}
+ .focus-progress{border-left:0;border-top:1px solid #e7ecf7;
+   display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:17px;align-items:center;padding:15px 22px}
+ .focus-progress-label{grid-column:1/3}
+ .focus-progress>strong{font-size:30px;margin:7px 0}
+ .focus-progress>strong small{font-size:15px}
+ .focus-progress-bar{grid-column:2;grid-row:2}
+ .focus-progress-meta{grid-column:1/3;margin:0}
+ .focus-progress>p{display:none}
+}
+@media(max-width:760px){
+ .focus-board{border-radius:18px}
+ .focus-main{padding:19px 17px}
+ .focus-main h2{font-size:23px}
+ .focus-goal{font-size:13px;line-height:1.6}
+ .focus-actions{gap:8px;margin-top:17px}
+ .focus-actions .focus-primary{width:100%}
+ .focus-actions .btn:not(.focus-primary){flex:1 1 140px}
+ .focus-meta .chip{font-size:11px}
+ .focus-progress{padding:12px 16px}
+ .daily-facts{gap:6px}
+ .daily-facts span{font-size:11px;padding:8px 10px}
+ .recall-body{padding:12px}
+ .recall-body .review-actions .btn{flex:1 1 100%}
+}
 @media(prefers-reduced-motion:reduce){
   #task-dialog .lesson-tabs,.task,.btn{scroll-behavior:auto;transition:none}
 }

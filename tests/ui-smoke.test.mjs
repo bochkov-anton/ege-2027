@@ -37,6 +37,41 @@ test("приложение загружается без DOM-ошибок и в�
   assert.ok(a.node("#app").innerHTML.includes("Ежедневный план"));
   assert.ok(["Следующее занятие","День без занятий","Основная работа завершена"].some(v=>a.node("#app").innerHTML.includes(v)));
 });
+test("фокусный экран предлагает одно следующее действие без дублирования прогресса",()=>{
+ const a=runApp(),L=a.window.EGE_LOGIC;
+ if(!L.isStudyDay(L.today()))return;
+ const h=a.node("#app").innerHTML;
+ assert.ok(h.includes('class="focus-board card"'));
+ assert.ok(h.includes('class="btn focus-primary"'));
+ assert.ok(h.includes('role="progressbar"'));
+ assert.ok(h.includes('aria-valuenow='));
+ assert.ok(h.includes('class="daily-facts"'));
+ assert.equal((h.match(/Прогресс сегодня/g)||[]).length,0);
+ assert.ok(h.includes('class="day-mode"'));
+ assert.ok(h.includes('class="task-more"'));
+ assert.ok(h.includes('data-action="show-materials"'));
+});
+test("повторения требуют сначала сформулировать ответ, затем оценить его",()=>{
+ const today=new Date(),day=today.getDay();if(day===0||day===6)return;
+ const r={"bio:1:0":{subject:"bio",title:"Повторить биологию",due:"2026-01-01",stage:0,successes:0}};
+ const a=runApp({completed:{},reviews:r,errors:[]});
+ a.events.get("document:click")({target:{closest:()=>({dataset:{view:"reviews"}})}});
+ const h=a.node("#app").innerHTML;
+ assert.ok(h.includes('class="review-item review-recall"'));
+ assert.ok(h.includes('<details class="recall-check"><summary>Проверить себя без подсказки</summary>'));
+ assert.ok(h.includes('ВОСПРОИЗВЕДЕНИЕ ПО ПАМЯТИ'));
+ assert.ok(h.includes('Самостоятельно'));
+ assert.ok(h.includes('Открыть объяснение и материалы'));
+ assert.ok(!h.includes('>Уверенно</button>'));
+});
+test("неделя позволяет сворачивать предметы без потери всех девяти тем",()=>{
+ const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({view:"week"});
+ const html=a.node("#app").innerHTML;
+ assert.ok(html.includes('class="week-course" open'));
+ assert.ok(html.includes('class="week-course"><summary'));
+ assert.equal((html.match(/class="week-lesson"/g)||[]).length,9);
+});
 test("планшетный режим чтения увеличивает текст, не изменяя прогресс",()=>{
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
  click({action:"open-topic",key:"chem:1:1"});
@@ -196,9 +231,9 @@ test("очередь повторений показывает ограниче�
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
   click({view:"reviews"});
   assert.ok(a.node("#app").innerHTML.includes("Показать всю очередь"));
-  assert.equal((a.node("#app").innerHTML.match(/class="review-item"/g)||[]).length,6);
+  assert.equal((a.node("#app").innerHTML.match(/class="review-item review-recall"/g)||[]).length,6);
   click({action:"toggle-all-reviews"});
-  assert.equal((a.node("#app").innerHTML.match(/class="review-item"/g)||[]).length,12);
+  assert.equal((a.node("#app").innerHTML.match(/class="review-item review-recall"/g)||[]).length,12);
 });
 test("сегодня показывает старые обязательные занятия как долг и фиксирует состав дня",()=>{
   const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
@@ -216,7 +251,7 @@ test("сегодня показывает старые обязательные 
   assert.equal(now.completed[first.id],first.subject);
   assert.ok(now.restSuggestion?.minutes>=15||a.node("#app").innerHTML.includes("Перерыв"));
   assert.deepEqual(Array.from(now.curriculumAssignments[day].map(x=>x.id)),Array.from(assigned.map(x=>x.id)));
-  assert.ok(a.node("#app").innerHTML.includes("Блоков выполнено"));
+  assert.ok(a.node("#app").innerHTML.includes("Выполнено сегодня"));
   assert.ok(a.node("#app").innerHTML.includes("Рекомендуется перерыв"));
   a.events.get("document:click")({target:{closest:()=>({dataset:{action:"start-break"}})}});
   const after=JSON.parse(a.store.get("ege2027-local-progress-v1"));
