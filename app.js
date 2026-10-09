@@ -45,6 +45,20 @@
     return window.EGE_THEORY?.get(key,subject,title,authored(key,subject,title))||{};
   }
   function directExercises(key){return window.EGE_PRACTICE?.get(key)?.sources||[];}
+  function coveragePanel(key){
+    const coverage=window.EGE_COVERAGE?.get(key);
+    if(!coverage)return "";
+    return '<section class="card padding content-coverage" aria-label="Покрытие подтем материалами">'+
+      '<h3>Что именно изучить по этой теме</h3>'+
+      '<p class="note">'+safe(coverage.notice)+'</p>'+
+      '<ol class="coverage-parts">'+coverage.components.map(part=>
+        '<li><strong>'+safe(part.label)+'</strong>'+
+        (part.source?
+          '<div class="coverage-evidence"><span>Содержание статьи проверено</span> · <a href="'+safe(part.source.url)+'" target="_blank" rel="noopener noreferrer">'+safe(part.source.title)+' ↗</a></div>':
+          '<div class="coverage-unreviewed">Для этого пункта соответствие внешних материалов не проверено</div>')+
+        '</li>').join("")+'</ol>'+
+      '</section>';
+  }
   function examMeta(key){
     const m=window.EGE_FIPI?.get(key);
     if(!m)return "";
@@ -188,10 +202,13 @@
       '<button type="button" role="tab" aria-selected="'+!showTheory+'" class="lesson-tab'+(!showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="practice">2. Задания и проверка</button></nav>';
     html+='<section id="lesson-theory" class="lesson-section" role="tabpanel"'+(showTheory?"":" hidden")+'>'+
       '<div class="study-chapter"><div class="study-kicker">ЧТО НУЖНО ПОНЯТЬ</div><p>'+safe(guide.know)+'</p></div>';
+    html+=coveragePanel(key);
     const articles=info.articles||[];
     if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">ФОКСФОРД · КРАТКОЕ ОБЪЯСНЕНИЕ</div>'+
       articles.map(x=>'<div class="foxford-item"><strong>'+safe(x.title)+'</strong>'+
-      '<p class="note">'+(x.coverage==="partial"?"Статья объясняет только часть этой темы. Остальные пункты изучите в учебнике, прежде чем решать задачи.":"Тематическая статья. Изучите объяснения и затем выполните задания.")+'</p>'+
+      '<p class="note">'+(window.EGE_COVERAGE?.get(key)?.components.some(part=>part.source?.url===x.url)?
+         "Статья проверена для указанного в карте подтем пункта, но не для всей составной темы.":
+         "Содержание этой статьи по всем пунктам темы ещё не проверено. Сверьте его с картой подтем выше.")+'</p>'+
       '<a class="btn" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Читать теорию Фоксфорда →</a>'+
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать ссылку</button></div>').join("")+'</div>';
     else html+='<div class="foxford-missing"><strong>Точно соответствующая теме статья Фоксфорда не подтверждена.</strong>'+
@@ -201,8 +218,11 @@
     html+='<div class="study-chapter"><div class="study-kicker">КРАТКИЙ КОНСПЕКТ · ОФЛАЙН</div>'+
       '<h3>Объяснение</h3><p>'+safe(info.explanation||guide.know)+'</p>'+
       '<div class="worked-example"><strong>Разобранный пример</strong><p>'+safe(info.example||guide.doTask)+'</p></div>'+
-      '<h3>Что воспроизвести без подсказки</h3><p>'+safe(guide.doTask)+'</p></div>'+
-      '<button type="button" class="btn" data-action="lesson-tab" data-tab="practice">Перейти к заданиям →</button></section>';
+      '<h3>Что воспроизвести без подсказки</h3><p>'+safe(guide.doTask)+'</p></div>';
+    if(task?.phase==="integrated"){
+      html+='<div class="step-list"><label class="step-line"><input type="checkbox" data-action="toggle-step" data-step="0"'+(checks[0]?" checked":"")+'><span>Теория изучена: могу объяснить основные понятия без подсказки</span></label></div>';
+    }
+    html+='<button type="button" class="btn" data-action="lesson-tab" data-tab="practice">Перейти к заданиям →</button></section>';
     html+='<section id="lesson-practice" class="lesson-section" role="tabpanel"'+(showTheory?" hidden":"")+'>'+
       examMeta(key)+'<div class="study-chapter"><div class="study-kicker">КОНКРЕТНОЕ УЧЕБНОЕ ДЕЙСТВИЕ</div>'+
       '<h3>Что выполнить</h3><p>'+safe(guide.doTask)+'</p>'+
@@ -216,7 +236,7 @@
       ];
       const last=state.results[task.id],score=last?last.correct+"/"+last.total:"";
       html+='<h3>Контрольные действия</h3><div class="step-list">'+steps.map((v,i)=>
-        '<label class="step-line"><input type="checkbox" data-action="toggle-step" data-step="'+i+'"'+(checks[i]?" checked":"")+'><span>'+safe(v)+'</span></label>').join("")+'</div>'+
+        (task.phase==="integrated"&&i===0?"":'<label class="step-line"><input type="checkbox" data-action="toggle-step" data-step="'+i+'"'+(checks[i]?" checked":"")+'><span>'+safe(v)+'</span></label>')).join("")+'</div>'+
       '<div class="result-box"><div class="field"><label for="task-score">Верных заданий / всего</label>'+
       '<input id="task-score" inputmode="text" placeholder="Например, 6/8" value="'+safe(score)+'"></div>'+
       '<button class="btn secondary small" data-action="save-score">Записать результат</button>'+
@@ -348,13 +368,18 @@
   function renderWeek(){
     const mon=L.move(L.parseDate(state.startDate),focusWeek*7);
     const sat=L.move(mon,5),sun=L.move(mon,6);
-    let html=head("Календарный ориентир","Неделя "+(focusWeek+1),dformat(L.iso(mon))+" — "+dformat(L.iso(sun))+". Незаконченная работа сохраняется в очереди.",weekNav());
+    let html=head("Календарный ориентир","Неделя "+(focusWeek+1),dformat(L.iso(mon))+" — "+dformat(L.iso(sun))+". Темы ниже идут в учебном порядке зависимостей; прошлые фактически начатые занятия сохраняются как архив.",weekNav());
     html+='<div class="week-days">'+[0,1,2,3,4].map(i=>{
       const day=L.iso(L.move(mon,i));
       const saved=state.curriculumAssignments?.[day];
       const modern=Array.isArray(saved);
+      const originalIds=state.assignments?.[day]||[];
+      const history=Array.isArray(originalIds)&&originalIds.some(id=>state.completed[id]||
+        state.notes[id]||Number(state.timeSpent[id])>0)||
+        Object.keys(state.completed).some(id=>id.startsWith(day+":")&&state.completed[id]);
+      const archivedLegacy=day<L.today()&&!modern&&history;
       const blocks=day===L.today()?currentAgenda(day,modeFor(day)):
-        modern?saved:day<L.today()?L.planDay(day,state.startDate,state.reviews,modeFor(day)):[];
+        modern?saved:archivedLegacy?L.planDay(day,state.startDate,state.reviews,modeFor(day)):[];
       const d=blocks.filter(x=>state.completed[x.id]).length;
       const remaining=blocks.filter(x=>x.kind!=="review"&&!state.completed[x.id]).length;
       return '<button class="week-day'+(day===date?" active":"")+'" data-action="pick-day" data-date="'+day+'">'+
@@ -387,7 +412,7 @@
     const [label,statusClass]=reviewStatus(topic.key),star=state.pinned[topic.key]?"★ ":"";
     const guide=authored(topic.key,topic.subject,topic.title),count=directExercises(topic.key).length;
     const foxford=(theoryFor(topic.key,topic.subject,topic.title).articles||[]).length;
-    return '<article class="topic topic-compact lesson-topic"><small>'+badge(topic.subject)+' <span>· Неделя '+(topic.week+1)+'</span></small>'+
+    return '<article class="topic topic-compact lesson-topic"><small>'+badge(topic.subject)+' <span>· Учебная неделя '+(C.placement[topic.key]?.week||topic.week+1)+'</span></small>'+
       '<div class="topic-title">'+star+safe(topic.title)+'</div>'+
       '<p class="note"><strong>Научиться:</strong> '+safe(guide.doTask)+'</p>'+
       '<p class="note"><strong>Критерий:</strong> '+safe(guide.check)+'</p>'+pagePreview(topic.key)+
@@ -524,6 +549,13 @@
         notice(missing.length?"Сначала изучите необходимые темы: "+missing.join("; "):
           "Сначала завершите теорию этой темы, затем переходите к практике.");
         return;
+      }
+      if(b.phase==="integrated"){
+        const steps=state.steps?.[id]||[];
+        if(![0,1,2].every(index=>steps[index]===true)){
+          notice("Для завершения темы отметьте изучение теории, самостоятельные задания и проверку решения.");
+          return;
+        }
       }
       if(b.phase==="practice"||b.phase==="integrated"){
         const score=state.results[id];
@@ -737,7 +769,7 @@
     const [status]=reviewStatus(key),personal=state.topicNotes[key]||"",guide=authored(key,t.subject,t.title);
     const missing=C.unmet(state,key);
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
-      '<p class="note" style="margin:12px 0 4px">Неделя '+(t.week+1)+' · '+safe(status)+'</p>'+
+      '<p class="note" style="margin:12px 0 4px">Учебная неделя '+(C.placement[key]?.week||t.week+1)+' · '+safe(status)+'</p>'+
       '<h2>'+safe(t.title)+'</h2></div><button class="dialog-close" data-action="close-dialog" aria-label="Закрыть">×</button></div>'+
       dependencyPanel(key)+
       '<div class="lesson-objective"><div class="study-kicker">ЦЕЛЬ ТЕМЫ</div><p>'+safe(guide.doTask)+'</p></div>'+
@@ -839,6 +871,10 @@
       case "toggle-task":completeTask(b.dataset.id);break;
       case "detail":detail(b.dataset.id);break;
       case "lesson-tab":{
+        if(b.dataset.tab==="practice"&&openTask?.phase==="integrated"&&state.steps?.[openTask.id]?.[0]!==true){
+          notice("Сначала изучите теорию и подтвердите это в первом разделе.");
+          break;
+        }
         lessonTab=b.dataset.tab==="practice"?"practice":"theory";
         const isTheory=lessonTab==="theory";
         const t=$("#lesson-theory"),p=$("#lesson-practice");
@@ -891,6 +927,11 @@
       case "dialog-complete":if(openTask){const id=openTask.id;closeDialog();completeTask(id);}break;
       case "save-score":{
         if(!openTask)break;
+        if(openTask.phase==="integrated"&&
+          !(state.steps?.[openTask.id]?.[0]===true&&state.steps?.[openTask.id]?.[1]===true)){
+          notice("Сначала изучите теорию и выполните самостоятельные задания.");
+          break;
+        }
         const raw=($("#task-score")?.value||"").trim(),m=/^(\d{1,3})\s*\/\s*(\d{1,3})$/.exec(raw);
         if(!m||Number(m[2])<1||Number(m[1])>Number(m[2])||Number(m[2])>200){notice("Введите результат как 8/10 (не больше 200 задач).");break;}
         const correct=Number(m[1]),total=Number(m[2]),fraction=correct/total;
@@ -960,7 +1001,15 @@
     if(ev.target.id==="task-note"&&openTask){state.notes[openTask.id]=ev.target.value;save();}
     if(ev.target.matches?.('input[data-action="toggle-step"]')&&openTask){
       const step=Number(ev.target.dataset.step);const checked=state.steps[openTask.id]||[];
-      checked[step]=!!ev.target.checked;state.steps[openTask.id]=checked;save();
+      if(!Number.isInteger(step)||step<0||step>2)return;
+      if(openTask.phase==="integrated"&&ev.target.checked&&step>0&&checked[step-1]!==true){
+        ev.target.checked=false;
+        notice(step===1?"Сначала завершите изучение теории.":"Сначала выполните самостоятельные задания.");
+        return;
+      }
+      checked[step]=!!ev.target.checked;
+      if(!checked[step])for(let i=step+1;i<3;i++)checked[i]=false;
+      state.steps[openTask.id]=checked;save();
     }
     if(ev.target.id==="search-subject"){searchSubject=ev.target.value;$("#topic-results").innerHTML=topicSearchResults();}
     if(["school-homework","school-sleep","school-energy","school-end","school-wake","school-sleep-target","school-commute","school-activity","school-recovery","school-meal"].includes(ev.target.id))schoolExpanded=true;

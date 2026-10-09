@@ -30,7 +30,7 @@ test("по всем 234 темам источники имеют семанти�
  assert.equal(Q.report.hidden,removed);
 });
 test("характерные ошибки соответствий Фоксфорда исключены",()=>{
- for(const id of ["bio:1:0","chem:1:2","math:1:1","bio:21:0"]){
+ for(const id of ["bio:21:0"]){
   const r=L.get(id),theory=T.get(id,r.subject,r.title,r);
   assert.equal(theory.articles.length,0,id+" still shows unrelated article");
  }

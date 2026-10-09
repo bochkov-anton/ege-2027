@@ -22,8 +22,15 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","topic-coverage.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
+}
+function markStudySteps(a,click,verify=true){
+  const change=a.events.get("document:change");
+  change({target:{dataset:{step:"0"},checked:true,matches:()=>true}});
+  click({action:"lesson-tab",tab:"practice"});
+  change({target:{dataset:{step:"1"},checked:true,matches:()=>true}});
+  if(verify)change({target:{dataset:{step:"2"},checked:true,matches:()=>true}});
 }
 test("приложение загружается без DOM-ошибок и выводит план дня",()=>{
   const a=runApp();
@@ -55,6 +62,7 @@ test("результат занятий сохраняется и низкая �
   click({action:"detail",id:first.id});
   assert.ok(a.node("#dialog-content").innerHTML.includes("Теория: Фоксфорд + учебник"));
   assert.ok(a.node("#dialog-content").innerHTML.includes("2. Задания и проверка"));
+  markStudySteps(a,click,false);
   a.node("#task-score").value="2/10";
   click({action:"save-score"});
   const saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
@@ -68,7 +76,8 @@ test("отметка выполненного блока сохраняется 
   if(!L.isStudyDay(date)) return;
   const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[date][0];
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
-  click({action:"detail",id:first.id});a.node("#task-score").value="4/5";click({action:"save-score"});
+  click({action:"detail",id:first.id});markStudySteps(a,click);
+  a.node("#task-score").value="4/5";click({action:"save-score"});
   click({action:"toggle-task",id:first.id});
   const saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(saved.completed[first.id],first.subject);
@@ -185,7 +194,8 @@ test("сегодня показывает старые обязательные 
   assert.ok(a.node("#app").innerHTML.includes("Следующее занятие"));
   const first=assigned[0];
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
-  click({action:"detail",id:first.id});a.node("#task-score").value="4/5";click({action:"save-score"});
+  click({action:"detail",id:first.id});markStudySteps(a,click);
+  a.node("#task-score").value="4/5";click({action:"save-score"});
   click({action:"toggle-task",id:first.id});
   const now=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(now.completed[first.id],first.subject);
@@ -341,6 +351,7 @@ test("теория Фоксфорд отделена от прямых зада�
   assert.ok(html.includes("Задания и проверка"));
   assert.ok(html.includes("category_id="));
   assert.ok(!html.includes("fipi.ru"));
+  a.events.get("document:change")({target:{dataset:{step:"0"},checked:true,matches:()=>true}});
   click({action:"lesson-tab",tab:"practice"});
   assert.equal(a.node("#lesson-theory").hidden,true);
   assert.equal(a.node("#lesson-practice").hidden,false);
@@ -431,14 +442,33 @@ test("интегрированная тема: теория и самостоя�
  click({action:"toggle-task",id:first.id});
  let saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
  assert.ok(!saved.completed[first.id],"Без самостоятельного результата занятие не зачтено");
- click({action:"detail",id:first.id});
- a.node("#task-score").value="4/5";click({action:"save-score"});
- click({action:"toggle-task",id:first.id});
+  click({action:"detail",id:first.id});
+  click({action:"lesson-tab",tab:"practice"});
+  assert.ok(a.node("#notice").textContent.includes("Сначала изучите теорию"),"Практика не открывается до теории");
+  a.node("#task-score").value="4/5";click({action:"save-score"});
+  assert.equal(JSON.parse(a.store.get("ege2027-local-progress-v1")).results[first.id],undefined,"Оценка не сохраняется до теории");
+  markStudySteps(a,click);
+  a.node("#task-score").value="4/5";click({action:"save-score"});
+  click({action:"toggle-task",id:first.id});
  saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
  assert.equal(saved.completed[first.id],first.subject);
  assert.equal(saved.topicProgress[first.topicKey].theory,true);
  assert.equal(saved.topicProgress[first.topicKey].practice,true);
  assert.ok(saved.reviews[first.topicKey],"После освоения назначается повторение");
+});
+test("составная тема показывает три проверенные подтемы, а непроверенные связи не выдаёт за полные",()=>{
+  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+  click({action:"open-topic",key:"chem:1:1"});
+  let html=a.node("#dialog-content").innerHTML;
+  assert.ok(html.includes("Что именно изучить по этой теме"));
+  for(const part of ["механизмы химической связи","решётки","Степень окисления"])
+    assert.ok(html.toLowerCase().includes(part.toLowerCase()),part);
+  assert.ok(html.includes("tipy-kristallicheskih-reshetok"));
+  assert.ok(html.includes("algoritm-opredeleniya-stepeni-okisleniya"));
+  click({action:"open-topic",key:"math:2:2"});
+  html=a.node("#dialog-content").innerHTML;
+  assert.ok(html.includes("Точное покрытие каждого пункта внешними материалами пока не проверено"));
+  assert.ok(html.includes("Для этого пункта соответствие внешних материалов не проверено"));
 });
 test("математика №6 показывает ФИПИ-проект и прямую подборку задач по дисперсии",()=>{
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});

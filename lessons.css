@@ -44,3 +44,13 @@
 .dependency-panel li span{font-size:13px;font-weight:690;line-height:1.5}
 .dependency-panel li small{font-size:11px;color:#8c704b}
 .dependency-panel li button{justify-self:start}
+.content-coverage{margin:18px 0;border-color:#d7e1f1;box-shadow:none}
+.content-coverage h3{margin-bottom:8px}
+.coverage-parts{display:grid;gap:10px;margin:0;padding-left:24px}
+.coverage-parts li{padding:4px 0;line-height:1.55;overflow-wrap:anywhere}
+.coverage-parts li strong{display:block;font-size:13px}
+.coverage-evidence,.coverage-unreviewed{font-size:12px;line-height:1.65;margin-top:4px}
+.coverage-evidence{color:#396f5c}
+.coverage-unreviewed{color:#845e35}
+.coverage-evidence a{overflow-wrap:anywhere}
+

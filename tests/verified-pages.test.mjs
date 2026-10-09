@@ -58,6 +58,14 @@ test("160 из 234 учебных карточек имеют проверенн
  assert.equal(verified,160);
  assert.equal(unmapped,74);
 });
+test("химическая связь не лишена решёток и степеней окисления в карте учебника",()=>{
+ const entries=W.EGE_READING.get("chem:1:1").entries;
+ const labels=entries.map(e=>e.editionId+":"+e.number);
+ assert.ok(labels.includes("chemPaper11:53"),"Ковалентная связь");
+ assert.ok(labels.includes("chemPaper11:54"),"Ионные решётки");
+ assert.ok(labels.includes("chemPaper11:55"),"Металлическая связь и решётки");
+ assert.ok(labels.includes("chemPaper10:7"),"ОВР как опора для степеней окисления — необходимо уточнить внутри §");
+});
 test("прямые темы химии, биологии и математики имеют номер и страницу",()=>{
  for(const key of ["bio:1:2","bio:6:1","bio:21:0","chem:1:0","chem:9:0","math:5:1","math:8:0"]){
    const r=W.EGE_READING.get(key);
@@ -103,6 +111,20 @@ test("редакторская проверка: тригонометрия ≠ 
  assert.ok(entries.some(x=>x.editionId==="mathPaper10"&&x.number===17),"Радианная мера угла обязательна");
  assert.ok(entries.some(x=>x.editionId==="mathPaper10"&&x.number===18),"Тригонометрические функции обязательны");
  assert.ok(entries.some(x=>x.editionId==="geo2026"),"Базовая геометрия представлена отдельно");
+});
+test("редакционная ревизия исключает несвязанные главы и добавляет точные основы по предметам",()=>{
+  const entries=key=>W.EGE_READING.get(key).entries;
+  const sections=key=>Array.from(entries(key),e=>e.editionId+":"+e.number);
+  const chemMole=sections("chem:1:2");
+  assert.deepEqual(chemMole,["chemPaper10:5","chemPaper10:6"],"Моль и газовые расчёты не должны ссылаться на ОВР и изомерию");
+  assert.ok(!sections("chem:4:2").includes("chemPaper10:9"),"Спирты и альдегиды не равны растворам");
+  for(const n of [25,29])assert.ok(sections("chem:9:0").includes("chemPaper10:"+n),"Свойства алканов и алкенов");
+  for(const n of [34,37])assert.ok(sections("chem:9:1").includes("chemPaper10:"+n),"Реакции алкинов и аренов");
+  assert.ok(sections("bio:9:1").includes("bioPlant7:8"),"Почки");
+  assert.ok(sections("bio:11:0").includes("bioPlant7:51"),"Плауны и хвощи");
+  assert.ok(!sections("math:1:1").includes("mathPaper11:4"),"Логарифмы не должны заменять степенные и корневые преобразования");
+  for(const n of [21,22,23])assert.ok(sections("math:2:2").includes("mathPaper11:"+n),"Случайные величины, распределения и их характеристики");
+  assert.ok(!sections("math:2:2").includes("mathPaper11:26"),"Методы решения уравнений не равны распределениям");
 });
 test("адресное повторение не выдаёт общие страницы по производной за исправление всех заданий №1–13",()=>{
  const info=W.EGE_READING.get("math:10:1");
