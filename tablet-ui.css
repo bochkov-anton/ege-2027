@@ -1,0 +1,208 @@
+/* Tablet-first interaction layer. Core desktop and mobile rules remain intact.
+ * 1) A compact navigation rail on 761–1199px displays without wasting width.
+ * 2) A readable, wide study dialog and 44–48px touch controls.
+ * 3) Six clearly labeled bottom destinations on small screens.
+ * No storage keys or lesson identifiers are changed.
+ */
+:root{--tap-min:44px;--muted:#5b687d}
+html{scroll-padding-top:90px}
+button,summary,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+a,button,summary{touch-action:manipulation}
+button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
+  outline:3px solid #5266cc;outline-offset:3px
+}
+.content,.dialog-pad,.task-copy,.topic,.main{min-width:0}
+.main{overflow-x:clip}
+.content{overflow-wrap:break-word}
+.btn,.nav button,.settings-nav{min-height:var(--tap-min)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;line-height:1.35;white-space:normal;text-align:center}
+.btn.small{min-height:40px}
+.dialog-close{min-width:48px;min-height:48px;display:inline-grid;place-items:center;flex:none;font-size:26px}
+.check-button{min-width:44px;min-height:44px}
+.mobile-nav button{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;min-height:58px}
+.mobile-nav .mobile-symbol{display:block;font-size:19px;line-height:1.1;font-weight:600}
+.mobile-nav button.active{box-shadow:inset 0 3px 0 var(--accent)}
+.week-day{overflow-wrap:anywhere}
+.week-topic,.topic-title,.task-goal,.dialog-head h2,.resource-copy,.note{overflow-wrap:anywhere}
+.lesson-objective p{line-height:1.65}
+.verified-reading,.content-coverage,.textbook-section,.study-chapter{min-width:0}
+.source-route summary,.resource-add summary,.school-summary{padding-block:7px}
+.source-route summary::marker{color:var(--accent)}
+.content-coverage{padding:17px 19px}
+.content-coverage>summary{font-size:14px;color:#2d427b;font-weight:800;cursor:pointer;min-height:44px;display:list-item;line-height:1.7}
+.content-coverage:not([open]){padding-bottom:12px}
+.content-coverage>h3{margin:12px 0 8px}
+#task-dialog .extra-materials{border:1px solid #dce4f2;border-radius:14px;padding:13px 17px;background:#f9fbff;min-width:0}
+#task-dialog .extra-materials>summary{cursor:pointer;min-height:44px;display:list-item;align-content:center;
+ color:#344d84;font-weight:800;font-size:14px;line-height:1.55}
+#task-dialog .extra-materials[open]>summary{margin-bottom:14px}
+#task-dialog .extra-materials .verified-reading{margin:10px 0}
+#task-dialog .extra-materials .textbook-section{margin:12px 0}
+@media(max-width:760px){.content-coverage{padding:13px 15px}#task-dialog .extra-materials{padding:10px 12px}}
+
+.resource-line .resource-buttons{flex-shrink:0}
+#task-dialog{overscroll-behavior:contain;scrollbar-gutter:stable}
+#dialog-content{min-width:0}
+#task-dialog .dialog-head{align-items:flex-start}
+#task-dialog .dialog-head-actions{display:flex;gap:8px;align-items:flex-start;flex:none}
+#task-dialog .reader-font-btn{min-height:48px;min-width:48px;border-radius:10px;
+ border:1px solid #d5ddef;color:#39529e;background:#eef2ff;font-size:16px;font-weight:800;cursor:pointer}
+#task-dialog .reader-font-btn[aria-pressed="true"]{background:#4057b8;border-color:#4057b8;color:#fff}
+#task-dialog.large-reading .study-chapter p,#task-dialog.large-reading .lesson-objective p{
+ font-size:18px!important;line-height:1.8}
+#task-dialog.large-reading .step-line,#task-dialog.large-reading .coverage-parts li,
+#task-dialog.large-reading .route-facets li,#task-dialog.large-reading .direct-description strong,
+#task-dialog.large-reading .verified-edition li{font-size:16px!important;line-height:1.7}
+#task-dialog.large-reading .note,#task-dialog.large-reading .route-readings li{
+ font-size:15px!important;line-height:1.7}
+
+#task-dialog .dialog-head h2{line-height:1.35}
+#task-dialog .lesson-section{min-width:0}
+#task-dialog .lesson-tabs{position:sticky;top:0;z-index:5;border:1px solid #e0e6f4;
+  box-shadow:0 5px 16px rgba(27,48,95,.08)}
+#task-dialog .lesson-tab{min-height:52px;font-size:14px;line-height:1.35}
+#task-dialog .step-line{min-height:50px;padding-block:13px}
+#task-dialog .step-line input{width:21px;height:21px;margin-top:1px}
+#task-dialog .field input,#task-dialog .field textarea,#task-dialog .field select,
+#task-dialog .textbook-place input{min-height:46px;font-size:16px}
+#task-dialog .source-route details{padding:15px 17px}
+#task-dialog .route-facets>li{padding:9px 2px 12px}
+#task-dialog .study-chapter p,#task-dialog .lesson-objective p{font-size:15px;line-height:1.75}
+#task-dialog .foxford-item .note,#task-dialog .source-route li,#task-dialog .textbook-section-head p,
+#task-dialog .verified-edition li{font-size:13px;line-height:1.7}
+#task-dialog .coverage-parts strong{font-size:14px}
+#task-dialog .coverage-evidence,#task-dialog .coverage-unreviewed{font-size:13px}
+#task-dialog .source-route h4,#task-dialog .study-chapter h3{font-size:15px}
+#task-dialog a{overflow-wrap:anywhere}
+#task-dialog .lesson-tabs:focus-within{outline:0}
+#notice{max-width:min(90vw,560px);text-align:center}
+@media(hover:none),(pointer:coarse){
+  .btn,.btn.small,.link-list a,.resource-line a,.school-summary,.week-day,
+  .topic button,.review-actions button,.mobile-nav button,.nav button,
+  .settings-nav,.dialog-close{min-height:48px}
+  .subject-topics .topic{min-height:178px}
+  .direct-description .row{gap:9px;flex-wrap:wrap}
+  input[type="checkbox"],input[type="radio"]{accent-color:var(--accent)}
+}
+/* Tablet portrait and landscape: 768/800/834/1024/1180px viewports */
+@media(min-width:761px) and (max-width:1199px){
+  .shell{grid-template-columns:88px minmax(0,1fr)}
+  .sidebar{width:88px!important;min-width:0;padding:18px 7px 12px;height:100dvh;
+    align-items:center;overflow-y:auto;overflow-x:hidden}
+  .brand{padding:0 0 22px;display:flex;justify-content:center;width:100%}
+  .brand>div:last-child{display:none}
+  .brand-logo{width:48px;height:48px;font-size:19px}
+  .nav-caption,.side-message{display:none}
+  .nav{width:100%;gap:9px}
+  .nav button,.settings-nav{position:relative;width:100%;border-radius:13px;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    gap:3px;min-height:69px;padding:8px 3px;text-align:center;font-size:11px;line-height:1.25}
+  .nav .nav-symbol,.settings-nav .nav-symbol{width:auto;font-size:23px;line-height:1.1}
+  .nav .nav-label,.settings-nav .nav-label{font-size:11px;white-space:normal;font-weight:700}
+  .sidebar-bottom{width:100%}
+  .small-count{position:absolute;right:2px;top:3px;margin:0;background:#eef1ff;border-radius:9px;
+    padding:1px 4px;font-size:10px}
+  .main .content{max-width:1100px;padding:24px clamp(20px,3.2vw,42px) 72px}
+  .topbar{height:65px;padding-inline:clamp(20px,3.2vw,42px)}
+  .topbar-label{font-size:13px}
+  .top-actions{gap:10px}
+  .top-date{font-size:12px}
+  .top-actions .btn.small{font-size:13px;padding:10px 13px}
+  .grid-2{grid-template-columns:minmax(0,1.25fr) minmax(255px,.95fr);gap:15px}
+  .grid-3,.subject-topics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .week-days{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .task{grid-template-columns:48px minmax(0,1fr);gap:12px;padding:19px}
+  .task-icon{width:48px;height:48px}
+  .task-copy h3{font-size:15px}
+  .task-goal{font-size:13px}
+  .task-actions{grid-column:2;max-width:none;justify-content:flex-start;gap:9px}
+  .task-actions .btn{font-size:13px;min-height:46px;padding:10px 14px}
+  .week-day{min-height:150px}
+  .topic{min-height:172px}
+  .topic .topic-title{font-size:14px}
+  .school-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #task-dialog{width:min(920px,calc(100vw - 34px));max-width:none;
+    max-height:calc(100dvh - 36px);border-radius:19px}
+  #task-dialog .dialog-pad{padding:24px clamp(24px,4vw,40px) 34px}
+  #task-dialog .dialog-head h2{font-size:22px}
+  #task-dialog .lesson-section{gap:19px}
+  #task-dialog .lesson-objective{padding:20px}
+  #task-dialog .study-chapter{padding:20px 22px}
+  #task-dialog .foxford-list{padding:18px 22px}
+  #task-dialog .verified-reading{padding:19px}
+  #task-dialog .source-route li{font-size:14px}
+  #task-dialog .lesson-tab{font-size:15px;min-height:58px}
+  #task-dialog .direct-exercise{padding:17px}
+  .study-session-inner{padding-inline:clamp(20px,3.2vw,42px)}
+  .android-pwa-banner{width:calc(100% - 42px)}
+}
+/* Small tablet portrait, but still over phone breakpoint */
+@media(min-width:761px) and (max-width:890px){
+  .top-date{display:none}
+  .grid-2{grid-template-columns:1fr}
+  .metric{padding:17px}
+  .hero{flex-wrap:wrap;gap:14px}
+  .hero .btn{min-height:46px}
+  #task-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px)}
+  #task-dialog .dialog-pad{padding:20px 24px}
+  .backlog-row{flex-wrap:wrap}
+  .backlog-row>.btn{margin-left:auto}
+}
+/* Phone: stable six-way navigation, respect safe area, no horizontal clipping */
+@media(max-width:760px){
+  .mobile-nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;
+    padding:4px 4px max(5px,env(safe-area-inset-bottom,0px));box-shadow:0 -5px 22px rgba(34,49,84,.05)}
+  .mobile-nav button{min-width:0;min-height:60px;padding:8px 1px;font-size:10px;
+    line-height:1.25;white-space:nowrap}
+  .mobile-nav .mobile-symbol{font-size:19px}
+  .content{padding:20px clamp(12px,3.6vw,23px) calc(114px + env(safe-area-inset-bottom,0px))}
+  .topbar{gap:6px;padding-inline:14px}
+  .topbar-label{font-size:12px}
+  .top-actions #quick-search{min-height:43px;font-size:12px;padding:8px 12px}
+  .section-head{gap:10px}
+  .metric-strip{gap:8px}
+  .metric{padding:13px 9px}
+  .metric span{font-size:11px}
+  .task{grid-template-columns:42px minmax(0,1fr);gap:10px;padding:14px}
+  .task-icon{width:42px;height:42px}
+  .task-actions{grid-column:1/-1;justify-content:flex-start;gap:8px}
+  .task-actions .btn{flex:1 1 125px;min-height:47px}
+  .task .check-button{min-height:48px;min-width:48px}
+  .week-days{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .week-day{min-height:154px}
+  #task-dialog{width:calc(100vw - 12px);max-height:calc(100dvh - 12px);
+    border-radius:15px;scrollbar-gutter:auto}
+  #task-dialog .dialog-pad{padding:14px 15px 25px}
+  #task-dialog .dialog-head h2{font-size:19px}
+  #task-dialog .lesson-objective{padding:14px}
+  #task-dialog .lesson-tabs{margin-block:14px 12px;gap:5px;padding:4px}
+  #task-dialog .lesson-tab{font-size:12px;padding:10px 5px;min-height:58px}
+  #task-dialog .lesson-section{gap:13px}
+  #task-dialog .study-chapter p,#task-dialog .lesson-objective p{font-size:14px}
+  #task-dialog .source-route details{padding:11px 12px}
+  #task-dialog .verified-edition{padding:12px}
+  #task-dialog .dialog-actions{align-items:stretch}
+  #task-dialog .dialog-actions .btn{flex:1 1 170px;min-height:48px}
+  #notice{bottom:calc(87px + env(safe-area-inset-bottom,0px))}
+  .study-session-inner{padding-inline:13px}
+}
+@media(max-width:360px){
+  .mobile-nav button{font-size:9px;letter-spacing:-.15px}
+  .mobile-nav .mobile-symbol{font-size:18px}
+  .topbar-label{max-width:128px}
+  .week-days{grid-template-columns:1fr}
+  .task-actions .btn{flex-basis:100%}
+}
+@media(max-height:600px) and (min-width:761px){
+  .sidebar{padding-block:9px}
+  .brand{padding-bottom:10px}
+  .brand-logo{height:38px;width:38px}
+  .nav{gap:3px}
+  .nav button,.settings-nav{min-height:52px;padding-block:4px}
+  .nav .nav-symbol{font-size:19px}
+  .topbar{height:56px}
+  #task-dialog{max-height:calc(100dvh - 12px)}
+}
+@media(prefers-reduced-motion:reduce){
+  #task-dialog .lesson-tabs,.task,.btn{scroll-behavior:auto;transition:none}
+}

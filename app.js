@@ -9,6 +9,15 @@
   catch{state=L.safeState(null,currentMonday);}
   let view="today",date=L.today(),focusWeek=Math.max(0,Math.min(25,L.weekNumber(date,state.startDate))),focusSubject="bio",searchQuery="",searchSubject="all",searchPinned=false,openTopicKey=null,schoolExpanded=false,showAllReviews=false;
   let openTask=null,noticeHandle=null,lessonTab='theory';
+  const READER_PREF="ege2027-large-reader-v1";
+  let largeReading=false;
+  try{largeReading=localStorage.getItem(READER_PREF)==="1";}catch{}
+  function applyReaderMode(){
+    $("#task-dialog").classList.toggle("large-reading",largeReading);
+    const button=document.querySelector("#task-dialog .reader-font-btn");
+    button?.setAttribute?.("aria-pressed",String(largeReading));
+    button?.setAttribute?.("aria-label",largeReading?"Вернуть обычный размер текста":"Увеличить текст учебных материалов");
+  }
   function save(){try{localStorage.setItem(STORE,JSON.stringify(state));}catch{notice("Не удалось сохранить: скачайте резервную копию JSON.");}}
   function notice(msg){$("#notice").textContent=msg;clearTimeout(noticeHandle);noticeHandle=setTimeout(()=>$("#notice").textContent="",3600);}
   function subj(key){return D.subjects[key]||D.subjects.bio;}
@@ -55,7 +64,7 @@
   function coveragePanel(key){
     const coverage=window.EGE_COVERAGE?.get(key);
     if(!coverage)return "";
-    return '<section class="card padding content-coverage" aria-label="Покрытие подтем материалами">'+
+    return '<details class="card padding content-coverage" aria-label="Покрытие подтем материалами"'+(coverage.components.length<=3?' open':'')+'><summary>План изучения · '+safe(coverage.components.length)+' подтем</summary>'+
       '<h3>Что именно изучить по этой теме</h3>'+
       '<p class="note">'+safe(coverage.notice)+'</p>'+
       '<ol class="coverage-parts">'+coverage.components.map(part=>
@@ -70,7 +79,7 @@
           (part.candidates?.practice?.length?'<div class="coverage-suggestions">Подборки-кандидаты по названию (задания не проверены): '+
             part.candidates.practice.map(x=>'<a href="'+safe(x.url)+'" rel="noopener noreferrer" target="_blank">'+safe(x.title)+' ↗</a>').join('; ')+'</div>':""))+
         '</li>').join("")+'</ol>'+
-      '</section>';
+      '</details>';
   }
   function studySourcesPanel(key){
     const guide=window.EGE_STUDY_SOURCES?.get(key);
@@ -250,10 +259,14 @@
     const guide=authored(key,subject,title),info=theoryFor(key,subject,title);
     const showTheory=initial!=="practice",checks=task?(state.steps[task.id]||[]):[];
     let html='<nav class="lesson-tabs" aria-label="Разделы темы" role="tablist">'+
-      '<button type="button" role="tab" aria-selected="'+showTheory+'" class="lesson-tab'+(showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="theory">1. Теория: Фоксфорд + учебник</button>'+
-      '<button type="button" role="tab" aria-selected="'+!showTheory+'" class="lesson-tab'+(!showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="practice">2. Задания и проверка</button></nav>';
-    html+='<section id="lesson-theory" class="lesson-section" role="tabpanel"'+(showTheory?"":" hidden")+'>'+
+      '<button type="button" role="tab" id="tab-theory" aria-controls="lesson-theory" tabindex="'+(showTheory?"0":"-1")+'" aria-selected="'+showTheory+'" class="lesson-tab'+(showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="theory">1. Теория: Фоксфорд + учебник</button>'+
+      '<button type="button" role="tab" id="tab-practice" aria-controls="lesson-practice" tabindex="'+(!showTheory?"0":"-1")+'" aria-selected="'+!showTheory+'" class="lesson-tab'+(!showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="practice">2. Задания и проверка</button></nav>';
+    html+='<section id="lesson-theory" class="lesson-section" role="tabpanel" aria-labelledby="tab-theory" tabindex="0"'+(showTheory?"":" hidden")+'>'+
       '<div class="study-chapter"><div class="study-kicker">ЧТО НУЖНО ПОНЯТЬ</div><p>'+safe(guide.know)+'</p></div>';
+    html+='<div class="study-chapter"><div class="study-kicker">КРАТКИЙ КОНСПЕКТ · ОФЛАЙН</div>'+
+      '<h3>Объяснение</h3><p>'+safe(info.explanation||guide.know)+'</p>'+
+      '<div class="worked-example"><strong>Разобранный пример</strong><p>'+safe(info.example||guide.doTask)+'</p></div>'+
+      '<h3>Что воспроизвести без подсказки</h3><p>'+safe(guide.doTask)+'</p></div>';
     html+=coveragePanel(key)+studySourcesPanel(key);
     const articles=info.articles||[];
     if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">ФОКСФОРД · КРАТКОЕ ОБЪЯСНЕНИЕ</div>'+
@@ -266,17 +279,14 @@
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать ссылку</button></div>').join("")+'</div>';
     else html+='<div class="foxford-missing"><strong>Точно соответствующая теме статья Фоксфорда не подтверждена.</strong>'+
       '<p>Не подменяем теорию кодификатором или неподходящей статьёй. Используйте конспект ниже.</p></div>';
-    html+=verifiedReadingPanel(key);
-    html+=textbookPanel(key,subject,title);
-    html+='<div class="study-chapter"><div class="study-kicker">КРАТКИЙ КОНСПЕКТ · ОФЛАЙН</div>'+
-      '<h3>Объяснение</h3><p>'+safe(info.explanation||guide.know)+'</p>'+
-      '<div class="worked-example"><strong>Разобранный пример</strong><p>'+safe(info.example||guide.doTask)+'</p></div>'+
-      '<h3>Что воспроизвести без подсказки</h3><p>'+safe(guide.doTask)+'</p></div>';
+    html+='<details class="extra-materials"'+(articles.length?'':' open')+'><summary>Учебники · точные параграфы и дополнительные материалы</summary>'+
+      verifiedReadingPanel(key)+textbookPanel(key,subject,title)+'</details>';
+
     if(task?.phase==="integrated"){
       html+='<div class="step-list"><label class="step-line"><input type="checkbox" data-action="toggle-step" data-step="0"'+(checks[0]?" checked":"")+'><span>Теория изучена: могу объяснить основные понятия без подсказки</span></label></div>';
     }
     html+='<button type="button" class="btn" data-action="lesson-tab" data-tab="practice">Перейти к заданиям →</button></section>';
-    html+='<section id="lesson-practice" class="lesson-section" role="tabpanel"'+(showTheory?" hidden":"")+'>'+
+    html+='<section id="lesson-practice" class="lesson-section" role="tabpanel" aria-labelledby="tab-practice" tabindex="0"'+(showTheory?" hidden":"")+'>'+
       examMeta(key)+'<div class="study-chapter"><div class="study-kicker">КОНКРЕТНОЕ УЧЕБНОЕ ДЕЙСТВИЕ</div>'+
       '<h3>Что выполнить</h3><p>'+safe(guide.doTask)+'</p>'+
       '<p class="criterion"><strong>Критерий освоения:</strong> '+safe(guide.check)+'</p></div>'+
@@ -580,7 +590,7 @@
     $("#top-date").textContent=dformat(L.today(),{day:"numeric",month:"long",year:"numeric"});
     const n=L.dueItems(state.reviews,L.today()).length;
     $("#review-badge").textContent=n?n:"";
-    document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
+    document.querySelectorAll("[data-view]").forEach(b=>{const active=b.dataset.view===view;b.classList.toggle("active",active);if(active)b.setAttribute?.("aria-current","page");else b.removeAttribute?.("aria-current");});
     $("#app").innerHTML=({today:renderToday,week:renderWeek,subjects:renderSubjects,reviews:renderReviews,progress:renderProgress,settings:renderSettings,backlog:renderBacklog}[view]||renderToday)();
     renderSession();
     window.EGE_ANDROID?.updateUI?.();
@@ -787,7 +797,7 @@
     const kind={new:"Изучить теорию",practice:"Решить после изучения теории",integrated:"Прочитать и решить",mixed:"Смешанная практика",review:"Проверить себя"}[t.kind];
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
       '<h2 style="margin:12px 0 5px">'+safe(t.title)+'</h2><p class="note">'+safe(kind)+' · '+t.minutes+' мин</p></div>'+
-      '<button class="dialog-close" data-action="close-dialog" aria-label="Закрыть карточку">×</button></div>'+
+      '<div class="dialog-head-actions"><button type="button" class="reader-font-btn" data-action="toggle-reader-size" aria-pressed="false" aria-label="Увеличить текст учебных материалов" title="Размер текста">Аа</button><button class="dialog-close" data-action="close-dialog" aria-label="Закрыть карточку">×</button></div></div>'+
       dependencyPanel(t.topicKey)+
       '<div class="lesson-objective"><div class="study-kicker">ЦЕЛЬ ЗАНЯТИЯ</div><p>'+safe(guide.doTask)+'</p>'+
       '<small><strong>Проверка освоения:</strong> '+safe(guide.check)+'</small></div>'+
@@ -804,6 +814,8 @@
       '<div class="field"><label for="dialog-error-text">Что исправить?</label><textarea id="dialog-error-text" maxlength="800" placeholder="Например: путаю знак при раскрытии скобок. Решить ещё 3 похожих примера."></textarea></div>'+
       '<button class="btn small" data-action="dialog-save-error">Сохранить ошибку</button></div></div>';
     $("#task-dialog").showModal();
+    applyReaderMode();
+    document.querySelector("#task-dialog .dialog-close")?.focus?.();
   }
   function dependencyPanel(id){
     const list=window.EGE_CURRICULUM?.prerequisitePath(state,id,10)||[];
@@ -823,7 +835,7 @@
     const missing=C.unmet(state,key);
     $("#dialog-content").innerHTML='<div class="dialog-pad"><div class="dialog-head"><div>'+badge(t.subject)+
       '<p class="note" style="margin:12px 0 4px">Учебная неделя '+(C.placement[key]?.week||t.week+1)+' · '+safe(status)+'</p>'+
-      '<h2>'+safe(t.title)+'</h2></div><button class="dialog-close" data-action="close-dialog" aria-label="Закрыть">×</button></div>'+
+      '<h2>'+safe(t.title)+'</h2></div><div class="dialog-head-actions"><button type="button" class="reader-font-btn" data-action="toggle-reader-size" aria-pressed="false" aria-label="Увеличить текст учебных материалов" title="Размер текста">Аа</button><button class="dialog-close" data-action="close-dialog" aria-label="Закрыть">×</button></div></div>'+
       dependencyPanel(key)+
       '<div class="lesson-objective"><div class="study-kicker">ЦЕЛЬ ТЕМЫ</div><p>'+safe(guide.doTask)+'</p></div>'+
       '<div id="lesson-panel">'+lessonPanel(key,t.subject,t.title,null,"theory")+'</div>'+
@@ -832,6 +844,8 @@
       '<div class="row wrap" style="margin-top:16px"><button class="btn secondary" data-action="pin-topic" data-key="'+safe(key)+'">'+(state.pinned[key]?"★ В закладках":"☆ В закладки")+'</button><button class="btn" data-action="start-topic-review" data-key="'+safe(key)+'">'+(state.reviews[key]?"Повтор уже запланирован":"Изучила → назначить повтор")+'</button>'+
       (state.reviews[key]?'<button class="btn secondary" data-view="reviews">Открыть повторения</button>':"")+'</div></div>';
     $("#task-dialog").showModal();
+    applyReaderMode();
+    document.querySelector("#task-dialog .dialog-close")?.focus?.();
   }
   function closeDialog(){$("#task-dialog").close();openTask=null;openTopicKey=null;}
   function addError(subject,title,description,kind="other",topicKey=null){
@@ -937,8 +951,9 @@
           const selected=el.dataset.tab===lessonTab;
           el.classList.toggle("selected",selected);
           el.setAttribute("aria-selected",String(selected));
+          el.tabIndex=selected?0:-1;
         });
-        $("#lesson-panel")?.scrollIntoView?.({block:"start",behavior:"smooth"});
+        $("#lesson-panel")?.scrollIntoView?.({block:"start",behavior:window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches?"auto":"smooth"});
         break;
       }
       case "copy-resource":{
@@ -976,6 +991,11 @@
       }
       case "import":$("#import-input").click();break;
       case "reset":if(confirm("Удалить ВСЕ отметки, повторы и ошибки в этом браузере?")){state=L.safeState(null,currentMonday);save();date=L.today();focusWeek=0;render();}break;
+      case "toggle-reader-size":
+        largeReading=!largeReading;
+        try{localStorage.setItem(READER_PREF,largeReading?"1":"0");}catch{}
+        applyReaderMode();
+        break;
       case "close-dialog":closeDialog();break;
       case "dialog-complete":if(openTask){const id=openTask.id;closeDialog();completeTask(id);}break;
       case "save-score":{
@@ -1119,6 +1139,18 @@
   $("#task-dialog").addEventListener("close",()=>{openTask=null;openTopicKey=null;});
   $("#quick-search").addEventListener("click",searchAction);
   document.addEventListener("keydown",ev=>{
+    if(["ArrowLeft","ArrowRight","Home","End"].includes(ev.key)&&ev.target?.matches?.(".lesson-tab")){
+      const tabs=[...document.querySelectorAll(".lesson-tab")];
+      const current=tabs.indexOf(ev.target);
+      if(current>=0&&tabs.length){
+        ev.preventDefault();
+        const next=ev.key==="Home"?0:ev.key==="End"?tabs.length-1:
+          (current+(ev.key==="ArrowRight"?1:-1)+tabs.length)%tabs.length;
+        tabs[next].focus();
+        tabs[next].click();
+      }
+      return;
+    }
     if(ev.key==="/"&&!ev.altKey&&!ev.ctrlKey&&!ev.metaKey&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName)){
       ev.preventDefault();searchAction();
     }

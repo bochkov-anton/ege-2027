@@ -37,6 +37,21 @@ test("приложение загружается без DOM-ошибок и в�
   assert.ok(a.node("#app").innerHTML.includes("Ежедневный план"));
   assert.ok(["Следующее занятие","День без занятий","Основная работа завершена"].some(v=>a.node("#app").innerHTML.includes(v)));
 });
+test("планшетный режим чтения увеличивает текст, не изменяя прогресс",()=>{
+ const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({action:"open-topic",key:"chem:1:1"});
+ const html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes('data-action="toggle-reader-size"'));
+ assert.ok(html.includes('aria-controls="lesson-theory"'));
+ assert.ok(html.includes('aria-controls="lesson-practice"'));
+ assert.ok(html.indexOf('КРАТКИЙ КОНСПЕКТ')<html.indexOf('<div class="foxford-list">'));
+ const progressBefore=a.store.get("ege2027-local-progress-v1");
+ click({action:"toggle-reader-size"});
+ assert.equal(a.store.get("ege2027-large-reader-v1"),"1");
+ assert.equal(a.store.get("ege2027-local-progress-v1"),progressBefore);
+ click({action:"toggle-reader-size"});
+ assert.equal(a.store.get("ege2027-large-reader-v1"),"0");
+});
 test("навигация отрисовывает все разделы",()=>{
   const a=runApp();
   for(const [view,title] of [["week","Неделя"],["subjects","Предметы"],["reviews","Повторения"],["progress","Прогресс"],["settings","Настройки"]]){
