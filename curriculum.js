@@ -250,7 +250,7 @@ function agenda(state,day,mode,currentDate,legacyPlan,legacyAgenda){
    const progress=topicStatus(state,item.topicKey);
    if(state.completed?.[item.id])return true; // Historical completion stays visible.
    if(item.phase==="theory"&&progress.theory)return false;
-   if(item.phase==="practice"&&progress.practice)return false;
+   if(item.phase==="practice"&&(!progress.theory||progress.practice))return false; // Never show exercises before theory is marked studied.
    if(item.phase==="integrated"&&progress.theory&&progress.practice)return false;
    return true;
  });

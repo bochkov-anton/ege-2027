@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-10-09",
+  "source": {
+    "url": "https://fipi.ru/ege/demoversii-specifikacii-kodifikatory",
+    "status": "project_2027_not_final",
+    "mappingStatus": "editorial_not_individually_fipi_verified"
+  },
+  "subjects": {
+    "bio": {
+      "topics": 78,
+      "prerequisites": 118,
+      "withPractice": 78,
+      "withStudyGuide": 78,
+      "withFipiSection": 78,
+      "withPages": 69,
+      "fipiExplicitLines": 0,
+      "inversions": 0
+    },
+    "chem": {
+      "topics": 78,
+      "prerequisites": 143,
+      "withPractice": 78,
+      "withStudyGuide": 78,
+      "withFipiSection": 78,
+      "withPages": 57,
+      "fipiExplicitLines": 12,
+      "inversions": 17
+    },
+    "math": {
+      "topics": 78,
+      "prerequisites": 108,
+      "withPractice": 78,
+      "withStudyGuide": 78,
+      "withFipiSection": 78,
+      "withPages": 34,
+      "fipiExplicitLines": 47,
+      "inversions": 1
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "calendarInversions": [
+    {
+      "topic": "chem:2:0",
+      "requiredBefore": "chem:2:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:2:2",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:2:2",
+      "requiredBefore": "chem:9:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:3:0",
+      "requiredBefore": "chem:5:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:3:2",
+      "requiredBefore": "chem:9:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:3:2",
+      "requiredBefore": "chem:13:2",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:0",
+      "requiredBefore": "chem:5:2",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:2",
+      "requiredBefore": "chem:11:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:2",
+      "requiredBefore": "chem:11:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:4:2",
+      "requiredBefore": "chem:14:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:7:2",
+      "requiredBefore": "chem:13:2",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:8:2",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:8:2",
+      "requiredBefore": "chem:9:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:8:2",
+      "requiredBefore": "chem:9:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:9:0",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:9:1",
+      "requiredBefore": "chem:10:0",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "chem:9:2",
+      "requiredBefore": "chem:10:1",
+      "reason": "calendar_dependency_inversion"
+    },
+    {
+      "topic": "math:4:2",
+      "requiredBefore": "math:5:1",
+      "reason": "calendar_dependency_inversion"
+    }
+  ],
+  "summary": {
+    "topics": 234,
+    "edges": 369,
+    "calendarInversions": 18,
+    "errors": 0
+  }
+}
