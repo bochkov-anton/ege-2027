@@ -110,6 +110,7 @@ bio:/^(?:растения|животные|организм человека|о�
 chem:/^(?:за[д­]дания для подготовки.*|задания тренировочных и диагностических работ|классификация.*вещества)$/i,
 math:/^(?:разные задачи|смешанные задачи)$/i
 };
+const prohibitedByTopic={"math:1:1":/логарифм/i,"chem:1:2":/окислител|восстановител|овр|изомер|номенклатур/i,"bio:21:0":/экологич/i,"math:23:0":/вероятност|тригонометрич/i};
 const fullTest=/полный.*(?:вариант|пробн)|полноформатн|финальн.*вариант|вариант.*экзаменационн|пробник|экзаменационн.*вариант|полувариант/i;
 function tags(subject,text){
  const dict=rules[subject]||{},t=String(text||"");
@@ -122,7 +123,7 @@ for(const subject of D.subjectOrder){
  report.bySubject[subject]={kept:0,hidden:0};
  for(let w=1;w<=26;w++)for(let i=0;i<3;i++){
   const key=subject+":"+w+":"+i,lesson=L.get(key),candidate=originalGet(key)||{};
-  const wanted=tags(subject,lesson.title),full=fullTest.test(lesson.title);
+  const wanted=tags(subject,[lesson.title,lesson.know,lesson.doTask].filter(Boolean).join("; ")),full=fullTest.test(lesson.title);
   if(subject==="math"){
     if(/№\s*14|уравнен.*№\s*14/.test(lesson.title)){wanted.push("trig","trigeq");}
     if(/№\s*16/.test(lesson.title)){wanted.push("inequality");}
@@ -141,6 +142,7 @@ for(const subject of D.subjectOrder){
   const sources=Array.isArray(candidate.sources)?candidate.sources:[];
   const audited=[];
   for(const source of sources){
+   if(prohibitedByTopic[key]?.test(source.title)){report.hidden++;continue;}
    const supplied=tags(subject,source.title),shared=wanted.filter(s=>supplied.includes(s));
    const broad=generics[subject]?.test(source.title.trim())||false;
    if(!full&&!broad&&shared.length&&/^(https:\/\/)/.test(source.url)){
@@ -153,7 +155,7 @@ for(const subject of D.subjectOrder){
   report.kept+=audited.length;report.bySubject[subject].kept+=audited.length;
   report.bySubject[subject].hidden+=sources.length-audited.length;
   if(!audited.length)report.unreviewed.push(key);
-  bank[key]={...candidate,sources:audited,
+  bank[key]={...candidate,label:lesson.title,legacyLabel:candidate.label,sources:audited,
     resourceAudit:{subject,topicTags:wanted,kept:audited.length,hidden:sources.length-audited.length,
       warning:"Это тематическая подборка по заголовку категории, не подтверждение содержания каждого задания."}};
  }

@@ -124,10 +124,17 @@ function ordered(subject){
  return result;
 }
 const order=Object.fromEntries(D.subjectOrder.map(s=>[s,ordered(s)]));
+const placement=Object.fromEntries(D.subjectOrder.flatMap(s=>
+  order[s].map((id,index)=>[id,{subject:s,position:index+1,week:Math.floor(index/3)+1,withinWeek:index%3,
+    originalWeek:records[id].week+1,originalIndex:records[id].index}])));
+const canonicalInversions=all.flatMap(id=>records[id].prerequisites.filter(dep=>
+  placement[dep].position>=placement[id].position).map(dep=>({topic:id,requiredBefore:dep})));
+if(canonicalInversions.length)throw Error("Canonical schedule violates dependencies");
 const risk=all.flatMap(id=>records[id].prerequisites.filter(d=>{
  const x=records[d],y=records[id];return x.week*3+x.index>y.week*3+y.index;
 }).map(d=>({topic:id,requiredBefore:d,reason:"calendar_dependency_inversion"})));
 function unmet(state,id){
+ if(!Object.hasOwn(records,id))return [];
  return records[id].prerequisites.filter(dep=>{
    const p=state?.topicProgress?.[dep];
    return !(p&&p.theory===true&&p.practice===true);
@@ -135,11 +142,12 @@ function unmet(state,id){
 }
 function topicStatus(state,id){
  const p=state?.topicProgress?.[id]||{};
- return {theory:p.theory===true,practice:p.practice===true,ready:unmet(state,id).length===0,
-   missing:unmet(state,id)};
+ const exists=Object.hasOwn(records,id),missing=exists?unmet(state,id):[];
+ return {theory:exists&&p.theory===true,practice:exists&&p.practice===true,
+   ready:exists&&missing.length===0,missing,unknown:!exists};
 }
 function prerequisitePath(state,id,limit=12){
- if(!records[id])return [];
+ if(!Object.hasOwn(records,id))return [];
  const found=new Set(),path=[];
  function visit(key){
    if(found.has(key))return;
@@ -154,6 +162,7 @@ function prerequisitePath(state,id,limit=12){
  return path.slice(0,Math.max(0,Math.min(30,Number.isFinite(limit)?Math.trunc(limit):12)));
 }
 function nextSubject(state,subject){
+ if(!Object.hasOwn(order,subject))return null;
  for(const id of order[subject]){
    const status=topicStatus(state,id);
    if(status.theory&&status.practice)continue;
@@ -163,8 +172,9 @@ function nextSubject(state,subject){
  return null;
 }
 function eligible(state,id,phase){
+ if(!Object.hasOwn(records,id))return false;
  const status=topicStatus(state,id);
- return !!records[id]&&status.ready&&(phase==="theory"?!status.theory:phase==="practice"&&status.theory&&!status.practice);
+ return status.ready&&(phase==="theory"?!status.theory:phase==="practice"&&status.theory&&!status.practice);
 }
 function migrateLegacy(state,oldPlan){
  if(!state.topicProgress)state.topicProgress={};
@@ -255,7 +265,7 @@ function agenda(state,day,mode,currentDate,legacyPlan,legacyAgenda){
  return work;
 }
 function readyForCompletion(state,entry){
- if(!entry?.topicKey||!records[entry.topicKey])return true;
+ if(!entry?.topicKey||!Object.hasOwn(records,entry.topicKey))return true;
  const x=topicStatus(state,entry.topicKey);
  if(!x.ready)return false;
  if(entry.phase==="theory")return true;
@@ -264,7 +274,7 @@ function readyForCompletion(state,entry){
  return false;
 }
 function markCompletion(state,entry,completed){
- if(!entry?.topicKey||!records[entry.topicKey])return;
+ if(!entry?.topicKey||!Object.hasOwn(records,entry.topicKey))return;
  if(!state.topicProgress)state.topicProgress={};
  const progress=state.topicProgress[entry.topicKey]||{};
  if(completed){
@@ -306,11 +316,11 @@ function queue(state){
  return merged;
 }
 function projectedWeek(subject,week){return order[subject].slice(week*3,week*3+3).map(id=>records[id]);}
-window.EGE_CURRICULUM={records,order,risks:risk,topicStatus,unmet,prerequisitePath,nextSubject,eligible,
+window.EGE_CURRICULUM={records,order,placement,risks:risk,canonicalInversions,topicStatus,unmet,prerequisitePath,nextSubject,eligible,
  migrateLegacy,assign,agenda,readyForCompletion,markCompletion,projectedWeek,debtSummary,queue,meta:{
  year:2027,source:"https://fipi.ru/ege/demoversii-specifikacii-kodifikatory",
  status:"FIPI project 2027; verify against approved documents on publication",
  subjects:{bio:"7 broad content areas",chem:"General, inorganic, organic, calculation, experiment",math:"2027 profile: 20 tasks including new 6,13,17"},
- version:"2.0-semantic-order-two-integrated-lessons"
+ version:"2.1-canonical-sequence-and-formal-eligibility"
 }};
 })();
