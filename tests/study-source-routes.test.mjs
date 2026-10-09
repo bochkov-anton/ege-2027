@@ -24,7 +24,7 @@ test("каждое из 234 занятий получает доказатель
    if(c.specificallyRelatedParagraphs.length){
     assert.ok(c.specificallyRelatedParagraphs.every(r=>r.verification==="verified_toc_only"));
    }
-   if(c.article) assert.ok(c.article.verification==="page_content_reviewed");
+   if(c.article) assert.ok(["source_excerpt_verified","editorial_link_selected"].includes(c.article.verification));
   }
  }
 });

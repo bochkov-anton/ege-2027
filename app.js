@@ -45,6 +45,13 @@
     return window.EGE_THEORY?.get(key,subject,title,authored(key,subject,title))||{};
   }
   function directExercises(key){return window.EGE_PRACTICE?.get(key)?.sources||[];}
+  function sourceCaveat(key,url){
+    if(key==="chem:3:0"&&/foxford\.ru\/wiki\/himiya\/gidroliz$/.test(url))
+      return "В выводах статьи встречается неточность: соль слабого основания и сильной кислоты гидролизуется по катиону, а не по аниону. Проверяйте состав ионов по учебнику.";
+    if(["math:12:0","math:12:1"].includes(key)&&/zadanie-17-ege-po-profilnoy-matematike/.test(url))
+      return "Не переносите числовой ответ из соседнего примера: проверьте все значения параметров по собственному условию.";
+    return "";
+  }
   function coveragePanel(key){
     const coverage=window.EGE_COVERAGE?.get(key);
     if(!coverage)return "";
@@ -54,7 +61,7 @@
       '<ol class="coverage-parts">'+coverage.components.map(part=>
         '<li><strong>'+safe(part.label)+'</strong>'+
         (part.source?
-          '<div class="coverage-evidence"><span>Содержание статьи проверено</span> · <a href="'+safe(part.source.url)+'" target="_blank" rel="noopener noreferrer">'+safe(part.source.title)+' ↗</a></div>':
+          '<div class="coverage-evidence"><span>'+(part.evidence==="source_excerpt_verified"?"Фрагмент текста источника проверен":"Редакционно подобрано: содержимое требуется сверить")+'</span> · <a href="'+safe(part.source.url)+'" target="_blank" rel="noopener noreferrer">'+safe(part.source.title)+' ↗</a></div>':
           '<div class="coverage-unreviewed">Для этого пункта соответствие внешних материалов не проверено</div>'+
           (part.candidates?.books?.length?'<div class="coverage-suggestions">Возможные § по оглавлению (содержимое не сверено): '+
             part.candidates.books.map(x=>safe(x.edition)+' · § '+safe(x.number)+' · с. '+safe(x.pagesLabel)).join('; ')+'</div>':"")+
@@ -73,9 +80,12 @@
       '<details><summary>Проверить весь маршрут изучения: параграфы, страницы и задачи ('+
        safe(guide.components.length)+' части)</summary>'+
       '<p class="note">'+safe(guide.notice)+'</p>'+
+       '<p class="note">Ориентир 75 минут: теория 40, задачи 25, повторение 10. Параграфы — тематическая карта, не требование читать всё подряд.</p>'+
+       (guide.workload.large?'<p class="route-load-warning"><strong>Большой объём:</strong> '+safe(guide.workload.referenceParagraphs)+
+       ' параграфов на '+safe(guide.workload.components)+' подтем. Если не успеваете, перенесите остаток на другую сессию; не отмечайте тему освоенной.</p>':"")+
       '<ol class="route-facets">'+guide.components.map(part=>
         '<li><strong>'+safe(part.label)+'</strong>'+
-        (part.article?'<div class="route-verified">Статья для этого компонента: <a href="'+safe(part.article.url)+'" target="_blank" rel="noopener noreferrer">'+safe(part.article.title)+' ↗</a></div>':"")+
+        (part.article?'<div class="route-verified">'+(part.article.verification==="source_excerpt_verified"?"Фрагмент текста проверен":"Статья подобрана редакционно, полный текст не проверен")+': <a href="'+safe(part.article.url)+'" target="_blank" rel="noopener noreferrer">'+safe(part.article.title)+' ↗</a></div>':"")+
         (part.specificallyRelatedParagraphs.length?
           '<ul>'+part.specificallyRelatedParagraphs.map(x=>
             '<li>'+safe(x.edition)+' · '+safe(x.marker)+' '+safe(x.number)+
@@ -245,10 +255,11 @@
     const articles=info.articles||[];
     if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">ФОКСФОРД · КРАТКОЕ ОБЪЯСНЕНИЕ</div>'+
       articles.map(x=>'<div class="foxford-item"><strong>'+safe(x.title)+'</strong>'+
-      '<p class="note">'+(window.EGE_COVERAGE?.get(key)?.components.some(part=>part.source?.url===x.url)?
-         "Статья проверена для указанного в карте подтем пункта, но не для всей составной темы.":
-         "Содержание этой статьи по всем пунктам темы ещё не проверено. Сверьте его с картой подтем выше.")+'</p>'+
-      '<a class="btn" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Читать теорию Фоксфорда →</a>'+
+      '<p class="note">'+(window.EGE_COVERAGE?.get(key)?.components.some(part=>part.source?.url===x.url&&part.evidence==="source_excerpt_verified")?
+         "Фрагмент текста статьи проверен для отдельного вопроса, но не для всей составной темы.":
+         "Статья подобрана по теме. Полное покрытие содержимым ещё не доказано; сверьте вопросы выше.")+'</p>'+
+      (sourceCaveat(key,x.url)?'<p class="route-load-warning">'+safe(sourceCaveat(key,x.url))+'</p>':"")+
+       '<a class="btn" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Читать теорию Фоксфорда →</a>'+
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать ссылку</button></div>').join("")+'</div>';
     else html+='<div class="foxford-missing"><strong>Точно соответствующая теме статья Фоксфорда не подтверждена.</strong>'+
       '<p>Не подменяем теорию кодификатором или неподходящей статьёй. Используйте конспект ниже.</p></div>';

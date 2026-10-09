@@ -87,6 +87,10 @@ for(const subject of D.subjectOrder)for(let week=1;week<=26;week++)for(let i=0;i
    supplementaryArticles:articles.map(x=>({title:x.title,url:x.url,coverage:x.coverage||"partial"})),
    diagnosticsFrom:support.map(x=>({id:x.id,title:C.records[x.id].title})),
    exercise:lesson.doTask,learningGoal:lesson.know,check:lesson.check,
+   workload:{referenceParagraphs:unique.length,components:items.length,
+     large:!diagnostic&&(unique.length>=6||items.length>=5),
+     budget:{theory:40,practice:25,recall:10},
+     perComponentTheoryMinutes:Math.max(4,Math.floor(40/Math.max(1,items.length)))},
    notice:diagnostic?
      "Повторение и диагностика: перечитайте отмеченные источники из тем-основ по своим ошибкам; нового теоретического параграфа не назначено.":
      "Адресные статьи и параграфы конкретного ISBN перечислены ниже; назначение каждой подтемы ещё не означает проверки содержания всей главы или заданий."

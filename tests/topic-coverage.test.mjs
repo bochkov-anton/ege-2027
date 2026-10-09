@@ -14,13 +14,17 @@ test("все 234 темы имеют список проверяемых смы�
   assert.ok(row.components.length>=1,id);
   assert.ok(row.components.every(x=>x.label.length>=2),id);
   if(row.reviewed){
-   assert.ok(row.components.every(x=>x.source?.url.startsWith("https://")&&x.evidence==="page_content_reviewed"),id);
+   assert.ok(row.components.every(x=>x.source?.url.startsWith("https://")&&["source_excerpt_verified","editorial_link_selected"].includes(x.evidence)),id);
   }else{
    assert.equal(row.status,"requires_editorial_content_review",id);
    assert.ok(row.components.every(x=>x.source===null&&x.evidence==="not_reviewed"),id);
   }
  }
  assert.equal(C.get("chem:99:1"),null);
+ assert.equal(C.report.verifiedExcerptComponents,10);
+ assert.equal(C.report.verifiedExcerptTopics,2);
+ assert.equal(C.get("chem:1:1").verifiedContent,true);
+ assert.equal(C.get("bio:11:0").verifiedContent,false);
 });
 test("химическая связь, кристаллические решётки и степени окисления — три РАЗНЫХ проверенных раздела",()=>{
  const row=C.get("chem:1:1");

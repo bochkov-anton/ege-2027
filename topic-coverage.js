@@ -1,7 +1,6 @@
-/* Проверяем ПОКРЫТИЕ подтем, а не совпадение названия источника и карточки.
- * Только явно перечисленные и прочитанные статьи имеют evidence=page_content_reviewed.
- * Для остальных тем показываем редакционный долг, а не выдуманную полноту.
- * Проверка URL не означает проверку доступности/содержания каждой задачи.
+/* Two different evidence levels: editorial link selection versus inspected source text.
+ * A thematic URL is NOT a certification of the article's contents, the full
+ * textbook paragraph or individual exercises. Never upgrade by title match.
  */
 (function(){"use strict";
 const D=window.EGE_DATA,L=window.EGE_LESSONS,T=window.EGE_THEORY;
@@ -56,6 +55,17 @@ const VERIFIED={
   ["Химическое равновесие и принцип Ле Шателье","https://foxford.ru/wiki/himiya/smeschenie-himicheskogo-ravnovesiya"]
  ]
 };
+const INSPECTED_SOURCE_EXCERPTS={
+ "chem:1:1":[0,1,2],
+ "math:2:2":[0,1,2,3],
+ "math:4:0":[0],
+ "bio:1:0":[0],
+ "bio:11:0":[0]
+};
+// Selected subtopics above have independently inspected source sections.
+// Entries not listed here remain editorially mapped, NOT text-verified.
+// This evidence does not extend to every exercise or complete examination syllabus.
+function isInspected(id,index){return (INSPECTED_SOURCE_EXCERPTS[id]||[]).includes(index);}
 function splitRequirements(lesson){
  // Поле know — редакционная учебная цель. Точки с запятой разделяют группы
  // навыков, но НЕ означают, что любая ссылка доказывает покрытие такой группы.
@@ -78,23 +88,26 @@ for(const subject of D.subjectOrder)for(let week=1;week<=26;week++)for(let index
    if(!label||!urls.has(url))throw Error("Coverage evidence not in source list "+id+" "+url);
   }
  }
- const components=editorial?editorial.map(([label,url])=>({
-  label,source:articles.find(x=>x.url===url),evidence:"page_content_reviewed"
+ const components=editorial?editorial.map(([label,url],i)=>({
+  label,source:articles.find(x=>x.url===url),evidence:isInspected(id,i)?"source_excerpt_verified":"editorial_link_selected"
  })):splitRequirements(lesson).map(label=>({label,source:null,evidence:"not_reviewed"}));
  indexed[id]={
   id,title:lesson.title,subject,reviewed:!!editorial,
+   verifiedContent:!!editorial&&components.every(x=>x.evidence==="source_excerpt_verified"),
   components,
   sourceCount:articles.length,
-  unmatched:components.filter(x=>!x.source).length,
-  status:editorial?"reviewed_selected_aspects":"requires_editorial_content_review",
+  unmatched:components.filter(x=>x.evidence==="not_reviewed").length,
+  status:editorial?"editorially_mapped_selected_aspects":"requires_editorial_content_review",
   notice:editorial?
-   "Для перечисленных аспектов подобраны и проверены по содержанию конкретные статьи. Практику и полный объём учебника необходимо проверять отдельно.":
+   "Статьи адресно подобраны для отдельных компонентов. Содержание проверено только для пунктов с отметкой «Фрагмент текста проверен»; остальные соответствия предварительные. Практику и весь учебник необходимо проверять отдельно.":
    "Точное покрытие каждого пункта внешними материалами пока не проверено. Наличие статьи, параграфа или категории задач не доказывает полноту темы."
  };
 }
 function get(id){return Object.hasOwn(indexed,id)?indexed[id]:null;}
 const report={topics:Object.keys(indexed).length,reviewed:Object.values(indexed).filter(x=>x.reviewed).length,
  unchecked:Object.values(indexed).filter(x=>!x.reviewed).length,
- parts:Object.values(indexed).reduce((n,x)=>n+x.components.length,0)};
+ parts:Object.values(indexed).reduce((n,x)=>n+x.components.length,0),
+  verifiedExcerptComponents:Object.values(indexed).reduce((n,x)=>n+x.components.filter(c=>c.evidence==="source_excerpt_verified").length,0),
+  verifiedExcerptTopics:Object.values(indexed).filter(x=>x.verifiedContent).length};
 window.EGE_COVERAGE={get,all:indexed,report,version:"2026-10-09-atomic-content-evidence-v1"};
 })();

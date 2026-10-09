@@ -486,6 +486,17 @@ test("каждая учебная карточка раскрывает учеб
  html=a.node("#dialog-content").innerHTML;
  assert.ok(html.includes("ma_11_2027.zip"));
 });
+test("сверхширокие занятия предупреждают о времени и не объявляют ссылки доказательством полного охвата",()=>{
+ const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+ click({action:"open-topic",key:"chem:2:1"});
+ let html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("Большой объём"));
+ assert.ok(html.includes("время")||html.includes("40, задачи 25"));
+ assert.ok(html.includes("Редакционно")||html.includes("редакционно"));
+ click({action:"open-topic",key:"chem:3:0"});
+ html=a.node("#dialog-content").innerHTML;
+ assert.ok(html.includes("гидролизуется по катиону"));
+});
 test("математика №6 показывает ФИПИ-проект и прямую подборку задач по дисперсии",()=>{
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
  click({action:"open-topic",key:"math:2:2"});

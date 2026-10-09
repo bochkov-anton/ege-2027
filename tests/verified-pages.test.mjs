@@ -58,6 +58,17 @@ test("159 из 234 учебных карточек имеют проверенн
  assert.equal(verified,159);
  assert.equal(unmapped,75);
 });
+test("широкие составные темы содержат разделы каждой необходимой содержательной области",()=>{
+ const has=(key,edition,number)=>W.EGE_READING.get(key).entries.some(x=>x.editionId===edition&&x.number===number);
+ for(const [key,edition,number] of [
+  ["bio:1:1","bioTeremov10",7],["bio:7:0","bioTeremov10",26],
+  ["chem:2:1","chemPaper11",48],["chem:3:2","chemPaper10",34],
+  ["chem:3:2","chemPaper10",37],["chem:11:1","chemPaper10",48],
+  ["chem:12:0","chemPaper10",60],["chem:13:1","chemPaper10",6],
+  ["math:2:1","mathPaper10",10],["math:3:1","mathPaper10",40],
+  ["math:4:2","mathPaper10",32]
+ ])assert.ok(has(key,edition,number),key+": missing "+edition+" §"+number);
+});
 test("химическая связь не лишена решёток и степеней окисления в карте учебника",()=>{
  const entries=W.EGE_READING.get("chem:1:1").entries;
  const labels=entries.map(e=>e.editionId+":"+e.number);

@@ -3,13 +3,15 @@
   "note": "Ссылки на категории задач проверены по заголовку; совпадение с конкретными заданиями не доказано.",
   "summary": {
     "total": 234,
-    "contentReviewed": 17,
+    "editoriallyMapped": 17,
+    "excerptVerifiedTopics": 2,
+    "excerptVerifiedComponents": 10,
     "unreviewed": 217,
     "unreviewedWithLinks": 46,
     "unreviewedWithoutFoxford": 171,
     "subtopicRows": 435,
-    "candidateHeadingsOnly": 202,
-    "withoutAnyHeadingCandidate": 233,
+    "candidateHeadingsOnly": 204,
+    "withoutAnyHeadingCandidate": 231,
     "bySubject": {
       "bio": {
         "total": 78,
@@ -33,7 +35,8 @@
       "id": "bio:1:2",
       "subject": "bio",
       "title": "ДНК и РНК: структура, сравнение, базовые задания",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "ДНК и РНК: структура",
@@ -77,7 +80,8 @@
       "id": "chem:1:0",
       "subject": "chem",
       "title": "Атом: электронные конфигурации, периодичность",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Атом: электронные конфигурации",
@@ -143,7 +147,8 @@
       "id": "bio:2:1",
       "subject": "bio",
       "title": "Органоиды: строение и функции, изображения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Органоиды: строение и функции",
@@ -203,7 +208,8 @@
       "id": "bio:2:2",
       "subject": "bio",
       "title": "Прокариоты, эукариоты, вирусы, сравнение клеток",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Отличия прокариот, эукариот и вирусов",
@@ -258,7 +264,8 @@
       "id": "bio:3:0",
       "subject": "bio",
       "title": "Репликация ДНК, транскрипция, процессинг",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ферменты репликации",
@@ -302,7 +309,8 @@
       "id": "bio:3:2",
       "subject": "bio",
       "title": "Расчётные задачи ДНК–РНК–белок, последовательности",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Условие о длине гена, числе нуклеотидов и аминокислот",
@@ -345,7 +353,8 @@
       "id": "math:4:1",
       "subject": "math",
       "title": "Финансовые и текстовые модели №13",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Финансовые модели: проценты, платежи, баланс",
@@ -380,7 +389,8 @@
       "id": "bio:5:0",
       "subject": "bio",
       "title": "Фотосинтез: световая и темновая фазы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Световые реакции, фотосистемы, цикл Кальвина",
@@ -416,7 +426,8 @@
       "id": "bio:5:2",
       "subject": "bio",
       "title": "Хемосинтез; сравнение фотосинтеза и дыхания",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Хемосинтез",
@@ -468,7 +479,8 @@
       "id": "chem:5:1",
       "subject": "chem",
       "title": "Растворы: массовая доля, молярная концентрация",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Растворы: массовая доля",
@@ -529,7 +541,8 @@
       "id": "chem:5:2",
       "subject": "chem",
       "title": "ОВР: электронный баланс, влияние среды, задание 29",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "ОВР: электронный баланс",
@@ -573,7 +586,8 @@
       "id": "math:5:1",
       "subject": "math",
       "title": "Тригонометрические уравнения №14: формулы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Формулы sin/cos, однородные и приводимые уравнения",
@@ -639,7 +653,8 @@
       "id": "math:5:2",
       "subject": "math",
       "title": "№14: отбор корней и оформление",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Отбор корней на промежутке и оформление",
@@ -663,7 +678,8 @@
       "id": "bio:6:0",
       "subject": "bio",
       "title": "Интерфаза, клеточный цикл и митоз",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Интерфаза",
@@ -718,7 +734,8 @@
       "id": "bio:6:1",
       "subject": "bio",
       "title": "Мейоз I/II, кроссинговер, гаметогенез",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Мейоз I/II",
@@ -792,7 +809,8 @@
       "id": "math:6:1",
       "subject": "math",
       "title": "№14: полный алгоритм, самостоятельные решения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№14: полный алгоритм",
@@ -835,7 +853,8 @@
       "id": "math:6:2",
       "subject": "math",
       "title": "Базовые неравенства: ОДЗ, метод интервалов",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Базовые неравенства: ОДЗ",
@@ -890,7 +909,8 @@
       "id": "bio:7:1",
       "subject": "bio",
       "title": "Моно- и дигибридное скрещивание, анализирующее",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Моно- и дигибридное скрещивание",
@@ -952,7 +972,8 @@
       "id": "bio:7:2",
       "subject": "bio",
       "title": "Неполное доминирование, кодоминирование, оформление задач",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Неполное доминирование",
@@ -1014,7 +1035,8 @@
       "id": "chem:7:0",
       "subject": "chem",
       "title": "Гидролиз, электролиз, равновесие и скорость",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Гидролиз",
@@ -1105,7 +1127,8 @@
       "id": "math:7:0",
       "subject": "math",
       "title": "№14: вариации и контроль из памяти",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Уравнения №14: формулы, отбор, вариации",
@@ -1163,7 +1186,8 @@
       "id": "math:7:1",
       "subject": "math",
       "title": "Рациональные неравенства №16",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Рациональные неравенства с дробями",
@@ -1193,7 +1217,8 @@
       "id": "bio:8:0",
       "subject": "bio",
       "title": "Сцепление, кроссинговер и наследование с полом",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сцепление",
@@ -1262,7 +1287,8 @@
       "id": "bio:8:1",
       "subject": "bio",
       "title": "Родословные, взаимодействие генов",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Родословные",
@@ -1302,7 +1328,8 @@
       "id": "math:8:0",
       "subject": "math",
       "title": "Показательные и логарифмические неравенства №16",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Показательные и логарифмические неравенства, монотонность",
@@ -1360,7 +1387,8 @@
       "id": "math:8:1",
       "subject": "math",
       "title": "№14: задачи с ловушками",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№14: сложные тригонометрические ловушки",
@@ -1418,7 +1446,8 @@
       "id": "bio:9:0",
       "subject": "bio",
       "title": "Растительная клетка и ткани",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Растительные ткани, клеточная стенка, вакуоль, пластиды",
@@ -1465,7 +1494,8 @@
       "id": "bio:9:1",
       "subject": "bio",
       "title": "Корень, стебель, лист, почка",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Корень, стебель, лист, почка",
@@ -1508,7 +1538,8 @@
       "id": "math:9:0",
       "subject": "math",
       "title": "№16: рациональные/показательные/логарифмические",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Рациональные, показательные и логарифмические неравенства",
@@ -1558,7 +1589,8 @@
       "id": "math:9:1",
       "subject": "math",
       "title": "№14: 8/10 на полный балл, проверка оформления",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№14: 8/10 на полный балл",
@@ -1592,7 +1624,8 @@
       "id": "math:1:0",
       "subject": "math",
       "title": "Диагностический вариант, карта сильных и слабых линий",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Диагностический вариант",
@@ -1626,7 +1659,8 @@
       "id": "math:1:2",
       "subject": "math",
       "title": "Базовая геометрия, единичная окружность, mixed фундамент",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Базовая геометрия",
@@ -1679,7 +1713,8 @@
       "id": "bio:10:1",
       "subject": "bio",
       "title": "Транспирация, газообмен, фотопериодизм",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Транспирация",
@@ -1723,7 +1758,8 @@
       "id": "chem:10:0",
       "subject": "chem",
       "title": "Гибридизация, изомерия, механизм реакций",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Гибридизация",
@@ -1803,7 +1839,8 @@
       "id": "math:10:0",
       "subject": "math",
       "title": "№16: контроль с интервалом",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Неравенства №16: отсроченный контроль",
@@ -1853,7 +1890,8 @@
       "id": "math:10:2",
       "subject": "math",
       "title": "Производная, графики и математические модели",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Производная",
@@ -1916,7 +1954,8 @@
       "id": "chem:2:2",
       "subject": "chem",
       "title": "Алканы и алкены: закрепление реакций и качественных признаков",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Алканы и алкены: замещение, присоединение, условия и качественные реакции",
@@ -1930,6 +1969,14 @@
                 "number": 24,
                 "page": 140,
                 "pagesLabel": "140–146",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Химические свойства алканов",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 25,
+                "page": 147,
+                "pagesLabel": "147–153",
                 "status": "toc_heading_candidate"
               },
               {
@@ -1957,7 +2004,8 @@
       "id": "math:2:1",
       "subject": "math",
       "title": "Уравнения №7 и выражения №8",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Уравнения и преобразования выражений",
@@ -2009,7 +2057,8 @@
       "id": "bio:11:2",
       "subject": "bio",
       "title": "Гаметофит, спорофит, жизненные циклы по памяти",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Гаметофит",
@@ -2077,7 +2126,8 @@
       "id": "math:11:0",
       "subject": "math",
       "title": "Финансовые/текстовые модели №13,17",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Финансовые/текстовые модели №13",
@@ -2117,7 +2167,8 @@
       "id": "math:11:1",
       "subject": "math",
       "title": "№16: ошибки ОДЗ и знаков",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Неравенства: ошибки ОДЗ и знаков",
@@ -2152,7 +2203,8 @@
       "id": "chem:3:1",
       "subject": "chem",
       "title": "Fe/Cu/Cr, галогены, сера и азот",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Fe, Cu, Cr и галогены/S/N",
@@ -2178,7 +2230,16 @@
           "evidence": "not_reviewed",
           "sourceUrl": null,
           "candidates": {
-            "books": [],
+            "books": [
+              {
+                "title": "Соединения хрома. Зависимость кислотноосно́́вных и окислительно-восстановительных свойств от степени окисления металла",
+                "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
+                "number": 40,
+                "page": 189,
+                "pagesLabel": "189–194",
+                "status": "toc_heading_candidate"
+              }
+            ],
             "practice": [],
             "articles": []
           }
@@ -2195,7 +2256,8 @@
       "id": "chem:3:2",
       "subject": "chem",
       "title": "Алкины и арены: строение, свойства и условия реакций",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Алкины и арены: строение",
@@ -2209,6 +2271,14 @@
                 "number": 33,
                 "page": 184,
                 "pagesLabel": "184–185",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Химические свойства алкинов",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 34,
+                "page": 186,
+                "pagesLabel": "186–189",
                 "status": "toc_heading_candidate"
               },
               {
@@ -2252,7 +2322,8 @@
       "id": "math:3:0",
       "subject": "math",
       "title": "Планиметрия №1, векторы №2, стереометрия №3",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Планиметрия №1",
@@ -2311,7 +2382,8 @@
       "id": "math:3:1",
       "subject": "math",
       "title": "Производная №9, графики №12",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Производная №9",
@@ -2351,7 +2423,16 @@
           "evidence": "not_reviewed",
           "sourceUrl": null,
           "candidates": {
-            "books": [],
+            "books": [
+              {
+                "title": "Построение графиков функций",
+                "edition": "Мерзляк, Номировский, Поляков. Алгебра и начала анализа. 10 класс. Углублённый. 8-е изд.",
+                "number": 45,
+                "page": 346,
+                "pagesLabel": "346–355",
+                "status": "toc_heading_candidate"
+              }
+            ],
             "practice": [],
             "articles": []
           }
@@ -2368,7 +2449,8 @@
       "id": "math:3:2",
       "subject": "math",
       "title": "Смешанный блок №1–13 и разбор ошибок",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Первая часть 1–13: независимая практика",
@@ -2392,7 +2474,8 @@
       "id": "math:12:0",
       "subject": "math",
       "title": "№17: перевод условий в математическую модель",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Математическая модель: переменные, ограничения и данные",
@@ -2422,7 +2505,8 @@
       "id": "math:12:1",
       "subject": "math",
       "title": "№17: функции, ограничения, оптимизация",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№17: функции",
@@ -2501,7 +2585,8 @@
       "id": "math:12:2",
       "subject": "math",
       "title": "№14 + №16: mixed, первая часть",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№14 + №16: mixed",
@@ -2535,7 +2620,8 @@
       "id": "bio:4:0",
       "subject": "bio",
       "title": "Ферменты, анаболизм, катаболизм и АТФ",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ферменты",
@@ -2579,7 +2665,8 @@
       "id": "bio:4:2",
       "subject": "bio",
       "title": "Клеточное дыхание, схемы, контроль клетки и молекулярной биологии",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Клеточное дыхание",
@@ -2632,7 +2719,8 @@
       "id": "chem:4:0",
       "subject": "chem",
       "title": "Электролиз, P/C/Si, качественные реакции",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Электролиз растворов/расплавов",
@@ -2675,7 +2763,8 @@
       "id": "chem:4:1",
       "subject": "chem",
       "title": "Амфотерность, неорганические цепочки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Амфотерность",
@@ -2709,7 +2798,8 @@
       "id": "math:4:2",
       "subject": "math",
       "title": "Первые уравнения №14 и контроль №1–13",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Тригонометрическое уравнение: вводная",
@@ -2723,6 +2813,22 @@
                 "number": 28,
                 "page": 202,
                 "pagesLabel": "202–207",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Уравнение sin x = b",
+                "edition": "Мерзляк, Номировский, Поляков. Алгебра и начала анализа. 10 класс. Углублённый. 8-е изд.",
+                "number": 29,
+                "page": 208,
+                "pagesLabel": "208–213",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Уравнения tg x = b и ctg x = b",
+                "edition": "Мерзляк, Номировский, Поляков. Алгебра и начала анализа. 10 класс. Углублённый. 8-е изд.",
+                "number": 30,
+                "page": 214,
+                "pagesLabel": "214–218",
                 "status": "toc_heading_candidate"
               }
             ],
@@ -2748,7 +2854,8 @@
       "id": "math:13:0",
       "subject": "math",
       "title": "№17: производная и экстремум в модели",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Экстремум функции на допустимом промежутке",
@@ -2801,7 +2908,8 @@
       "id": "bio:5:1",
       "subject": "bio",
       "title": "Хлоропласт, пигменты, фотолиз, фиксация CO₂",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Хлоропласт",
@@ -2855,7 +2963,8 @@
       "id": "chem:5:0",
       "subject": "chem",
       "title": "Металлы и важнейшие соединения: реакционная сеть",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Металлическая активность, степени окисления и амфотерность",
@@ -2894,7 +3003,8 @@
       "id": "math:5:0",
       "subject": "math",
       "title": "Слабые линии №1–13, стабильность",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Слабые линии №1–13",
@@ -2928,7 +3038,8 @@
       "id": "math:14:1",
       "subject": "math",
       "title": "№14 и №16: timed practice",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Тригонометрия и неравенства под временем",
@@ -2978,7 +3089,8 @@
       "id": "bio:6:2",
       "subject": "bio",
       "title": "Наборы n/c, последовательности фаз и задачи",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Наборы n/c",
@@ -3018,7 +3130,8 @@
       "id": "chem:6:0",
       "subject": "chem",
       "title": "Неметаллы и их соединения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Характерные реакции S, N, P, C, Si и галогенов",
@@ -3051,7 +3164,8 @@
       "id": "chem:6:1",
       "subject": "chem",
       "title": "Ионные превращения: условия и продукты, задание 30",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ионные превращения: условия и продукты",
@@ -3091,7 +3205,8 @@
       "id": "chem:6:2",
       "subject": "chem",
       "title": "Смешанные неорганические цепочки, задание 31",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смешанные неорганические цепочки",
@@ -3125,7 +3240,8 @@
       "id": "math:6:0",
       "subject": "math",
       "title": "№1–13: независимые смешанные блоки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Мешанные короткие задачи первой части",
@@ -3149,7 +3265,8 @@
       "id": "math:15:2",
       "subject": "math",
       "title": "№14/16/17: отсроченный контроль",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Уравнения, неравенства, моделирование: отсроченный контроль",
@@ -3199,7 +3316,8 @@
       "id": "chem:7:1",
       "subject": "chem",
       "title": "Качественные реакции, эксперимент и распознавание веществ",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Качественные реакции",
@@ -3268,7 +3386,8 @@
       "id": "chem:7:2",
       "subject": "chem",
       "title": "Расчёты: смеси, выход, последовательные превращения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Расчёты: смеси",
@@ -3321,7 +3440,8 @@
       "id": "math:7:2",
       "subject": "math",
       "title": "№1–13: смешанный timed set",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Первая часть: точность и время",
@@ -3345,7 +3465,8 @@
       "id": "bio:8:2",
       "subject": "bio",
       "title": "Мутации, цитогенетика, смешанная генетика",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Геномные, хромосомные и генные мутации",
@@ -3379,7 +3500,8 @@
       "id": "chem:8:0",
       "subject": "chem",
       "title": "Неорганика: смешанные задачи и идентификация",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Неорганические вещества: классы, продукты, распознавание",
@@ -3423,7 +3545,8 @@
       "id": "chem:8:1",
       "subject": "chem",
       "title": "ОВР + ионные процессы: сложные случаи",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "ОВР и ионные реакции в сложной среде",
@@ -3470,7 +3593,8 @@
       "id": "chem:8:2",
       "subject": "chem",
       "title": "Органика: номенклатура, изомерия, механизмы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Органика: номенклатура",
@@ -3557,7 +3681,8 @@
       "id": "math:8:2",
       "subject": "math",
       "title": "Смешанная первая часть и геометрия",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Геометрия плюс смешанная первая часть",
@@ -3581,7 +3706,8 @@
       "id": "bio:9:2",
       "subject": "bio",
       "title": "Ксилема, флоэма, изображения и связь строения с функцией",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ксилема",
@@ -3642,7 +3768,8 @@
       "id": "chem:9:0",
       "subject": "chem",
       "title": "Алканы, алкены и циклоалканы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Алканы",
@@ -3718,7 +3845,8 @@
       "id": "chem:9:1",
       "subject": "chem",
       "title": "Алкадиены, алкины, арены",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Алкадиены",
@@ -3788,7 +3916,8 @@
       "id": "chem:9:2",
       "subject": "chem",
       "title": "Схемы превращений и прогноз продуктов",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Органические превращения: реагент, продукт, механизм",
@@ -3832,7 +3961,8 @@
       "id": "math:9:2",
       "subject": "math",
       "title": "№1–13 под временем",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "1–13 под временем",
@@ -3856,7 +3986,8 @@
       "id": "bio:10:0",
       "subject": "bio",
       "title": "Корневое и минеральное питание, транспорт воды",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Корневое и минеральное питание",
@@ -3899,7 +4030,8 @@
       "id": "bio:10:2",
       "subject": "bio",
       "title": "Фитогормоны, ростовые движения, размножение растений",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ауксин, гиббереллин, цитокинин",
@@ -3950,7 +4082,8 @@
       "id": "chem:10:1",
       "subject": "chem",
       "title": "Галогенпроизводные и реакции углеводородов",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Галогенпроизводные, замещение, элиминирование",
@@ -3983,7 +4116,8 @@
       "id": "chem:10:2",
       "subject": "chem",
       "title": "Органические цепочки: первые самостоятельные",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Цепочки из органических классов без подсказок",
@@ -4016,7 +4150,8 @@
       "id": "math:10:1",
       "subject": "math",
       "title": "№1–13: скорость без потери точности",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Первая часть: ускорение после стабильной точности",
@@ -4040,7 +4175,8 @@
       "id": "bio:11:1",
       "subject": "bio",
       "title": "Голосеменные и покрытосеменные",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Признаки голосеменных и покрытосеменных, семязачаток и плод",
@@ -4092,7 +4228,8 @@
       "id": "chem:11:0",
       "subject": "chem",
       "title": "Спирты, многоатомные спирты и фенол",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Спирты",
@@ -4106,6 +4243,14 @@
                 "number": 43,
                 "page": 227,
                 "pagesLabel": "227–233",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Химические свойства спиртов",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 44,
+                "page": 234,
+                "pagesLabel": "234–243",
                 "status": "toc_heading_candidate"
               },
               {
@@ -4136,19 +4281,19 @@
                 "status": "toc_heading_candidate"
               },
               {
+                "title": "Химические свойства спиртов",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 44,
+                "page": 234,
+                "pagesLabel": "234–243",
+                "status": "toc_heading_candidate"
+              },
+              {
                 "title": "Многоатомные спирты",
                 "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
                 "number": 45,
                 "page": 244,
                 "pagesLabel": "244–247",
-                "status": "toc_heading_candidate"
-              },
-              {
-                "title": "Фенолы",
-                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
-                "number": 46,
-                "page": 248,
-                "pagesLabel": "248–256",
                 "status": "toc_heading_candidate"
               }
             ],
@@ -4168,7 +4313,8 @@
       "id": "chem:11:1",
       "subject": "chem",
       "title": "Альдегиды, кетоны (ацетон), карбоновые кислоты",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Альдегиды, кетоны, кислоты",
@@ -4210,6 +4356,14 @@
                 "status": "toc_heading_candidate"
               },
               {
+                "title": "Химические свойства и методы получения карбонильных соединений",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 48,
+                "page": 266,
+                "pagesLabel": "266–272",
+                "status": "toc_heading_candidate"
+              },
+              {
                 "title": "Карбоновые кислоты",
                 "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
                 "number": 49,
@@ -4234,7 +4388,8 @@
       "id": "chem:11:2",
       "subject": "chem",
       "title": "Качественные реакции органики и обратный синтез",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Органическая идентификация по качественным реакциям",
@@ -4264,7 +4419,8 @@
       "id": "math:11:2",
       "subject": "math",
       "title": "Смешанные №1–13 и №14",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Комбинация первой части и тригонометрических уравнений",
@@ -4311,7 +4467,8 @@
       "id": "math:20:1",
       "subject": "math",
       "title": "№14/16/17: устойчивое выполнение",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№14/16/17: устойчивые решения",
@@ -4335,7 +4492,8 @@
       "id": "bio:12:0",
       "subject": "bio",
       "title": "Цветок, опыление и двойное оплодотворение",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Цветок",
@@ -4395,7 +4553,8 @@
       "id": "bio:12:1",
       "subject": "bio",
       "title": "Семена, плоды, семейства, однодольные и двудольные",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Семена",
@@ -4473,7 +4632,8 @@
       "id": "bio:12:2",
       "subject": "bio",
       "title": "Смешанная ботаника, эксперимент, повтор генетики",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сравнительная ботаника и эксперимент",
@@ -4507,7 +4667,8 @@
       "id": "chem:12:0",
       "subject": "chem",
       "title": "Сложные эфиры, жиры и углеводы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сложные эфиры",
@@ -4556,7 +4717,8 @@
       "id": "chem:12:1",
       "subject": "chem",
       "title": "Амины, анилин, аминокислоты и белки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Амины",
@@ -4640,7 +4802,8 @@
       "id": "chem:12:2",
       "subject": "chem",
       "title": "Цепочки 32 и смешанный контроль органики",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Органические цепочки и контроль химических свойств",
@@ -4664,7 +4827,8 @@
       "id": "bio:13:0",
       "subject": "bio",
       "title": "Простейшие, губки, кишечнополостные",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Простейшие",
@@ -4714,7 +4878,8 @@
       "id": "bio:13:1",
       "subject": "bio",
       "title": "Плоские, круглые, кольчатые черви",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Плоские, круглые, кольчатые черви",
@@ -4771,7 +4936,8 @@
       "id": "bio:13:2",
       "subject": "bio",
       "title": "Паразитические циклы, сравнение систем органов",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Паразитические циклы",
@@ -4814,7 +4980,8 @@
       "id": "chem:13:0",
       "subject": "chem",
       "title": "Полимеры, функциональные группы и свойства",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полимеры",
@@ -4871,7 +5038,8 @@
       "id": "chem:13:1",
       "subject": "chem",
       "title": "Установление формулы органики: задание 33",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Определение молекулярной формулы по массовым долям и плотности",
@@ -4901,7 +5069,8 @@
       "id": "chem:13:2",
       "subject": "chem",
       "title": "Избыток/примеси/выход + материальный баланс",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Избыток реагента, примеси и выход: материальный баланс",
@@ -4925,7 +5094,8 @@
       "id": "math:13:1",
       "subject": "math",
       "title": "№17: самостоятельное объяснение решения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Самостоятельное объяснение решения текстовой задачи",
@@ -4949,7 +5119,8 @@
       "id": "math:13:2",
       "subject": "math",
       "title": "№1–13, №14, №16: контроль",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№1–13",
@@ -4993,7 +5164,8 @@
       "id": "bio:22:2",
       "subject": "bio",
       "title": "Антропогенез, происхождение жизни, филогенетические деревья",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Антропогенез",
@@ -5052,7 +5224,8 @@
       "id": "bio:14:0",
       "subject": "bio",
       "title": "Моллюски и ракообразные",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Моллюски, ракообразные, строение тела и органов",
@@ -5091,7 +5264,8 @@
       "id": "bio:14:1",
       "subject": "bio",
       "title": "Паукообразные и насекомые",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Паукообразные/насекомые, сегменты, конечности, дыхание",
@@ -5132,7 +5306,8 @@
       "id": "bio:14:2",
       "subject": "bio",
       "title": "Метаморфоз, сравнительные признаки, изображения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Метаморфоз",
@@ -5176,7 +5351,8 @@
       "id": "chem:14:0",
       "subject": "chem",
       "title": "Растворы, кристаллогидраты, растворимость",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Растворы",
@@ -5250,7 +5426,8 @@
       "id": "chem:14:1",
       "subject": "chem",
       "title": "Смеси и последовательные реакции",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смеси веществ и последовательные реакции",
@@ -5294,7 +5471,8 @@
       "id": "chem:14:2",
       "subject": "chem",
       "title": "Органика: цепочки 32 и расчётные элементы 33",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Органическая цепочка и расчёт неизвестного вещества",
@@ -5318,7 +5496,8 @@
       "id": "math:14:0",
       "subject": "math",
       "title": "№17: задачи с меняющимися условиями",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Изменение условий оптимизационной задачи",
@@ -5342,7 +5521,8 @@
       "id": "math:14:2",
       "subject": "math",
       "title": "Полный смешанный набор и ошибки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смешанный вариант: анализ «цены ошибки»",
@@ -5366,7 +5546,8 @@
       "id": "bio:23:0",
       "subject": "bio",
       "title": "Экологические факторы, популяции и экосистемы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Экологические факторы",
@@ -5421,7 +5602,8 @@
       "id": "bio:15:0",
       "subject": "bio",
       "title": "Хордовые, рыбы, земноводные",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ланцетник, рыбы, земноводные",
@@ -5487,7 +5669,8 @@
       "id": "bio:15:1",
       "subject": "bio",
       "title": "Пресмыкающиеся и птицы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Пресмыкающиеся, птицы, яйца, дыхание, кровообращение",
@@ -5531,7 +5714,8 @@
       "id": "bio:15:2",
       "subject": "bio",
       "title": "Млекопитающие; эволюция дыхания и кровообращения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Млекопитающие",
@@ -5596,7 +5780,8 @@
       "id": "chem:15:0",
       "subject": "chem",
       "title": "Органическая структура и изомерия: повтор",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Органические функциональные группы, номенклатура, изомерия",
@@ -5648,7 +5833,8 @@
       "id": "chem:15:1",
       "subject": "chem",
       "title": "Большие органические и неорганические цепочки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Большие цепочки с органическими и неорганическими этапами",
@@ -5672,7 +5858,8 @@
       "id": "chem:15:2",
       "subject": "chem",
       "title": "Высокий уровень: нестандартные условия",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Нестандартные условия реакции, избирательность продуктов",
@@ -5724,7 +5911,8 @@
       "id": "math:15:0",
       "subject": "math",
       "title": "№17: применение моделей в новых условиях",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Математическое моделирование на новой сюжетной задаче",
@@ -5748,7 +5936,8 @@
       "id": "math:15:1",
       "subject": "math",
       "title": "№1–13: устойчивость",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Первая часть: устойчивость без подсказок",
@@ -5772,7 +5961,8 @@
       "id": "bio:16:0",
       "subject": "bio",
       "title": "Сравнительная зоология: сердце и кровообращение",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сердце и круги кровообращения у позвоночных",
@@ -5796,7 +5986,8 @@
       "id": "bio:16:1",
       "subject": "bio",
       "title": "Сравнение дыхания, выделения и размножения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сравнение дыхания",
@@ -5830,7 +6021,8 @@
       "id": "bio:16:2",
       "subject": "bio",
       "title": "Незнакомые изображения, смешанная ботаника+зоология, полувариант",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Незнакомые изображения",
@@ -5874,7 +6066,8 @@
       "id": "chem:16:0",
       "subject": "chem",
       "title": "Проверка покрытия химического кодификатора",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сопоставление кодификатора с фактически освоенными линиями",
@@ -5898,7 +6091,8 @@
       "id": "chem:16:1",
       "subject": "chem",
       "title": "Задания 29–33 под критерии оценивания",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "ОВР, ионные и органические цепочки по критериям",
@@ -5922,7 +6116,8 @@
       "id": "chem:16:2",
       "subject": "chem",
       "title": "Комбинированные расчёты: фундамент задания 34",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Задание 34: расчётный базис и материальный баланс",
@@ -5955,7 +6150,8 @@
       "id": "math:16:0",
       "subject": "math",
       "title": "Выбор одной специализации №15/18/20",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Специализация: параметры / геометрия / нестандартные задачи",
@@ -5985,7 +6181,8 @@
       "id": "math:16:1",
       "subject": "math",
       "title": "Диагностические задачи специализации",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Диагностика выбранной специализации",
@@ -6009,7 +6206,8 @@
       "id": "math:16:2",
       "subject": "math",
       "title": "Контроль core №1–13,14,16,17",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Контроль core №1–13",
@@ -6063,7 +6261,8 @@
       "id": "bio:17:0",
       "subject": "bio",
       "title": "Ткани, мышцы и опорно-двигательная система человека",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Эпителиальная, соединительная, мышечная, нервная ткани",
@@ -6129,7 +6328,8 @@
       "id": "bio:17:1",
       "subject": "bio",
       "title": "Кожа, пищеварение, ферменты",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Кожа",
@@ -6201,7 +6401,8 @@
       "id": "bio:17:2",
       "subject": "bio",
       "title": "Всасывание и обмен веществ",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Всасывание в тонкой кишке",
@@ -6235,7 +6436,8 @@
       "id": "chem:17:0",
       "subject": "chem",
       "title": "Задание 34: смеси и материальный баланс",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смеси и баланс массы для 34",
@@ -6265,7 +6467,8 @@
       "id": "chem:17:1",
       "subject": "chem",
       "title": "Задание 34: несколько реакций и ограничений",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Несколько реакций, параллельные пути и ограничения",
@@ -6298,7 +6501,8 @@
       "id": "chem:17:2",
       "subject": "chem",
       "title": "Контраст условий, неизвестные продукты и цепочки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Контраст условий",
@@ -6332,7 +6536,8 @@
       "id": "math:17:0",
       "subject": "math",
       "title": "Специализация: углубление только при хорошем ROI",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Выбранная специализация: устойчивый метод",
@@ -6356,7 +6561,8 @@
       "id": "math:17:1",
       "subject": "math",
       "title": "№14/16/17: смешанные задачи",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№14/16 и модель: смешанный набор",
@@ -6380,7 +6586,8 @@
       "id": "math:17:2",
       "subject": "math",
       "title": "Первый полноформатный контроль",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Первый полноформатный контроль",
@@ -6404,7 +6611,8 @@
       "id": "bio:18:0",
       "subject": "bio",
       "title": "Кровь, иммунитет, группы крови",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Кровь",
@@ -6474,7 +6682,8 @@
       "id": "bio:18:1",
       "subject": "bio",
       "title": "Сердце, сосуды, кровообращение и лимфа",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сердце",
@@ -6527,7 +6736,8 @@
       "id": "bio:18:2",
       "subject": "bio",
       "title": "Дыхание и газообмен",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Лёгочная вентиляция, газообмен, перенос O₂/CO₂",
@@ -6560,7 +6770,8 @@
       "id": "chem:18:0",
       "subject": "chem",
       "title": "Задания 29–30: ОВР и ионные уравнения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "ОВР 29 и ионные уравнения 30",
@@ -6584,7 +6795,8 @@
       "id": "chem:18:1",
       "subject": "chem",
       "title": "Задания 31–32: неорганика и органика",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Неорганическая и органическая цепочка 31–32",
@@ -6617,7 +6829,8 @@
       "id": "chem:18:2",
       "subject": "chem",
       "title": "Задания 33–34: расчёты, оформление, контроль",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Задания 33–34: расчёты",
@@ -6670,7 +6883,8 @@
       "id": "math:18:0",
       "subject": "math",
       "title": "Специализация или ремонт дорогих ошибок",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ремонт дорогих математических ошибок",
@@ -6694,7 +6908,8 @@
       "id": "math:18:1",
       "subject": "math",
       "title": "№1–13: быстрый смешанный блок",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Первая часть на скорость и точность",
@@ -6718,7 +6933,8 @@
       "id": "math:18:2",
       "subject": "math",
       "title": "№14/16/17 и управление временем",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "14/16/17 плюс управление временем",
@@ -6742,7 +6958,8 @@
       "id": "bio:19:0",
       "subject": "bio",
       "title": "Почки, нефрон, мочеобразование, водно-солевой баланс",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Почки",
@@ -6796,7 +7013,8 @@
       "id": "bio:19:1",
       "subject": "bio",
       "title": "Эндокринные железы, гормоны, органы-мишени",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Эндокринные железы",
@@ -6872,7 +7090,8 @@
       "id": "bio:19:2",
       "subject": "bio",
       "title": "Гомеостаз и отрицательная обратная связь",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Гомеостаз и отрицательная обратная связь",
@@ -6896,7 +7115,8 @@
       "id": "chem:19:0",
       "subject": "chem",
       "title": "Нестандартные цепочки и неизвестные промежуточные вещества",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Неизвестные продукты и нестандартные цепочки",
@@ -6926,7 +7146,8 @@
       "id": "chem:19:1",
       "subject": "chem",
       "title": "Расчёты: ограничения, обратные задачи, альтернативные решения",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Расчёты: ограничения",
@@ -6979,7 +7200,8 @@
       "id": "chem:19:2",
       "subject": "chem",
       "title": "Микс всех линий, скорость после точности",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Микс всех линий",
@@ -7013,7 +7235,8 @@
       "id": "math:19:0",
       "subject": "math",
       "title": "Пробник и разбор, оценка нижней границы результата",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Пробник и разбор",
@@ -7047,7 +7270,8 @@
       "id": "math:19:1",
       "subject": "math",
       "title": "Точечный ремонт слабых заданий",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Адресный ремонт трёх слабых линий",
@@ -7071,7 +7295,8 @@
       "id": "math:19:2",
       "subject": "math",
       "title": "Вторая часть: оформление и проверка",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Вторая часть: оформление и проверка доказательств",
@@ -7095,7 +7320,8 @@
       "id": "bio:20:0",
       "subject": "bio",
       "title": "Нервная система, рефлекс и рефлекторная дуга",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Нервная система",
@@ -7161,7 +7387,8 @@
       "id": "bio:20:1",
       "subject": "bio",
       "title": "ЦНС, вегетативная система и анализаторы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Центральная, автономная нервная система",
@@ -7210,7 +7437,8 @@
       "id": "bio:20:2",
       "subject": "bio",
       "title": "Высшая нервная деятельность, размножение человека, mixed",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Условные и безусловные рефлексы",
@@ -7244,7 +7472,8 @@
       "id": "chem:20:0",
       "subject": "chem",
       "title": "Промежуточный полный вариант и разбор",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Промежуточный полный вариант: диагностический разбор",
@@ -7268,7 +7497,8 @@
       "id": "chem:20:1",
       "subject": "chem",
       "title": "Слабые коды: адресный ремонт",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ремонт по кодам ошибок и приоритетности",
@@ -7292,7 +7522,8 @@
       "id": "chem:20:2",
       "subject": "chem",
       "title": "Точность и оформление 29–34",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Оформление 29–34 по элементам критериев",
@@ -7316,7 +7547,8 @@
       "id": "math:20:0",
       "subject": "math",
       "title": "№1–13: скорость, точность, надёжность",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "№1–13: скорость",
@@ -7360,7 +7592,8 @@
       "id": "math:20:2",
       "subject": "math",
       "title": "Экзаменационное распределение времени",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Экзаменационное управление временем",
@@ -7384,7 +7617,8 @@
       "id": "bio:21:0",
       "subject": "bio",
       "title": "Популяции, генофонд, мутации, дрейф, изоляция",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Популяции",
@@ -7474,7 +7708,8 @@
       "id": "bio:21:1",
       "subject": "bio",
       "title": "Естественный отбор, формы отбора, видообразование",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Естественный отбор",
@@ -7545,7 +7780,8 @@
       "id": "bio:21:2",
       "subject": "bio",
       "title": "Критерии вида, эволюционные задачи",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Критерии вида",
@@ -7594,7 +7830,8 @@
       "id": "chem:21:0",
       "subject": "chem",
       "title": "Mixed practice по всем четырём химическим потокам",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смешанная химия: теоретические/неорганические/органические/расчётные навыки",
@@ -7618,7 +7855,8 @@
       "id": "chem:21:1",
       "subject": "chem",
       "title": "Полуварианты и сложные части 2",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полувариант и задания второй части",
@@ -7642,7 +7880,8 @@
       "id": "chem:21:2",
       "subject": "chem",
       "title": "Коррекция системных ошибок",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Коррекция системных ошибок",
@@ -7666,7 +7905,8 @@
       "id": "math:21:0",
       "subject": "math",
       "title": "Пробник и детальная коррекция",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Пробный вариант с последующим ремонтом",
@@ -7690,7 +7930,8 @@
       "id": "math:21:1",
       "subject": "math",
       "title": "Выбранная специализация или P1-пробел",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Специализация или приоритетный пробел",
@@ -7714,7 +7955,8 @@
       "id": "math:21:2",
       "subject": "math",
       "title": "Смешанный контроль первой части",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смешанная первая часть",
@@ -7738,7 +7980,8 @@
       "id": "bio:22:0",
       "subject": "bio",
       "title": "Доказательства эволюции, гомология и аналогия",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Доказательства эволюции",
@@ -7795,7 +8038,8 @@
       "id": "bio:22:1",
       "subject": "bio",
       "title": "Ароморфоз, идиоадаптация, дегенерация",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ароморфоз",
@@ -7839,7 +8083,8 @@
       "id": "chem:22:0",
       "subject": "chem",
       "title": "Полный вариант без жёсткого времени, подробный анализ",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полный вариант без жёсткого времени",
@@ -7873,7 +8118,8 @@
       "id": "chem:22:1",
       "subject": "chem",
       "title": "Граф реакций и контраст условий",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Граф взаимосвязи органических веществ",
@@ -7897,7 +8143,8 @@
       "id": "chem:22:2",
       "subject": "chem",
       "title": "Сложные расчёты и неизвестные цепочки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сложные расчёты с ограничениями",
@@ -7930,7 +8177,8 @@
       "id": "math:22:0",
       "subject": "math",
       "title": "Экзаменационная стратегия: порядок заданий",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Экзаменационная стратегия: порядок и пропуски",
@@ -7954,7 +8202,8 @@
       "id": "math:22:1",
       "subject": "math",
       "title": "Вторая часть под временем",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Развёрнутые задачи под временем",
@@ -7978,7 +8227,8 @@
       "id": "math:22:2",
       "subject": "math",
       "title": "Работа над повторяющимися ошибками",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Системные математические ошибки",
@@ -8002,7 +8252,8 @@
       "id": "bio:23:1",
       "subject": "bio",
       "title": "Пищевые сети, цепи, пирамиды и расчёты",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Пищевые сети",
@@ -8046,7 +8297,8 @@
       "id": "bio:23:2",
       "subject": "bio",
       "title": "Сукцессии, круговороты, биосфера, антропогенное воздействие",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сукцессии",
@@ -8124,7 +8376,8 @@
       "id": "chem:23:0",
       "subject": "chem",
       "title": "Варианты: точность, распознавание без подсказки",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Варианты: точность",
@@ -8158,7 +8411,8 @@
       "id": "chem:23:1",
       "subject": "chem",
       "title": "Задания 31–34 с ограничением времени",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "31–34 по времени, без потери оформления",
@@ -8182,7 +8436,8 @@
       "id": "chem:23:2",
       "subject": "chem",
       "title": "Слабые линии и повтор важных реакций",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Слабые линии и обязательные реакции",
@@ -8206,7 +8461,8 @@
       "id": "math:23:0",
       "subject": "math",
       "title": "Полный вариант и разбор",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полный вариант с анализом.",
@@ -8230,7 +8486,8 @@
       "id": "math:23:1",
       "subject": "math",
       "title": "Слабые линии №1–13",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Слабые линии 1–13",
@@ -8254,7 +8511,8 @@
       "id": "math:23:2",
       "subject": "math",
       "title": "№14/16/17: контроль без подсказок",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Развёрнутые 14/16/17 без подсказок",
@@ -8278,7 +8536,8 @@
       "id": "bio:24:0",
       "subject": "bio",
       "title": "Полный диагностический вариант 1 и подробный разбор",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полный диагностический вариант: структура и оценка по критериям",
@@ -8302,7 +8561,8 @@
       "id": "bio:24:1",
       "subject": "bio",
       "title": "Полный вариант 2 и разбор ошибок",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Повторный полный вариант и разделение ошибок",
@@ -8326,7 +8586,8 @@
       "id": "bio:24:2",
       "subject": "bio",
       "title": "Пять самых дорогих слабых зон: коррекция и повтор",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Пять дорогих слабых навыков: приоритет ошибки и цена баллов",
@@ -8350,7 +8611,8 @@
       "id": "chem:24:0",
       "subject": "chem",
       "title": "Полный вариант в экзаменационном режиме",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полный вариант в экзаменационном режиме",
@@ -8374,7 +8636,8 @@
       "id": "chem:24:1",
       "subject": "chem",
       "title": "Разбор ошибок по критериям ФИПИ",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ошибки по критериям ФИПИ",
@@ -8398,7 +8661,8 @@
       "id": "chem:24:2",
       "subject": "chem",
       "title": "Адресный ремонт 29–34 и расчётов",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Ремонт сложных реакций/расчётов 29–34",
@@ -8428,7 +8692,8 @@
       "id": "math:24:0",
       "subject": "math",
       "title": "Полный вариант с измерением времени",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полный вариант и диагностика времени",
@@ -8452,7 +8717,8 @@
       "id": "math:24:1",
       "subject": "math",
       "title": "Повтор слабых навыков",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Адресный повтор слабых навыков",
@@ -8476,7 +8742,8 @@
       "id": "math:24:2",
       "subject": "math",
       "title": "Проверка записи, ОДЗ, корней, единиц",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Проверка записи",
@@ -8530,7 +8797,8 @@
       "id": "bio:25:0",
       "subject": "bio",
       "title": "Сложные тематические блоки, эксперимент",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сложные тематические блоки",
@@ -8564,7 +8832,8 @@
       "id": "bio:25:1",
       "subject": "bio",
       "title": "Генетика, изображения, последовательности, вторая часть",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Генетика",
@@ -8618,7 +8887,8 @@
       "id": "bio:25:2",
       "subject": "bio",
       "title": "Полный вариант, разбор, повтор слабых зон",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полный вариант",
@@ -8662,7 +8932,8 @@
       "id": "chem:25:0",
       "subject": "chem",
       "title": "Смешанный контроль и скорость без потери точности",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смешанная химия: скорость и надёжность",
@@ -8686,7 +8957,8 @@
       "id": "chem:25:1",
       "subject": "chem",
       "title": "Нестандартные реакции и материальный баланс",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Необычные реакции и материальный баланс",
@@ -8721,7 +8993,8 @@
       "id": "chem:25:2",
       "subject": "chem",
       "title": "Вторая часть: оформление и самопроверка",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Вторая часть: оформление, критерии и самопроверка",
@@ -8745,7 +9018,8 @@
       "id": "math:25:0",
       "subject": "math",
       "title": "Стабильный результат, адресный ремонт",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Стабильный результат",
@@ -8779,7 +9053,8 @@
       "id": "math:25:1",
       "subject": "math",
       "title": "Смешанные задания без подписей тем",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Смешанный блок без подсказок",
@@ -8803,7 +9078,8 @@
       "id": "math:25:2",
       "subject": "math",
       "title": "Контроль временных потерь и невнимательности",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Контроль невнимательности и времени",
@@ -8827,11 +9103,12 @@
       "id": "bio:1:0",
       "subject": "bio",
       "title": "Методы биологии, уровни организации, вода и соли",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 1,
       "subtopics": [
         {
           "title": "Методы биологических исследований, наблюдение и эксперимент",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/nauka-biologiya-metody-izucheniya-biologii",
           "candidates": {
             "books": [
@@ -8841,6 +9118,14 @@
                 "number": 1,
                 "page": 10,
                 "pagesLabel": "10–15",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Разнообразие биологических систем и процессов",
+                "edition": "Теремов, Петросова. Биология. Биологические системы и процессы. 10 класс",
+                "number": 2,
+                "page": 16,
+                "pagesLabel": "16–23",
                 "status": "toc_heading_candidate"
               }
             ],
@@ -8862,7 +9147,7 @@
         },
         {
           "title": "Уровни организации живых систем",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/urovni-strukturnoy-organizatsii-zhivogo",
           "candidates": {
             "books": [
@@ -8872,6 +9157,14 @@
                 "number": 1,
                 "page": 10,
                 "pagesLabel": "10–15",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Разнообразие биологических систем и процессов",
+                "edition": "Теремов, Петросова. Биология. Биологические системы и процессы. 10 класс",
+                "number": 2,
+                "page": 16,
+                "pagesLabel": "16–23",
                 "status": "toc_heading_candidate"
               }
             ],
@@ -8887,7 +9180,7 @@
         },
         {
           "title": "Вода, минеральные соли и их роль в клетке",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/himicheskiy-sostav-zhivyh-organizmov-mineralnye-veschestva-voda",
           "candidates": {
             "books": [
@@ -8912,7 +9205,7 @@
         }
       ],
       "reviewPriority": 100,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 3,
       "practiceCategoryLinks": 1,
       "practiceVerification": "category_title_only_not_task_content",
@@ -8922,11 +9215,12 @@
       "id": "bio:1:1",
       "subject": "bio",
       "title": "Углеводы, липиды, белки, ферменты, АТФ",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Углеводы: моно-, олиго- и полисахариды, функции",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/uglevody-ih-stroenie-i-funktsii",
           "candidates": {
             "books": [
@@ -8956,7 +9250,7 @@
         },
         {
           "title": "Липиды: триглицериды, фосфолипиды, функции",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/lipidy-ih-svoystva-i-funktsii-membrany",
           "candidates": {
             "books": [
@@ -8986,7 +9280,7 @@
         },
         {
           "title": "Строение белков и уровни структуры",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/struktura-belka",
           "candidates": {
             "books": [],
@@ -9007,7 +9301,7 @@
         },
         {
           "title": "Функции белков и принципы действия ферментов",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/funktsii-belkov-fermenty",
           "candidates": {
             "books": [],
@@ -9028,7 +9322,7 @@
         },
         {
           "title": "АТФ: роль в энергетическом обмене",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/obmen-veschestv-energeticheskiy-obmen-rol-atf",
           "candidates": {
             "books": [],
@@ -9044,7 +9338,7 @@
         }
       ],
       "reviewPriority": 100,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 5,
       "practiceCategoryLinks": 1,
       "practiceVerification": "category_title_only_not_task_content",
@@ -9054,7 +9348,8 @@
       "id": "bio:26:0",
       "subject": "bio",
       "title": "Полный вариант в экзаменационном режиме",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Полный экзаменационный вариант и управление временем",
@@ -9078,7 +9373,8 @@
       "id": "bio:26:1",
       "subject": "bio",
       "title": "Задания второй части, контроль типовых ошибок",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Задания второй части",
@@ -9112,7 +9408,8 @@
       "id": "bio:26:2",
       "subject": "bio",
       "title": "Финальная стабилизация: только слабые зоны и повтор",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Финальное повторение слабых зон без нового материала",
@@ -9136,11 +9433,12 @@
       "id": "chem:1:1",
       "subject": "chem",
       "title": "Химическая связь, решётки, степени окисления",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 3,
       "subtopics": [
         {
           "title": "Виды, свойства и механизмы химической связи",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/himiya/vidy-harakteristiki-i-mehanizmy-obrazovaniya-himicheskoy-svyazi",
           "candidates": {
             "books": [
@@ -9171,7 +9469,7 @@
         },
         {
           "title": "Молекулярные, атомные, ионные, металлические решётки; свойства веществ",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/himiya/tipy-kristallicheskih-reshetok-i-fizicheskie-svoystva-veschestv",
           "candidates": {
             "books": [
@@ -9223,7 +9521,7 @@
         },
         {
           "title": "Степень окисления, правила определения и расчёт",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/himiya/algoritm-opredeleniya-stepeni-okisleniya-i-valentnosti-elementa-v-soedinenii",
           "candidates": {
             "books": [
@@ -9254,7 +9552,7 @@
         }
       ],
       "reviewPriority": 100,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 3,
       "practiceCategoryLinks": 3,
       "practiceVerification": "category_title_only_not_task_content",
@@ -9264,11 +9562,12 @@
       "id": "chem:1:2",
       "subject": "chem",
       "title": "Моль, молярная масса, объём газа и расчёты по уравнениям",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Количество вещества, моль, молярная масса, формула n=m/M",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/mol-molyarnaya-massa",
           "candidates": {
             "books": [],
@@ -9295,7 +9594,7 @@
         },
         {
           "title": "Молярный объём газа и расчёты n=V/Vm при известных условиях",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/osnovnye-ponyatiya-mol",
           "candidates": {
             "books": [
@@ -9325,7 +9624,7 @@
         },
         {
           "title": "Стехиометрические коэффициенты и расчёты массы/объёма по реакциям",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/raschety-po-himicheskim-uravneniyam",
           "candidates": {
             "books": [
@@ -9361,7 +9660,7 @@
         }
       ],
       "reviewPriority": 100,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 3,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -9371,7 +9670,8 @@
       "id": "chem:26:0",
       "subject": "chem",
       "title": "Финальный полноценный вариант",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Финальный экзаменационный вариант",
@@ -9395,7 +9695,8 @@
       "id": "chem:26:1",
       "subject": "chem",
       "title": "Стабилизация слабых линий",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Повтор слабых линий",
@@ -9419,7 +9720,8 @@
       "id": "chem:26:2",
       "subject": "chem",
       "title": "Реакции, расчёты, ошибки; без нового крупного материала",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Реакции",
@@ -9479,11 +9781,12 @@
       "id": "math:1:1",
       "subject": "math",
       "title": "Дроби, степени, корни и квадратные уравнения: базовые преобразования",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Обыкновенные и десятичные дроби, операции с рациональными числами",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/deistvija-s-racionalnymi-chislami",
           "candidates": {
             "books": [
@@ -9519,7 +9822,7 @@
         },
         {
           "title": "Целые степени и правила преобразования",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/svojstva-stepeni-s-celym-pokazatelem",
           "candidates": {
             "books": [
@@ -9576,7 +9879,7 @@
         },
         {
           "title": "Корни и рациональные показатели",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/stepen-s-ratsionalnym-pokazatelem",
           "candidates": {
             "books": [
@@ -9620,7 +9923,7 @@
         },
         {
           "title": "Квадратные уравнения и дискриминант",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/formula-korney-kvadratnogo-uravneniya",
           "candidates": {
             "books": [
@@ -9645,7 +9948,7 @@
         }
       ],
       "reviewPriority": 100,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 4,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -9655,7 +9958,8 @@
       "id": "math:26:0",
       "subject": "math",
       "title": "Финальный вариант, разбор",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Финальный вариант",
@@ -9689,7 +9993,8 @@
       "id": "math:26:1",
       "subject": "math",
       "title": "Оформление и самопроверка, лёгкие баллы",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Оформление и самопроверка",
@@ -9723,7 +10028,8 @@
       "id": "math:26:2",
       "subject": "math",
       "title": "Финальная стабилизация без дорогих новых тем",
-      "editorialContentReviewed": false,
+      "editorialArticleMapped": false,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Стабилизация знаний без новых дорогих тем",
@@ -9747,11 +10053,12 @@
       "id": "bio:2:0",
       "subject": "bio",
       "title": "Клеточная мембрана, диффузия, осмос, транспорт",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Осмос и плазмолиз",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/osmos-i-osmoregulyatsiya",
           "candidates": {
             "books": [],
@@ -9767,7 +10074,7 @@
         },
         {
           "title": "Активный и пассивный перенос",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/transport-veschestv-cherez-membranu-endotsitoz-i-ekzotsitoz",
           "candidates": {
             "books": [],
@@ -9777,7 +10084,7 @@
         }
       ],
       "reviewPriority": 97,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 2,
       "practiceCategoryLinks": 1,
       "practiceVerification": "category_title_only_not_task_content",
@@ -9787,11 +10094,12 @@
       "id": "chem:2:0",
       "subject": "chem",
       "title": "Электролиты, ионный обмен, растворимость",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Сильные и слабые электролиты, диссоциация",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/teoriya-elektroliticheskoy-dissotsiatsii-ted",
           "candidates": {
             "books": [],
@@ -9813,7 +10121,7 @@
         },
         {
           "title": "Полные и сокращённые ионные уравнения реакций",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/reaktsii-ionnogo-obmena-v-rastvorah",
           "candidates": {
             "books": [
@@ -9844,7 +10152,7 @@
         },
         {
           "title": "Таблица растворимости и условия обмена в растворах",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/reaktsii-ionnogo-obmena-v-rastvorah",
           "candidates": {
             "books": [
@@ -9888,7 +10196,7 @@
         }
       ],
       "reviewPriority": 97,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 2,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -9898,11 +10206,12 @@
       "id": "chem:2:1",
       "subject": "chem",
       "title": "Классы неорганики, Na/K/Ca/Mg, Al/Zn",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Оксиды, основания, кислоты, соли",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/klassifikatsiya-i-nomenklatura-neorganicheskih-veschestv",
           "candidates": {
             "books": [],
@@ -9912,7 +10221,7 @@
         },
         {
           "title": "Металлы Na, K, Ca, Mg",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/osobennosti-stroeniya-metallov-ia-i-iia-grupp",
           "candidates": {
             "books": [
@@ -9943,7 +10252,7 @@
         },
         {
           "title": "Алюминий",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/stroenie-i-svoystva-alyuminiya-i-ego-soedineniy",
           "candidates": {
             "books": [
@@ -9953,6 +10262,14 @@
                 "number": 35,
                 "page": 162,
                 "pagesLabel": "162–169",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Соединения алюминия",
+                "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
+                "number": 36,
+                "page": 170,
+                "pagesLabel": "170–172",
                 "status": "toc_heading_candidate"
               }
             ],
@@ -9968,7 +10285,7 @@
         },
         {
           "title": "Цинк",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/stroenie-i-svoystva-tsinka-i-ego-soedineniy",
           "candidates": {
             "books": [],
@@ -9978,16 +10295,32 @@
         },
         {
           "title": "Амфотерные соединения",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/amfoternost",
           "candidates": {
             "books": [
+              {
+                "title": "Соединения натрия и калия",
+                "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
+                "number": 30,
+                "page": 140,
+                "pagesLabel": "140–144",
+                "status": "toc_heading_candidate"
+              },
               {
                 "title": "Магний и его соединения",
                 "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
                 "number": 32,
                 "page": 148,
                 "pagesLabel": "148–151",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Кальций и его соединения",
+                "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
+                "number": 33,
+                "page": 152,
+                "pagesLabel": "152–157",
                 "status": "toc_heading_candidate"
               }
             ],
@@ -10008,7 +10341,7 @@
         }
       ],
       "reviewPriority": 97,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 5,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10018,11 +10351,12 @@
       "id": "math:2:0",
       "subject": "math",
       "title": "Вероятность: элементарные и сложные события №4–5",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Классическая вероятность, элементарные исходы",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/teoriya-veroyatnostey",
           "candidates": {
             "books": [
@@ -10074,7 +10408,7 @@
         },
         {
           "title": "Независимость событий и формула произведения",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/teoriya-veroyatnostey",
           "candidates": {
             "books": [],
@@ -10096,7 +10430,7 @@
         },
         {
           "title": "Условная вероятность и объединение событий",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/teoriya-veroyatnostey",
           "candidates": {
             "books": [
@@ -10140,7 +10474,7 @@
         }
       ],
       "reviewPriority": 97,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 1,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10150,11 +10484,12 @@
       "id": "math:2:2",
       "subject": "math",
       "title": "Случайные величины и распределения №6; смешанная практика №4–8",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 4,
       "subtopics": [
         {
           "title": "Распределение случайной величины",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike",
           "candidates": {
             "books": [
@@ -10195,7 +10530,7 @@
         },
         {
           "title": "Математическое ожидание",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike",
           "candidates": {
             "books": [],
@@ -10211,7 +10546,7 @@
         },
         {
           "title": "Дисперсия",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike",
           "candidates": {
             "books": [],
@@ -10227,7 +10562,7 @@
         },
         {
           "title": "Стандартное отклонение",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike",
           "candidates": {
             "books": [],
@@ -10237,7 +10572,7 @@
         }
       ],
       "reviewPriority": 97,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 1,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10247,11 +10582,12 @@
       "id": "bio:3:1",
       "subject": "bio",
       "title": "Генетический код, трансляция, биосинтез белка",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Генетический код: кодоны и свойства",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/geneticheskiy-kod",
           "candidates": {
             "books": [],
@@ -10273,7 +10609,7 @@
         },
         {
           "title": "Трансляция: работа рибосомы и тРНК",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/translyatsiya-biosintez-belka",
           "candidates": {
             "books": [],
@@ -10289,7 +10625,7 @@
         }
       ],
       "reviewPriority": 94,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 2,
       "practiceCategoryLinks": 1,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10299,11 +10635,12 @@
       "id": "chem:3:0",
       "subject": "chem",
       "title": "Гидролиз, pH и химическое равновесие",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Гидролиз солей и его ионные уравнения",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/gidroliz",
           "candidates": {
             "books": [
@@ -10328,7 +10665,7 @@
         },
         {
           "title": "Кислая, нейтральная, щелочная среда и качественная оценка pH",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/gidroliz",
           "candidates": {
             "books": [],
@@ -10338,7 +10675,7 @@
         },
         {
           "title": "Химическое равновесие и принцип Ле Шателье",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/smeschenie-himicheskogo-ravnovesiya",
           "candidates": {
             "books": [
@@ -10377,7 +10714,7 @@
         }
       ],
       "reviewPriority": 94,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 2,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10387,11 +10724,12 @@
       "id": "bio:4:1",
       "subject": "bio",
       "title": "Гликолиз и этапы энергетического обмена",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Гликолиз",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/obmen-veschestv-energeticheskiy-obmen-rol-atf",
           "candidates": {
             "books": [],
@@ -10407,7 +10745,7 @@
         },
         {
           "title": "Клеточное дыхание",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/obmen-veschestv-energeticheskiy-obmen-rol-atf",
           "candidates": {
             "books": [],
@@ -10423,7 +10761,7 @@
         }
       ],
       "reviewPriority": 91,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 1,
       "practiceCategoryLinks": 1,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10433,11 +10771,12 @@
       "id": "chem:4:2",
       "subject": "chem",
       "title": "Спирты, фенол и альдегиды: распознавание и характерные реакции",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Характерные реакции спиртов",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-spirtov",
           "candidates": {
             "books": [
@@ -10476,7 +10815,7 @@
         },
         {
           "title": "Фенолы и качественные реакции",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-fenola",
           "candidates": {
             "books": [
@@ -10515,7 +10854,7 @@
         },
         {
           "title": "Альдегиды и карбонильные реакции",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-karbonilnyh-soedineniy",
           "candidates": {
             "books": [
@@ -10554,7 +10893,7 @@
         }
       ],
       "reviewPriority": 91,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 3,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10564,11 +10903,12 @@
       "id": "math:4:0",
       "subject": "math",
       "title": "Прикладные и текстовые задачи №10–11",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 1,
       "subtopics": [
         {
           "title": "Проценты в текстовых задачах",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/matematika/protsenty",
           "candidates": {
             "books": [],
@@ -10590,7 +10930,7 @@
         },
         {
           "title": "Задачи на движение",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/zadachi-na-dvizhenie",
           "candidates": {
             "books": [],
@@ -10612,7 +10952,7 @@
         },
         {
           "title": "Задачи на совместную работу",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/matematika/zadachi-na-rabotu",
           "candidates": {
             "books": [],
@@ -10628,7 +10968,7 @@
         }
       ],
       "reviewPriority": 91,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 3,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10638,11 +10978,12 @@
       "id": "bio:7:0",
       "subject": "bio",
       "title": "Гены, аллели, генотип, фенотип, законы Менделя",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 0,
       "subtopics": [
         {
           "title": "Гены, аллели, генотип и фенотип",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/pervyy-zakon-mendelya-tipy-vzaimodeystviya-allelnyh-genov",
           "candidates": {
             "books": [],
@@ -10658,7 +10999,7 @@
         },
         {
           "title": "Первый закон Менделя",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/pervyy-zakon-mendelya-tipy-vzaimodeystviya-allelnyh-genov",
           "candidates": {
             "books": [],
@@ -10679,7 +11020,7 @@
         },
         {
           "title": "Второй закон и чистота гамет",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/vtoroy-zakon-mendelya-zakon-chistoty-gamet",
           "candidates": {
             "books": [],
@@ -10700,7 +11041,7 @@
         },
         {
           "title": "Третий закон Менделя",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/di-i-poligibridnoe-skreschivanie-tretiy-zakon-mendelya",
           "candidates": {
             "books": [],
@@ -10721,7 +11062,7 @@
         }
       ],
       "reviewPriority": 82,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 3,
       "practiceCategoryLinks": 1,
       "practiceVerification": "category_title_only_not_task_content",
@@ -10731,11 +11072,12 @@
       "id": "bio:11:0",
       "subject": "bio",
       "title": "Водоросли, мхи, плауны, хвощи, папоротники",
-      "editorialContentReviewed": true,
+      "editorialArticleMapped": true,
+      "inspectedExcerptComponents": 1,
       "subtopics": [
         {
           "title": "Водоросли",
-          "evidence": "page_content_reviewed",
+          "evidence": "source_excerpt_verified",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/vodorosli-obshchaya-harakteristika",
           "candidates": {
             "books": [
@@ -10745,6 +11087,14 @@
                 "number": 45,
                 "page": 172,
                 "pagesLabel": "172–174",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Многоклеточные зеленые водоросли",
+                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
+                "number": 46,
+                "page": 175,
+                "pagesLabel": "175–181",
                 "status": "toc_heading_candidate"
               }
             ],
@@ -10766,7 +11116,7 @@
         },
         {
           "title": "Мхи",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/vysshie-sporovye-rasteniya-otdel-mohovidnye",
           "candidates": {
             "books": [],
@@ -10776,7 +11126,7 @@
         },
         {
           "title": "Плауны",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/otdel-plaunovidnye",
           "candidates": {
             "books": [
@@ -10801,7 +11151,7 @@
         },
         {
           "title": "Хвощи",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/otdel-hvoshchevidnye",
           "candidates": {
             "books": [],
@@ -10817,7 +11167,7 @@
         },
         {
           "title": "Папоротники",
-          "evidence": "page_content_reviewed",
+          "evidence": "editorial_link_selected",
           "sourceUrl": "https://foxford.ru/wiki/biologiya/vysshie-sporovye-rasteniya-otdel-paporotnikovidnye",
           "candidates": {
             "books": [
@@ -10850,7 +11200,7 @@
         }
       ],
       "reviewPriority": 70,
-      "sourceReviewStatus": "reviewed_selected_aspects",
+      "sourceReviewStatus": "editorially_mapped_selected_aspects",
       "foxfordArticles": 5,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
