@@ -22,7 +22,7 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","topic-coverage.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","topic-coverage.js","coverage-candidates.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 function markStudySteps(a,click,verify=true){
@@ -465,7 +465,7 @@ test("составная тема показывает три проверенн
     assert.ok(html.toLowerCase().includes(part.toLowerCase()),part);
   assert.ok(html.includes("tipy-kristallicheskih-reshetok"));
   assert.ok(html.includes("algoritm-opredeleniya-stepeni-okisleniya"));
-  click({action:"open-topic",key:"math:2:2"});
+  click({action:"open-topic",key:"math:3:2"});
   html=a.node("#dialog-content").innerHTML;
   assert.ok(html.includes("Точное покрытие каждого пункта внешними материалами пока не проверено"));
   assert.ok(html.includes("Для этого пункта соответствие внешних материалов не проверено"));

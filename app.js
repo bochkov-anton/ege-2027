@@ -55,7 +55,13 @@
         '<li><strong>'+safe(part.label)+'</strong>'+
         (part.source?
           '<div class="coverage-evidence"><span>Содержание статьи проверено</span> · <a href="'+safe(part.source.url)+'" target="_blank" rel="noopener noreferrer">'+safe(part.source.title)+' ↗</a></div>':
-          '<div class="coverage-unreviewed">Для этого пункта соответствие внешних материалов не проверено</div>')+
+          '<div class="coverage-unreviewed">Для этого пункта соответствие внешних материалов не проверено</div>'+
+          (part.candidates?.books?.length?'<div class="coverage-suggestions">Возможные § по оглавлению (содержимое не сверено): '+
+            part.candidates.books.map(x=>safe(x.edition)+' · § '+safe(x.number)+' · с. '+safe(x.pagesLabel)).join('; ')+'</div>':"")+
+          (part.candidates?.articles?.length?'<div class="coverage-suggestions">Статьи-кандидаты по названию: '+
+            part.candidates.articles.map(x=>'<a href="'+safe(x.url)+'" rel="noopener noreferrer" target="_blank">'+safe(x.title)+' ↗</a>').join('; ')+'</div>':"")+
+          (part.candidates?.practice?.length?'<div class="coverage-suggestions">Подборки-кандидаты по названию (задания не проверены): '+
+            part.candidates.practice.map(x=>'<a href="'+safe(x.url)+'" rel="noopener noreferrer" target="_blank">'+safe(x.title)+' ↗</a>').join('; ')+'</div>':""))+
         '</li>').join("")+'</ol>'+
       '</section>';
   }

@@ -7,12 +7,18 @@
 const D=window.EGE_DATA,L=window.EGE_LESSONS,T=window.EGE_THEORY;
 if(!D||!L||!T)throw Error("Topic coverage needs data, lessons and theory");
 const VERIFIED={
+ "math:2:0":[["Классическая вероятность, элементарные исходы","https://foxford.ru/wiki/matematika/teoriya-veroyatnostey"],["Независимость событий и формула произведения","https://foxford.ru/wiki/matematika/teoriya-veroyatnostey"],["Условная вероятность и объединение событий","https://foxford.ru/wiki/matematika/teoriya-veroyatnostey"]],
+ "math:2:2":[["Распределение случайной величины","https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike"],["Математическое ожидание","https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike"],["Дисперсия","https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike"],["Стандартное отклонение","https://foxford.ru/wiki/matematika/zadanie-6-ege-po-profilnoy-matematike"]],
  "math:1:1":[
   ["Обыкновенные и десятичные дроби, операции с рациональными числами","https://foxford.ru/wiki/matematika/deistvija-s-racionalnymi-chislami"],
   ["Целые степени и правила преобразования","https://foxford.ru/wiki/matematika/svojstva-stepeni-s-celym-pokazatelem"],
   ["Корни и рациональные показатели","https://foxford.ru/wiki/matematika/stepen-s-ratsionalnym-pokazatelem"],
   ["Квадратные уравнения и дискриминант","https://foxford.ru/wiki/matematika/formula-korney-kvadratnogo-uravneniya"]
  ],
+ "bio:2:0":[["Осмос и плазмолиз","https://foxford.ru/wiki/biologiya/osmos-i-osmoregulyatsiya"],["Активный и пассивный перенос","https://foxford.ru/wiki/biologiya/transport-veschestv-cherez-membranu-endotsitoz-i-ekzotsitoz"]],
+ "bio:3:1":[["Генетический код: кодоны и свойства","https://foxford.ru/wiki/biologiya/geneticheskiy-kod"],["Трансляция: работа рибосомы и тРНК","https://foxford.ru/wiki/biologiya/translyatsiya-biosintez-belka"]],
+ "bio:4:1":[["Гликолиз","https://foxford.ru/wiki/biologiya/obmen-veschestv-energeticheskiy-obmen-rol-atf"],["Клеточное дыхание","https://foxford.ru/wiki/biologiya/obmen-veschestv-energeticheskiy-obmen-rol-atf"]],
+ "bio:7:0":[["Гены, аллели, генотип и фенотип","https://foxford.ru/wiki/biologiya/pervyy-zakon-mendelya-tipy-vzaimodeystviya-allelnyh-genov"],["Первый закон Менделя","https://foxford.ru/wiki/biologiya/pervyy-zakon-mendelya-tipy-vzaimodeystviya-allelnyh-genov"],["Второй закон и чистота гамет","https://foxford.ru/wiki/biologiya/vtoroy-zakon-mendelya-zakon-chistoty-gamet"],["Третий закон Менделя","https://foxford.ru/wiki/biologiya/di-i-poligibridnoe-skreschivanie-tretiy-zakon-mendelya"]],
  "bio:1:0":[
   ["Методы биологических исследований, наблюдение и эксперимент","https://foxford.ru/wiki/biologiya/nauka-biologiya-metody-izucheniya-biologii"],
   ["Уровни организации живых систем","https://foxford.ru/wiki/biologiya/urovni-strukturnoy-organizatsii-zhivogo"],

@@ -8,8 +8,8 @@ for(const name of ["data.js","lesson-content.js","topic-practice.js","theory-cor
 const W=ctx.window,C=W.EGE_COVERAGE;
 test("все 234 темы имеют список проверяемых смысловых компонентов, без ложного зачёта источников",()=>{
  assert.equal(C.report.topics,234);
- assert.equal(C.report.reviewed,7);
- assert.equal(C.report.unchecked,227);
+ assert.ok(C.report.reviewed>=13);
+ assert.equal(C.report.unchecked+C.report.reviewed,234);
  for(const [id,row] of Object.entries(C.all)){
   assert.ok(row.components.length>=1,id);
   assert.ok(row.components.every(x=>x.label.length>=2),id);
@@ -56,7 +56,7 @@ test("первый математический фундамент не подм
  assert.ok(row.components.every(x=>!x.source.url.includes("logarifm")),row.id);
 });
 test("все материалы вне узкого редакционного списка не получают статус прочитанного содержания",()=>{
- for(const key of ["bio:1:2","math:2:2","bio:25:0"]){
+ for(const key of ["bio:1:2","math:3:2","bio:25:0"]){
   const row=C.get(key);
   assert.equal(row.reviewed,false,key);
   assert.ok(row.unmatched>=1);
