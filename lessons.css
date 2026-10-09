@@ -53,4 +53,16 @@
 .coverage-evidence{color:#396f5c}
 .coverage-unreviewed{color:#845e35}
 .coverage-evidence a{overflow-wrap:anywhere}
+.source-route{margin:14px 0 18px;min-width:0}
+.source-route details{border:1px solid #dce3f1;border-radius:12px;padding:12px 14px;background:#fafcff}
+.source-route summary{font-size:13px;font-weight:750;cursor:pointer;line-height:1.6}
+.source-route h4{font-size:13px;margin:15px 0 7px}
+.source-route .route-facets,.source-route .route-readings{margin:8px 0 12px;padding-left:24px}
+.source-route li{font-size:12px;line-height:1.6;overflow-wrap:anywhere;margin:7px 0}
+.source-route .route-facets>li{border-bottom:1px solid #dce3f1;padding:4px 0 9px}
+.source-route a{overflow-wrap:anywhere}
+.route-verified{color:#326752;font-size:12px}
+.route-unmatched{color:#795b42;font-size:11px;margin:5px 0}
+@media(max-width:700px){.source-route details{padding:10px}.source-route .route-facets,.source-route .route-readings{padding-left:19px}}
+
 

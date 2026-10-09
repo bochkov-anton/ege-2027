@@ -37,7 +37,7 @@ test("контрольные номера из оглавлений не пер�
  for(const [id,n,start] of pairs)assert.equal(ed.section(id,n)?.page,start,id+" §"+n);
  assert.ok(ed.editions.chemPaper10.isbn!==ed.editions.chemPaper11.isbn);
 });
-test("160 из 234 учебных карточек имеют проверенную привязку, остаток честно обозначен",()=>{
+test("159 из 234 учебных карточек имеют проверенную привязку, остаток честно обозначен",()=>{
  let verified=0,unmapped=0;
  for(const sub of W.EGE_DATA.subjectOrder)for(let wi=0;wi<26;wi++)for(let i=0;i<3;i++){
    const k=sub+":"+(wi+1)+":"+i,r=W.EGE_READING.get(k);
@@ -55,8 +55,8 @@ test("160 из 234 учебных карточек имеют проверенн
      }
    }else unmapped++;
  }
- assert.equal(verified,160);
- assert.equal(unmapped,74);
+ assert.equal(verified,159);
+ assert.equal(unmapped,75);
 });
 test("химическая связь не лишена решёток и степеней окисления в карте учебника",()=>{
  const entries=W.EGE_READING.get("chem:1:1").entries;

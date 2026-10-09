@@ -3,13 +3,13 @@
   "note": "Ссылки на категории задач проверены по заголовку; совпадение с конкретными заданиями не доказано.",
   "summary": {
     "total": 234,
-    "contentReviewed": 16,
-    "unreviewed": 218,
-    "unreviewedWithLinks": 44,
-    "unreviewedWithoutFoxford": 174,
-    "subtopicRows": 433,
-    "candidateHeadingsOnly": 199,
-    "withoutAnyHeadingCandidate": 234,
+    "contentReviewed": 17,
+    "unreviewed": 217,
+    "unreviewedWithLinks": 46,
+    "unreviewedWithoutFoxford": 171,
+    "subtopicRows": 435,
+    "candidateHeadingsOnly": 202,
+    "withoutAnyHeadingCandidate": 233,
     "bySubject": {
       "bio": {
         "total": 78,
@@ -23,8 +23,8 @@
       },
       "math": {
         "total": 78,
-        "reviewed": 3,
-        "notReviewed": 75
+        "reviewed": 4,
+        "notReviewed": 74
       }
     }
   },
@@ -356,6 +356,11 @@
             "practice": [],
             "articles": [
               {
+                "title": "Экономическая модель №13, ЕГЭ-2027",
+                "url": "https://foxford.ru/wiki/matematika/zadanie-13-ege-po-profilnoy-matematike",
+                "status": "article_heading_candidate"
+              },
+              {
                 "title": "Математическая модель кредита",
                 "url": "https://foxford.ru/wiki/matematika/kredit",
                 "status": "article_heading_candidate"
@@ -366,7 +371,7 @@
       ],
       "reviewPriority": 191,
       "sourceReviewStatus": "requires_editorial_content_review",
-      "foxfordArticles": 1,
+      "foxfordArticles": 2,
       "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
       "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
@@ -2384,6 +2389,115 @@
       "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
     },
     {
+      "id": "math:12:0",
+      "subject": "math",
+      "title": "№17: перевод условий в математическую модель",
+      "editorialContentReviewed": false,
+      "subtopics": [
+        {
+          "title": "Математическая модель: переменные, ограничения и данные",
+          "evidence": "not_reviewed",
+          "sourceUrl": null,
+          "candidates": {
+            "books": [],
+            "practice": [],
+            "articles": [
+              {
+                "title": "Математическое моделирование №17, ЕГЭ-2027",
+                "url": "https://foxford.ru/wiki/matematika/zadanie-17-ege-po-profilnoy-matematike",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        }
+      ],
+      "reviewPriority": 167,
+      "sourceReviewStatus": "requires_editorial_content_review",
+      "foxfordArticles": 1,
+      "practiceCategoryLinks": 2,
+      "practiceVerification": "category_title_only_not_task_content",
+      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
+    },
+    {
+      "id": "math:12:1",
+      "subject": "math",
+      "title": "№17: функции, ограничения, оптимизация",
+      "editorialContentReviewed": false,
+      "subtopics": [
+        {
+          "title": "№17: функции",
+          "evidence": "not_reviewed",
+          "sourceUrl": null,
+          "candidates": {
+            "books": [
+              {
+                "title": "Точки экстремума функции",
+                "edition": "Мерзляк, Номировский, Поляков. Алгебра и начала анализа. 10 класс. Углублённый. 8-е изд.",
+                "number": 42,
+                "page": 320,
+                "pagesLabel": "320–330",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Наибольшее и наименьшее значения функции на отрезке",
+                "edition": "Мерзляк, Номировский, Поляков. Алгебра и начала анализа. 10 класс. Углублённый. 8-е изд.",
+                "number": 43,
+                "page": 331,
+                "pagesLabel": "331–338",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [
+              {
+                "title": "Применение производной к исследованию функций",
+                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=70",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": []
+          }
+        },
+        {
+          "title": "ограничения",
+          "evidence": "not_reviewed",
+          "sourceUrl": null,
+          "candidates": {
+            "books": [],
+            "practice": [],
+            "articles": []
+          }
+        },
+        {
+          "title": "оптимизация",
+          "evidence": "not_reviewed",
+          "sourceUrl": null,
+          "candidates": {
+            "books": [],
+            "practice": [
+              {
+                "title": "Задачи на оптимальный выбор",
+                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=247",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Оптимизация модели №17, ЕГЭ-2027",
+                "url": "https://foxford.ru/wiki/matematika/zadanie-17-ege-po-profilnoy-matematike",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        }
+      ],
+      "reviewPriority": 167,
+      "sourceReviewStatus": "requires_editorial_content_review",
+      "foxfordArticles": 1,
+      "practiceCategoryLinks": 2,
+      "practiceVerification": "category_title_only_not_task_content",
+      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
+    },
+    {
       "id": "math:12:2",
       "subject": "math",
       "title": "№14 + №16: mixed, первая часть",
@@ -2580,41 +2694,6 @@
           "candidates": {
             "books": [],
             "practice": [],
-            "articles": []
-          }
-        }
-      ],
-      "reviewPriority": 166,
-      "sourceReviewStatus": "requires_editorial_content_review",
-      "foxfordArticles": 0,
-      "practiceCategoryLinks": 2,
-      "practiceVerification": "category_title_only_not_task_content",
-      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
-    },
-    {
-      "id": "math:4:0",
-      "subject": "math",
-      "title": "Прикладные и текстовые задачи №10–11",
-      "editorialContentReviewed": false,
-      "subtopics": [
-        {
-          "title": "Текстовые задачи, проценты, движение, работа",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [
-              {
-                "title": "Задачи на проценты, сплавы и смеси",
-                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=88",
-                "status": "category_heading_candidate"
-              },
-              {
-                "title": "Задачи на движение по прямой",
-                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=84",
-                "status": "category_heading_candidate"
-              }
-            ],
             "articles": []
           }
         }
@@ -4570,103 +4649,6 @@
           "candidates": {
             "books": [],
             "practice": [],
-            "articles": []
-          }
-        }
-      ],
-      "reviewPriority": 142,
-      "sourceReviewStatus": "requires_editorial_content_review",
-      "foxfordArticles": 0,
-      "practiceCategoryLinks": 2,
-      "practiceVerification": "category_title_only_not_task_content",
-      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
-    },
-    {
-      "id": "math:12:0",
-      "subject": "math",
-      "title": "№17: перевод условий в математическую модель",
-      "editorialContentReviewed": false,
-      "subtopics": [
-        {
-          "title": "Математическая модель: переменные, ограничения и данные",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [],
-            "articles": []
-          }
-        }
-      ],
-      "reviewPriority": 142,
-      "sourceReviewStatus": "requires_editorial_content_review",
-      "foxfordArticles": 0,
-      "practiceCategoryLinks": 2,
-      "practiceVerification": "category_title_only_not_task_content",
-      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
-    },
-    {
-      "id": "math:12:1",
-      "subject": "math",
-      "title": "№17: функции, ограничения, оптимизация",
-      "editorialContentReviewed": false,
-      "subtopics": [
-        {
-          "title": "№17: функции",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [
-              {
-                "title": "Точки экстремума функции",
-                "edition": "Мерзляк, Номировский, Поляков. Алгебра и начала анализа. 10 класс. Углублённый. 8-е изд.",
-                "number": 42,
-                "page": 320,
-                "pagesLabel": "320–330",
-                "status": "toc_heading_candidate"
-              },
-              {
-                "title": "Наибольшее и наименьшее значения функции на отрезке",
-                "edition": "Мерзляк, Номировский, Поляков. Алгебра и начала анализа. 10 класс. Углублённый. 8-е изд.",
-                "number": 43,
-                "page": 331,
-                "pagesLabel": "331–338",
-                "status": "toc_heading_candidate"
-              }
-            ],
-            "practice": [
-              {
-                "title": "Применение производной к исследованию функций",
-                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=70",
-                "status": "category_heading_candidate"
-              }
-            ],
-            "articles": []
-          }
-        },
-        {
-          "title": "ограничения",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [],
-            "articles": []
-          }
-        },
-        {
-          "title": "оптимизация",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [
-              {
-                "title": "Задачи на оптимальный выбор",
-                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=247",
-                "status": "category_heading_candidate"
-              }
-            ],
             "articles": []
           }
         }
@@ -10565,6 +10547,80 @@
               {
                 "title": "Альдегиды",
                 "url": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-karbonilnyh-soedineniy",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        }
+      ],
+      "reviewPriority": 91,
+      "sourceReviewStatus": "reviewed_selected_aspects",
+      "foxfordArticles": 3,
+      "practiceCategoryLinks": 2,
+      "practiceVerification": "category_title_only_not_task_content",
+      "followUp": "Проверить текст отдельных задач, покрытие учебника и соответствие ФИПИ"
+    },
+    {
+      "id": "math:4:0",
+      "subject": "math",
+      "title": "Прикладные и текстовые задачи №10–11",
+      "editorialContentReviewed": true,
+      "subtopics": [
+        {
+          "title": "Проценты в текстовых задачах",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/matematika/protsenty",
+          "candidates": {
+            "books": [],
+            "practice": [
+              {
+                "title": "Задачи на проценты, сплавы и смеси",
+                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=88",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Проценты: вычисления и текстовые задачи",
+                "url": "https://foxford.ru/wiki/matematika/protsenty",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Задачи на движение",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/matematika/zadachi-na-dvizhenie",
+          "candidates": {
+            "books": [],
+            "practice": [
+              {
+                "title": "Задачи на движение по прямой",
+                "url": "https://math-ege.sdamgia.ru/test?filter=all&category_id=84",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Задачи на движение",
+                "url": "https://foxford.ru/wiki/matematika/zadachi-na-dvizhenie",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Задачи на совместную работу",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/matematika/zadachi-na-rabotu",
+          "candidates": {
+            "books": [],
+            "practice": [],
+            "articles": [
+              {
+                "title": "Задачи на совместную работу",
+                "url": "https://foxford.ru/wiki/matematika/zadachi-na-rabotu",
                 "status": "article_heading_candidate"
               }
             ]

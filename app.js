@@ -65,6 +65,39 @@
         '</li>').join("")+'</ol>'+
       '</section>';
   }
+  function studySourcesPanel(key){
+    const guide=window.EGE_STUDY_SOURCES?.get(key);
+    if(!guide)return "";
+    const pack=guide.bookReadings;
+    return '<section class="source-route" aria-label="Материалы по компонентам занятия">'+
+      '<details><summary>Проверить весь маршрут изучения: параграфы, страницы и задачи ('+
+       safe(guide.components.length)+' части)</summary>'+
+      '<p class="note">'+safe(guide.notice)+'</p>'+
+      '<ol class="route-facets">'+guide.components.map(part=>
+        '<li><strong>'+safe(part.label)+'</strong>'+
+        (part.article?'<div class="route-verified">Статья для этого компонента: <a href="'+safe(part.article.url)+'" target="_blank" rel="noopener noreferrer">'+safe(part.article.title)+' ↗</a></div>':"")+
+        (part.specificallyRelatedParagraphs.length?
+          '<ul>'+part.specificallyRelatedParagraphs.map(x=>
+            '<li>'+safe(x.edition)+' · '+safe(x.marker)+' '+safe(x.number)+
+              ', с. '+safe(x.pagesLabel)+
+              ' · '+safe(x.heading)+'</li>').join("")+'</ul>':
+          '<p class="route-unmatched">Точный параграф для этого пункта по названию оглавления не установлен — используйте общий список по занятию ниже и сверьте содержание.</p>')+
+        '</li>').join("")+'</ol>'+
+      (pack.length?'<h4>'+(guide.type==="review_or_assessment"?"Повторить по предыдущим занятиям":"Опорные параграфы занятия")+'</h4>'+
+        '<ol class="route-readings">'+pack.map(x=>
+          '<li><strong>'+safe(x.heading)+'</strong> · '+safe(x.edition)+
+          ' · '+safe(x.marker)+' '+safe(x.number)+' · с. '+safe(x.pagesLabel)+
+          ' · ISBN '+safe(x.isbn)+
+          (x.fromTopic?' · из темы «'+safe(x.fromTitle)+'»':"")+
+          ' · <a href="'+safe(x.source)+'" target="_blank" rel="noopener noreferrer">Источник оглавления ↗</a></li>').join("")+'</ol>':
+          '<p class="note">'+(guide.type==="review_or_assessment"?
+            "Для диагностики новых учебных параграфов нет: используйте демовариант ФИПИ или подборку заданий ниже.":
+            "Адресная статья по этой теме дана выше; ошибочный параграф другого раздела учебника не назначаем.")+'</p>')+
+      (guide.practiceCategories.length?'<h4>Практика</h4><ul class="route-readings">'+
+        guide.practiceCategories.map(x=>'<li><a target="_blank" rel="noopener noreferrer" href="'+safe(x.url)+'">'+safe(x.title)+' ↗</a>'+
+         ' · '+(x.verification==="official_fipi_archive"?"Архив проекта ФИПИ-2027":"Категория по названию, отдельные задания ещё не проверены")+'</li>').join("")+'</ul>':"")+
+      '</details></section>';
+  }
   function examMeta(key){
     const m=window.EGE_FIPI?.get(key);
     if(!m)return "";
@@ -208,7 +241,7 @@
       '<button type="button" role="tab" aria-selected="'+!showTheory+'" class="lesson-tab'+(!showTheory?" selected":"")+'" data-action="lesson-tab" data-tab="practice">2. Задания и проверка</button></nav>';
     html+='<section id="lesson-theory" class="lesson-section" role="tabpanel"'+(showTheory?"":" hidden")+'>'+
       '<div class="study-chapter"><div class="study-kicker">ЧТО НУЖНО ПОНЯТЬ</div><p>'+safe(guide.know)+'</p></div>';
-    html+=coveragePanel(key);
+    html+=coveragePanel(key)+studySourcesPanel(key);
     const articles=info.articles||[];
     if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">ФОКСФОРД · КРАТКОЕ ОБЪЯСНЕНИЕ</div>'+
       articles.map(x=>'<div class="foxford-item"><strong>'+safe(x.title)+'</strong>'+
