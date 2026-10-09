@@ -68,7 +68,8 @@ for(const subject of D.subjectOrder)for(let week=1;week<=26;week++)for(let i=0;i
  const officialFipi=subject==="math"?"https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/ma_11_2027.zip":
    subject==="bio"?"https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/bi_11_2027.zip":
    "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/hi_11_2027.zip";
- const officialPractice=(diagnostic&&!unique.length)?
+ const fullExam=/(полный.*вариант|полноформатн|финальн.*вариант|пробник|вариант.*экзаменационн|экзаменационном режиме)/i.test(record.title);
+ const officialPractice=(fullExam||(diagnostic&&!unique.length))?
    [{title:"Проект демоверсии ФИПИ-2027: архив заданий и спецификации",url:officialFipi,
      coverage:"official_exam_archive",verification:"official_fipi_archive"}]:[];
  const items=coverage.components.map(part=>{
@@ -80,10 +81,10 @@ for(const subject of D.subjectOrder)for(let week=1;week<=26;week++)for(let i=0;i
    unresolved:!source&&!matched.length,
    evidence:source?part.evidence:matched.length?"toc_heading_or_subject_match_not_article_content":"no_component_content_evidence"};
  });
- mapping[id]={id,title:record.title,subject,type:diagnostic?"review_or_assessment":"theory_and_practice",
+ mapping[id]={id,title:record.title,subject,fullExam,type:diagnostic?"review_or_assessment":"theory_and_practice",
    components:items,
    bookReadings:unique,
-   practiceCategories:[...practice.map(x=>({title:x.title,url:x.url,coverage:x.coverage||"heading_only",verification:"category_title_only"})),...officialPractice],
+   practiceCategories:[...practice.map(x=>({title:x.title,url:x.url,coverage:x.coverage||"heading_only",verification:"category_title_only",purpose:fullExam?"review_of_errors_only":"practice"})),...officialPractice],
    supplementaryArticles:articles.map(x=>({title:x.title,url:x.url,coverage:x.coverage||"partial"})),
    diagnosticsFrom:support.map(x=>({id:x.id,title:C.records[x.id].title})),
    exercise:lesson.doTask,learningGoal:lesson.know,check:lesson.check,
@@ -103,6 +104,7 @@ const stats={topics:all.length,withBookBundle:all.filter(x=>x.bookReadings.lengt
  reviewTopics:all.filter(x=>x.type==="review_or_assessment").length,
  components:all.reduce((n,x)=>n+x.components.length,0),
  explicitComponents:all.reduce((n,x)=>n+x.components.filter(c=>!!c.article).length,0),
+ fullExamTopics:all.filter(x=>x.fullExam).length,
  bookMatchedComponents:all.reduce((n,x)=>n+x.components.filter(c=>c.specificallyRelatedParagraphs.length>0).length,0),
  unresolvedComponents:all.reduce((n,x)=>n+x.components.filter(c=>c.unresolved).length,0)};
 window.EGE_STUDY_SOURCES={get:id=>mapping[id]||null,all:mapping,stats,version:"2026-10-09-complete-234-topic-reading-routes"};

@@ -121,11 +121,14 @@
   }
   function resourceCards(subject,week,title,key){
     const sources=directExercises(key);
+    const examRoute=window.EGE_STUDY_SOURCES?.get(key);
+    const officialExam=examRoute?.practiceCategories?.find(x=>x.verification==="official_fipi_archive");
     const saved=key?(Array.isArray(state.customLinks[key])?state.customLinks[key]:[])
       .filter(x=>U.safeHttpUrl(x.url)&&typeof x.title==="string").slice(0,12):[];
-    return '<div class="practice-intro"><strong>Прямые подборки задач по теме</strong>'+
-      '<p>Откройте условия задач, решите 5–8 самостоятельно, затем сверьте решения и запишите результат.</p></div>'+
-      '<div class="direct-exercises">'+(sources.length?sources.map((x,i)=>
+    return '<div class="practice-intro"><strong>'+(examRoute?.fullExam?"Тематическая отработка ошибок, не полный вариант":"Прямые подборки задач по теме")+'</strong>'+
+      '<p>'+(examRoute?.fullExam?"Сначала выполните полный вариант самостоятельно. Эти узкие подборки предназначены только для исправления ошибок.":"Откройте условия задач, решите 5–8 самостоятельно, затем сверьте решения и запишите результат.")+'</p></div>'+
+      (officialExam?'<p class="route-load-warning"><strong>ФИПИ-2027 · проект демоварианта:</strong> <a href="'+safe(officialExam.url)+'" target="_blank" rel="noopener noreferrer">Открыть официальный архив ↗</a>. Это один демонстрационный комплект, не банк полных вариантов.</p>':"")+
+       '<div class="direct-exercises">'+(sources.length?sources.map((x,i)=>
       '<div class="direct-exercise"><span class="direct-index">'+(i+1)+'</span>'+
       '<div class="direct-description"><strong>'+safe(x.title)+'</strong>'+
       '<span>'+(x.url.includes("sdamgia.ru")?"РЕШУ ЕГЭ":"Внешний учебный ресурс")+' · '+(x.coverage==="partial"?"только часть темы":"тематическая категория")+' · проверено по заголовку, не по содержанию каждой задачи</span>'+

@@ -46,6 +46,16 @@ test("диагностические варианты получают марш�
  assert.ok(first.practiceCategories.some(r=>r.verification==="official_fipi_archive"));
  assert.equal(first.bookReadings.length,0);
 });
+test("полноформатные варианты не подменяются тематическими заданиями",()=>{
+ for(const key of ["bio:24:0","bio:26:0","chem:20:0","chem:26:0","math:23:0","math:26:0"]){
+  const row=full.get(key);
+  assert.ok(row.fullExam,key);
+  assert.ok(row.practiceCategories.some(x=>x.verification==="official_fipi_archive"),key);
+  assert.ok(row.practiceCategories.filter(x=>x.verification==="category_title_only")
+    .every(x=>x.purpose==="review_of_errors_only"),key);
+ }
+ assert.equal(full.get("math:2:2").fullExam,false);
+});
 test("ресурсы защищены от переприсвоения проверки содержания по заголовку",()=>{
  for(const x of Object.values(full.all)){
   for(const c of x.components){

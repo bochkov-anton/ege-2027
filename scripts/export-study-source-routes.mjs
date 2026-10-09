@@ -20,7 +20,7 @@ const editions=Object.fromEntries(Object.entries(W.EGE_VERIFIED_TOC.editions).ma
  {title:b.title,year:b.year,isbn:b.isbn,source:b.url}]));
 const topics=order.map(id=>{
  const t=all[id];
- return {id:t.id,subject:t.subject,title:t.title,type:t.type,know:t.learningGoal,
+ return {id:t.id,subject:t.subject,title:t.title,type:t.type,fullExam:t.fullExam,know:t.learningGoal,
   task:t.exercise,check:t.check,
   components:t.components.map(c=>({label:c.label,
    article:c.article?{title:c.article.title,url:c.article.url}:null,
@@ -28,7 +28,7 @@ const topics=order.map(id=>{
    evidence:c.evidence})),
   books:t.bookReadings.map(b=>({edition:b.editionId,number:b.number,page:b.page,pages:b.pagesLabel,
    title:b.heading,fromTopic:b.fromTopic||null})),
-  practice:t.practiceCategories.map(p=>({title:p.title,url:p.url,evidence:p.verification})),
+  practice:t.practiceCategories.map(p=>({title:p.title,url:p.url,evidence:p.verification,purpose:p.purpose||null})),
   articles:t.supplementaryArticles.map(a=>({title:a.title,url:a.url})),
   reviewFrom:t.diagnosticsFrom.map(x=>x.id)};
 });
@@ -53,6 +53,7 @@ for(const subject of W.EGE_DATA.subjectOrder){
   md+="**Знать:** "+t.learningGoal+"\n\n";
   md+="**Выполнить:** "+t.exercise+"\n\n";
   md+="**Проверка:** "+t.check+"\n\n";
+  if(t.fullExam)md+="**Внимание:** только официальный архив ФИПИ содержит демонстрационный экзаменационный комплект; узкие тематические категории ниже нужны для исправления ошибок и не заменяют полный пробник.\n\n";
   for(const c of t.components){
    md+="- **"+c.label+"**. ";
    if(c.article)md+="[статья] "+c.article.title+" \u2014 "+c.article.url+". ";
