@@ -7,7 +7,7 @@ import {createHash} from "node:crypto";
 const root=resolve(dirname(fileURLToPath(import.meta.url)),"..");
 const site="https://bochkov-anton.github.io/ege-2027/";
 const fileList=["index.html","manifest.webmanifest","sw.js","style.css","ux.css","android.css","flow.css","session.css","wellbeing.css","lessons.css","textbooks.css",
-  "data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js","android.js","icons/icon-192.png","icons/icon-512.png"];
+  "data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","topic-coverage.js","coverage-candidates.js","study-source-routes.js","experience.js","app.js","android.js","icons/icon-192.png","icons/icon-512.png"];
 const sha=b=>createHash("sha256").update(b).digest("hex").slice(0,12);
 const report={site,assets:[],broken:[],stale:[],external:[]};
 async function query(url,timeout=16000){
