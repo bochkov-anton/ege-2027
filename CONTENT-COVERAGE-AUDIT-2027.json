@@ -3,23 +3,23 @@
   "note": "Ссылки на категории задач проверены по заголовку; совпадение с конкретными заданиями не доказано.",
   "summary": {
     "total": 234,
-    "contentReviewed": 13,
-    "unreviewed": 221,
+    "contentReviewed": 16,
+    "unreviewed": 218,
     "unreviewedWithLinks": 44,
-    "unreviewedWithoutFoxford": 177,
-    "subtopicRows": 429,
-    "candidateHeadingsOnly": 194,
-    "withoutAnyHeadingCandidate": 235,
+    "unreviewedWithoutFoxford": 174,
+    "subtopicRows": 433,
+    "candidateHeadingsOnly": 199,
+    "withoutAnyHeadingCandidate": 234,
     "bySubject": {
       "bio": {
         "total": 78,
-        "reviewed": 6,
-        "notReviewed": 72
+        "reviewed": 7,
+        "notReviewed": 71
       },
       "chem": {
         "total": 78,
-        "reviewed": 4,
-        "notReviewed": 74
+        "reviewed": 6,
+        "notReviewed": 72
       },
       "math": {
         "total": 78,
@@ -1908,40 +1908,6 @@
       "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
     },
     {
-      "id": "chem:2:1",
-      "subject": "chem",
-      "title": "Классы неорганики, Na/K/Ca/Mg, Al/Zn",
-      "editorialContentReviewed": false,
-      "subtopics": [
-        {
-          "title": "Оксиды, основания, кислоты и соли",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [],
-            "articles": []
-          }
-        },
-        {
-          "title": "амфотерные Al/Zn",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [],
-            "articles": []
-          }
-        }
-      ],
-      "reviewPriority": 172,
-      "sourceReviewStatus": "requires_editorial_content_review",
-      "foxfordArticles": 0,
-      "practiceCategoryLinks": 2,
-      "practiceVerification": "category_title_only_not_task_content",
-      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
-    },
-    {
       "id": "chem:2:2",
       "subject": "chem",
       "title": "Алканы и алкены: закрепление реакций и качественных признаков",
@@ -2614,72 +2580,6 @@
           "candidates": {
             "books": [],
             "practice": [],
-            "articles": []
-          }
-        }
-      ],
-      "reviewPriority": 166,
-      "sourceReviewStatus": "requires_editorial_content_review",
-      "foxfordArticles": 0,
-      "practiceCategoryLinks": 2,
-      "practiceVerification": "category_title_only_not_task_content",
-      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
-    },
-    {
-      "id": "chem:4:2",
-      "subject": "chem",
-      "title": "Спирты, фенол и альдегиды: распознавание и характерные реакции",
-      "editorialContentReviewed": false,
-      "subtopics": [
-        {
-          "title": "Спирты",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [
-              {
-                "title": "Спирты",
-                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
-                "number": 43,
-                "page": 227,
-                "pagesLabel": "227–233",
-                "status": "toc_heading_candidate"
-              }
-            ],
-            "practice": [],
-            "articles": []
-          }
-        },
-        {
-          "title": "фенол и альдегиды: распознавание и характерные реакции",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [
-              {
-                "title": "Фенолы",
-                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
-                "number": 46,
-                "page": 248,
-                "pagesLabel": "248–256",
-                "status": "toc_heading_candidate"
-              },
-              {
-                "title": "Карбонильные соединения: номенклатура, изомерия, реакции присоединения",
-                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
-                "number": 47,
-                "page": 257,
-                "pagesLabel": "257–265",
-                "status": "toc_heading_candidate"
-              }
-            ],
-            "practice": [
-              {
-                "title": "Определение значения «выхода продукта реакции» или «массовой примеси»",
-                "url": "https://chem-ege.sdamgia.ru/test?filter=all&category_id=175",
-                "status": "category_heading_candidate"
-              }
-            ],
             "articles": []
           }
         }
@@ -4051,111 +3951,6 @@
         }
       ],
       "reviewPriority": 148,
-      "sourceReviewStatus": "requires_editorial_content_review",
-      "foxfordArticles": 0,
-      "practiceCategoryLinks": 2,
-      "practiceVerification": "category_title_only_not_task_content",
-      "followUp": "Сопоставить каждую подтему с прочитанным текстом статьи, параграфа и условиями задач"
-    },
-    {
-      "id": "bio:11:0",
-      "subject": "bio",
-      "title": "Водоросли, мхи, плауны, хвощи, папоротники",
-      "editorialContentReviewed": false,
-      "subtopics": [
-        {
-          "title": "Водоросли",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [
-              {
-                "title": "Отдел Зеленые водоросли. Одноклеточные зеленые водоросли",
-                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
-                "number": 45,
-                "page": 172,
-                "pagesLabel": "172–174",
-                "status": "toc_heading_candidate"
-              }
-            ],
-            "practice": [
-              {
-                "title": "Водоросли",
-                "url": "https://bio-ege.sdamgia.ru/test?filter=all&category_id=29",
-                "status": "category_heading_candidate"
-              }
-            ],
-            "articles": []
-          }
-        },
-        {
-          "title": "мхи",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [],
-            "articles": []
-          }
-        },
-        {
-          "title": "плауны",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [
-              {
-                "title": "Отделы: Хвощевидные и Плауновидные. Вымершие папоротникообразные",
-                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
-                "number": 51,
-                "page": 192,
-                "pagesLabel": "192–195",
-                "status": "toc_heading_candidate"
-              }
-            ],
-            "practice": [],
-            "articles": []
-          }
-        },
-        {
-          "title": "хвощи",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [],
-            "practice": [],
-            "articles": []
-          }
-        },
-        {
-          "title": "папоротники",
-          "evidence": "not_reviewed",
-          "sourceUrl": null,
-          "candidates": {
-            "books": [
-              {
-                "title": "Отдел Папоротниковидные, или Папоротники",
-                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
-                "number": 50,
-                "page": 189,
-                "pagesLabel": "189–191",
-                "status": "toc_heading_candidate"
-              },
-              {
-                "title": "Отделы: Хвощевидные и Плауновидные. Вымершие папоротникообразные",
-                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
-                "number": 51,
-                "page": 192,
-                "pagesLabel": "192–195",
-                "status": "toc_heading_candidate"
-              }
-            ],
-            "practice": [],
-            "articles": []
-          }
-        }
-      ],
-      "reviewPriority": 145,
       "sourceReviewStatus": "requires_editorial_content_review",
       "foxfordArticles": 0,
       "practiceCategoryLinks": 2,
@@ -10118,6 +9913,126 @@
       "followUp": "Проверить текст отдельных задач, покрытие учебника и соответствие ФИПИ"
     },
     {
+      "id": "chem:2:1",
+      "subject": "chem",
+      "title": "Классы неорганики, Na/K/Ca/Mg, Al/Zn",
+      "editorialContentReviewed": true,
+      "subtopics": [
+        {
+          "title": "Оксиды, основания, кислоты, соли",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/klassifikatsiya-i-nomenklatura-neorganicheskih-veschestv",
+          "candidates": {
+            "books": [],
+            "practice": [],
+            "articles": []
+          }
+        },
+        {
+          "title": "Металлы Na, K, Ca, Mg",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/osobennosti-stroeniya-metallov-ia-i-iia-grupp",
+          "candidates": {
+            "books": [
+              {
+                "title": "Общая характеристика щелочных металлов",
+                "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
+                "number": 28,
+                "page": 132,
+                "pagesLabel": "132–135",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [
+              {
+                "title": "Свойства простых веществ — металлов и неметаллов",
+                "url": "https://chem-ege.sdamgia.ru/test?filter=all&category_id=154",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Металлы IA и IIA групп",
+                "url": "https://foxford.ru/wiki/himiya/osobennosti-stroeniya-metallov-ia-i-iia-grupp",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Алюминий",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/stroenie-i-svoystva-alyuminiya-i-ego-soedineniy",
+          "candidates": {
+            "books": [
+              {
+                "title": "Алюминий — химический элемент и простое вещество",
+                "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
+                "number": 35,
+                "page": 162,
+                "pagesLabel": "162–169",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [],
+            "articles": [
+              {
+                "title": "Алюминий и соединения",
+                "url": "https://foxford.ru/wiki/himiya/stroenie-i-svoystva-alyuminiya-i-ego-soedineniy",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Цинк",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/stroenie-i-svoystva-tsinka-i-ego-soedineniy",
+          "candidates": {
+            "books": [],
+            "practice": [],
+            "articles": []
+          }
+        },
+        {
+          "title": "Амфотерные соединения",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/amfoternost",
+          "candidates": {
+            "books": [
+              {
+                "title": "Магний и его соединения",
+                "edition": "Ерёмин и др. Химия. 11 класс. Углублённый уровень. 13-е изд.",
+                "number": 32,
+                "page": 148,
+                "pagesLabel": "148–151",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [],
+            "articles": [
+              {
+                "title": "Алюминий и соединения",
+                "url": "https://foxford.ru/wiki/himiya/stroenie-i-svoystva-alyuminiya-i-ego-soedineniy",
+                "status": "article_heading_candidate"
+              },
+              {
+                "title": "Цинк и соединения",
+                "url": "https://foxford.ru/wiki/himiya/stroenie-i-svoystva-tsinka-i-ego-soedineniy",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        }
+      ],
+      "reviewPriority": 97,
+      "sourceReviewStatus": "reviewed_selected_aspects",
+      "foxfordArticles": 5,
+      "practiceCategoryLinks": 2,
+      "practiceVerification": "category_title_only_not_task_content",
+      "followUp": "Проверить текст отдельных задач, покрытие учебника и соответствие ФИПИ"
+    },
+    {
       "id": "math:2:0",
       "subject": "math",
       "title": "Вероятность: элементарные и сложные события №4–5",
@@ -10533,6 +10448,137 @@
       "followUp": "Проверить текст отдельных задач, покрытие учебника и соответствие ФИПИ"
     },
     {
+      "id": "chem:4:2",
+      "subject": "chem",
+      "title": "Спирты, фенол и альдегиды: распознавание и характерные реакции",
+      "editorialContentReviewed": true,
+      "subtopics": [
+        {
+          "title": "Характерные реакции спиртов",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-spirtov",
+          "candidates": {
+            "books": [
+              {
+                "title": "Спирты",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 43,
+                "page": 227,
+                "pagesLabel": "227–233",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Карбонильные соединения: номенклатура, изомерия, реакции присоединения",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 47,
+                "page": 257,
+                "pagesLabel": "257–265",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [
+              {
+                "title": "Определение значения «выхода продукта реакции» или «массовой примеси»",
+                "url": "https://chem-ege.sdamgia.ru/test?filter=all&category_id=175",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Спирты",
+                "url": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-spirtov",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Фенолы и качественные реакции",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-fenola",
+          "candidates": {
+            "books": [
+              {
+                "title": "Фенолы",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 46,
+                "page": 248,
+                "pagesLabel": "248–256",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Карбонильные соединения: номенклатура, изомерия, реакции присоединения",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 47,
+                "page": 257,
+                "pagesLabel": "257–265",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [
+              {
+                "title": "Определение значения «выхода продукта реакции» или «массовой примеси»",
+                "url": "https://chem-ege.sdamgia.ru/test?filter=all&category_id=175",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Фенол",
+                "url": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-fenola",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Альдегиды и карбонильные реакции",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-karbonilnyh-soedineniy",
+          "candidates": {
+            "books": [
+              {
+                "title": "Карбонильные соединения: номенклатура, изомерия, реакции присоединения",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 47,
+                "page": 257,
+                "pagesLabel": "257–265",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Химические свойства и методы получения карбонильных соединений",
+                "edition": "Ерёмин и др. Химия. 10 класс. Углублённый уровень. 13-е изд.",
+                "number": 48,
+                "page": 266,
+                "pagesLabel": "266–272",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [
+              {
+                "title": "Определение значения «выхода продукта реакции» или «массовой примеси»",
+                "url": "https://chem-ege.sdamgia.ru/test?filter=all&category_id=175",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Альдегиды",
+                "url": "https://foxford.ru/wiki/himiya/himicheskie-svoystva-karbonilnyh-soedineniy",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        }
+      ],
+      "reviewPriority": 91,
+      "sourceReviewStatus": "reviewed_selected_aspects",
+      "foxfordArticles": 3,
+      "practiceCategoryLinks": 2,
+      "practiceVerification": "category_title_only_not_task_content",
+      "followUp": "Проверить текст отдельных задач, покрытие учебника и соответствие ФИПИ"
+    },
+    {
       "id": "bio:7:0",
       "subject": "bio",
       "title": "Гены, аллели, генотип, фенотип, законы Менделя",
@@ -10622,6 +10668,135 @@
       "sourceReviewStatus": "reviewed_selected_aspects",
       "foxfordArticles": 3,
       "practiceCategoryLinks": 1,
+      "practiceVerification": "category_title_only_not_task_content",
+      "followUp": "Проверить текст отдельных задач, покрытие учебника и соответствие ФИПИ"
+    },
+    {
+      "id": "bio:11:0",
+      "subject": "bio",
+      "title": "Водоросли, мхи, плауны, хвощи, папоротники",
+      "editorialContentReviewed": true,
+      "subtopics": [
+        {
+          "title": "Водоросли",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/biologiya/vodorosli-obshchaya-harakteristika",
+          "candidates": {
+            "books": [
+              {
+                "title": "Отдел Зеленые водоросли. Одноклеточные зеленые водоросли",
+                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
+                "number": 45,
+                "page": 172,
+                "pagesLabel": "172–174",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [
+              {
+                "title": "Водоросли",
+                "url": "https://bio-ege.sdamgia.ru/test?filter=all&category_id=29",
+                "status": "category_heading_candidate"
+              }
+            ],
+            "articles": [
+              {
+                "title": "Водоросли",
+                "url": "https://foxford.ru/wiki/biologiya/vodorosli-obshchaya-harakteristika",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Мхи",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/biologiya/vysshie-sporovye-rasteniya-otdel-mohovidnye",
+          "candidates": {
+            "books": [],
+            "practice": [],
+            "articles": []
+          }
+        },
+        {
+          "title": "Плауны",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/biologiya/otdel-plaunovidnye",
+          "candidates": {
+            "books": [
+              {
+                "title": "Отделы: Хвощевидные и Плауновидные. Вымершие папоротникообразные",
+                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
+                "number": 51,
+                "page": 192,
+                "pagesLabel": "192–195",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [],
+            "articles": [
+              {
+                "title": "Плауны",
+                "url": "https://foxford.ru/wiki/biologiya/otdel-plaunovidnye",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Хвощи",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/biologiya/otdel-hvoshchevidnye",
+          "candidates": {
+            "books": [],
+            "practice": [],
+            "articles": [
+              {
+                "title": "Хвощи",
+                "url": "https://foxford.ru/wiki/biologiya/otdel-hvoshchevidnye",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Папоротники",
+          "evidence": "page_content_reviewed",
+          "sourceUrl": "https://foxford.ru/wiki/biologiya/vysshie-sporovye-rasteniya-otdel-paporotnikovidnye",
+          "candidates": {
+            "books": [
+              {
+                "title": "Отдел Папоротниковидные, или Папоротники",
+                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
+                "number": 50,
+                "page": 189,
+                "pagesLabel": "189–191",
+                "status": "toc_heading_candidate"
+              },
+              {
+                "title": "Отделы: Хвощевидные и Плауновидные. Вымершие папоротникообразные",
+                "edition": "Викторов, Никишов. Биология. Растения. Бактерии. Грибы и лишайники. 7 класс",
+                "number": 51,
+                "page": 192,
+                "pagesLabel": "192–195",
+                "status": "toc_heading_candidate"
+              }
+            ],
+            "practice": [],
+            "articles": [
+              {
+                "title": "Папоротники",
+                "url": "https://foxford.ru/wiki/biologiya/vysshie-sporovye-rasteniya-otdel-paporotnikovidnye",
+                "status": "article_heading_candidate"
+              }
+            ]
+          }
+        }
+      ],
+      "reviewPriority": 70,
+      "sourceReviewStatus": "reviewed_selected_aspects",
+      "foxfordArticles": 5,
+      "practiceCategoryLinks": 2,
       "practiceVerification": "category_title_only_not_task_content",
       "followUp": "Проверить текст отдельных задач, покрытие учебника и соответствие ФИПИ"
     }
