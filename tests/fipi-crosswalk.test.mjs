@@ -40,7 +40,7 @@ test("спецификация показывает проектные огра�
  assert.ok(F.caution.includes("Проекты ФИПИ"));
  assert.ok(F.primarySource.startsWith("https://fipi.ru/"));
  assert.ok(F.get("bio:1:1").section.length>10);
- assert.equal(F.get("bio:1:1").verification,"editorial_category");
+ assert.equal(F.get("bio:1:1").verification,"editorial_week_domain_only");
 });
 
 test("новое задание №6 ведёт непосредственно в статью Фоксфорда и подборку реальных задач",()=>{

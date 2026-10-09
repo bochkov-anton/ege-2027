@@ -216,25 +216,18 @@ function assign(state,day,start,planDay){
  const week=Math.max(0,Math.floor((dat-new Date(start+"T12:00:00"))/604800000));
  const pair=D.patterns[week%2][dat.getDay()-1]||["bio","chem"];
  const preferred=[...pair,...D.subjectOrder.filter(x=>!pair.includes(x))];
+ // Single complete lesson = theory → independent exercises → score.
+ // 234 topics / 130 study days requires at least 1.8 completed topics/day.
+ // Old stored curriculumAssignments are never reinterpreted.
  const chosen=new Set(),tasks=[];
- const first=nextSubject(state,preferred[0])||nextSubject(state,preferred[1]);
- if(first){
-   chosen.add(first.subject);
-   if(!first.status.theory){
-     tasks.push(task(day,tasks.length,first.id,"theory",55));
-     tasks.push(task(day,tasks.length,first.id,"practice",50));
-   }else tasks.push(task(day,tasks.length,first.id,"practice",55));
- }
  for(const subject of preferred){
-   if(tasks.length>=3)break;
+   if(tasks.length>=2)break;
    if(chosen.has(subject))continue;
    const next=nextSubject(state,subject);
    if(!next)continue;
    chosen.add(subject);
-   // A second subject gets a standalone theory or practice stage, never both.
-   // This prevents "mixed" exercises on material that was not yet studied.
-   const phase=next.status.theory?"practice":"theory";
-   tasks.push(task(day,tasks.length,next.id,phase,tasks.length===2?45:50));
+   const phase=next.status.theory?"practice":"integrated";
+   tasks.push(task(day,tasks.length,next.id,phase,phase==="integrated"?75:55));
  }
  state.curriculumAssignments[day]=tasks;
  return tasks;
@@ -318,6 +311,6 @@ window.EGE_CURRICULUM={records,order,risks:risk,topicStatus,unmet,prerequisitePa
  year:2027,source:"https://fipi.ru/ege/demoversii-specifikacii-kodifikatory",
  status:"FIPI project 2027; verify against approved documents on publication",
  subjects:{bio:"7 broad content areas",chem:"General, inorganic, organic, calculation, experiment",math:"2027 profile: 20 tasks including new 6,13,17"},
- version:"1.1"
+ version:"2.0-semantic-order-two-integrated-lessons"
 }};
 })();

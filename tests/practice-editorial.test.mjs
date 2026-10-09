@@ -24,6 +24,6 @@ test("проект ФИПИ не выдаётся за официально за
   assert.equal(Object.keys(a.all).length,234);
   for(const r of Object.values(a.all)){
     assert.equal(r.status,"draft");
-    assert.ok(["editorial_category","declared_line_in_plan"].includes(r.verification));
+    assert.ok(["editorial_category","declared_line_in_plan","editorial_week_domain_only"].includes(r.verification));
   }
 });

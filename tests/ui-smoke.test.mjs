@@ -22,7 +22,7 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 test("приложение загружается без DOM-ошибок и выводит план дня",()=>{
@@ -67,11 +67,13 @@ test("отметка выполненного блока сохраняется 
   const date=L.today();
   if(!L.isStudyDay(date)) return;
   const first=JSON.parse(a.store.get("ege2027-local-progress-v1")).curriculumAssignments[date][0];
-  a.events.get("document:click")({target:{closest:()=>({dataset:{action:"toggle-task",id:first.id}})}});
+  const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+  click({action:"detail",id:first.id});a.node("#task-score").value="4/5";click({action:"save-score"});
+  click({action:"toggle-task",id:first.id});
   const saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(saved.completed[first.id],first.subject);
   assert.equal(saved.topicProgress[first.topicKey].theory,true);
-  assert.equal(saved.topicProgress[first.topicKey].practice,undefined,"Теория ещё не равна освоенной практике");
+  assert.equal(saved.topicProgress[first.topicKey].practice,true,"Теория и проверенная практика завершены");
 });
 test("поиск тем и открытие подробной карточки работают без перехода по неделям",()=>{
   const a=runApp(),click=(dataset)=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
@@ -178,11 +180,13 @@ test("сегодня показывает старые обязательные 
   const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
   if(!L.isStudyDay(day)||L.parseDate(day).getDay()<2)return;
   const initial=JSON.parse(a.store.get("ege2027-local-progress-v1"));
-  const assigned=initial.curriculumAssignments[day];assert.ok(Array.isArray(assigned)&&assigned.length===3);
+  const assigned=initial.curriculumAssignments[day];assert.ok(Array.isArray(assigned)&&assigned.length===2);
   assert.ok(a.node("#app").innerHTML.includes("Темы, требующие завершения"));
   assert.ok(a.node("#app").innerHTML.includes("Следующее занятие"));
   const first=assigned[0];
-  a.events.get("document:click")({target:{closest:()=>({dataset:{action:"toggle-task",id:first.id}})}});
+  const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
+  click({action:"detail",id:first.id});a.node("#task-score").value="4/5";click({action:"save-score"});
+  click({action:"toggle-task",id:first.id});
   const now=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(now.completed[first.id],first.subject);
   assert.ok(now.restSuggestion?.minutes>=15||a.node("#app").innerHTML.includes("Перерыв"));
@@ -209,7 +213,7 @@ test("таймер достигает лимита, фиксирует резу�
   const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset,textContent:""})}});
   click({action:"detail",id:assigned[0]});
   click({action:"timer-toggle"});
-  clock.now+=55*60*1000;
+  clock.now+=75*60*1000;
   a.tick();
   const state=JSON.parse(a.store.get("ege2027-local-progress-v1"));
   assert.equal(state.restSuggestion.minutes,15);
@@ -274,7 +278,7 @@ test("запущенный таймер восстанавливается по�
   const restored=JSON.parse(b.store.get("ege2027-local-progress-v1"));
   assert.equal(restored.studyTimer.taskId,task);
   assert.ok(restored.studyTimer.startedAt);
-  clock.now+=56*60000;b.tick();
+  clock.now+=76*60000;b.tick();
   const after=JSON.parse(b.store.get("ege2027-local-progress-v1"));
   assert.equal(after.studyTimer.startedAt,null);
   assert.equal(after.studyTimer.notified,true);
@@ -416,33 +420,25 @@ test("короткие ссылки на § видны сразу в недел�
  assert.ok(a.node("#app").innerHTML.includes("reading-short"),"На карточках предметов присутствует ориентир");
 });
 
-test("новая теория должна быть завершена раньше самостоятельной практики",()=>{
+test("интегрированная тема: теория и самостоятельные задания учитываются вместе, зачёт только с результатом",()=>{
  const a=runApp(),L=a.window.EGE_LOGIC,day=L.today();
  if(!L.isStudyDay(day))return;
  const click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
  const state=JSON.parse(a.store.get("ege2027-local-progress-v1"));
- const [theory,practice,second]=state.curriculumAssignments[day];
- assert.equal(theory.kind,"new");
- assert.equal(practice.kind,"practice");
- assert.equal(second.kind,"new");
- assert.equal(theory.topicKey,practice.topicKey);
- click({action:"toggle-task",id:practice.id});
+ const [first,second]=state.curriculumAssignments[day];
+ assert.equal(first.phase,"integrated");assert.equal(second.phase,"integrated");
+ assert.notEqual(first.subject,second.subject);
+ click({action:"toggle-task",id:first.id});
  let saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
- assert.ok(!saved.completed[practice.id],"Раньше изучения теории зачёт практики запрещён");
- click({action:"toggle-task",id:theory.id});
- saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
- assert.equal(saved.topicProgress[theory.topicKey].theory,true);
- assert.ok(!saved.topicProgress[theory.topicKey].practice);
- click({action:"toggle-task",id:practice.id});
- saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
- assert.ok(!saved.completed[practice.id],"Без результатов минимум трёх задач практика не закрывается");
- click({action:"detail",id:practice.id});
+ assert.ok(!saved.completed[first.id],"Без самостоятельного результата занятие не зачтено");
+ click({action:"detail",id:first.id});
  a.node("#task-score").value="4/5";click({action:"save-score"});
- click({action:"toggle-task",id:practice.id});
+ click({action:"toggle-task",id:first.id});
  saved=JSON.parse(a.store.get("ege2027-local-progress-v1"));
- assert.equal(saved.topicProgress[practice.topicKey].practice,true);
- assert.equal(saved.completed[practice.id],practice.subject);
- assert.ok(saved.reviews[practice.topicKey],"Повторение после самостоятельной практики");
+ assert.equal(saved.completed[first.id],first.subject);
+ assert.equal(saved.topicProgress[first.topicKey].theory,true);
+ assert.equal(saved.topicProgress[first.topicKey].practice,true);
+ assert.ok(saved.reviews[first.topicKey],"После освоения назначается повторение");
 });
 test("математика №6 показывает ФИПИ-проект и прямую подборку задач по дисперсии",()=>{
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});

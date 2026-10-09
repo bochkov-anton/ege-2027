@@ -65,9 +65,9 @@
       '<div class="direct-exercises">'+(sources.length?sources.map((x,i)=>
       '<div class="direct-exercise"><span class="direct-index">'+(i+1)+'</span>'+
       '<div class="direct-description"><strong>'+safe(x.title)+'</strong>'+
-      '<span>РЕШУ ЕГЭ · '+(i===0?"основной набор":"дополнительный набор")+'</span>'+
+      '<span>'+(x.url.includes("sdamgia.ru")?"РЕШУ ЕГЭ":"Внешний учебный ресурс")+' · '+(x.coverage==="partial"?"только часть темы":"тематическая категория")+' · проверено по заголовку, не по содержанию каждой задачи</span>'+
       '<div class="row wrap"><a class="btn small" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Открыть задания →</a>'+
-      '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать адрес</button></div></div></div>').join(""):'<p class="note">Подтверждённая подборка пока отсутствует; используйте учебную задачу ниже.</p>')+'</div>'+
+      '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать адрес</button></div></div></div>').join(""):'<p class="note">Не найдена подборка заданий с достаточно точным названием по этой теме. Неподходящие ссылки скрыты; выполните индивидуальное упражнение из карточки. Это не означает, что задача на сайте отсутствует.</p>')+'</div>'+
       (saved.length?'<details class="personal-links"><summary>Мои дополнительные ссылки ('+saved.length+')</summary>'+saved.map(x=>sourceActions({...x,user:true},key)).join("")+'</details>':"");
   }
   function textbookSection(key,subject,title){
@@ -191,10 +191,10 @@
     const articles=info.articles||[];
     if(articles.length)html+='<div class="foxford-list"><div class="study-kicker">ФОКСФОРД · КРАТКОЕ ОБЪЯСНЕНИЕ</div>'+
       articles.map(x=>'<div class="foxford-item"><strong>'+safe(x.title)+'</strong>'+
-      '<p class="note">Прочитайте объяснения и разобранные примеры. Затем выполните задания самостоятельно.</p>'+
+      '<p class="note">'+(x.coverage==="partial"?"Статья объясняет только часть этой темы. Остальные пункты изучите в учебнике, прежде чем решать задачи.":"Тематическая статья. Изучите объяснения и затем выполните задания.")+'</p>'+
       '<a class="btn" href="'+safe(x.url)+'" target="_blank" rel="noopener noreferrer">Читать теорию Фоксфорда →</a>'+
       '<button class="btn ghost small" data-action="copy-resource" data-url="'+safe(x.url)+'">Скопировать ссылку</button></div>').join("")+'</div>';
-    else html+='<div class="foxford-missing"><strong>Точная статья Фоксфорда для этой узкой темы ещё не подтверждена.</strong>'+
+    else html+='<div class="foxford-missing"><strong>Точно соответствующая теме статья Фоксфорда не подтверждена.</strong>'+
       '<p>Не подменяем теорию кодификатором или неподходящей статьёй. Используйте конспект ниже.</p></div>';
     html+=verifiedReadingPanel(key);
     html+=textbookPanel(key,subject,title);

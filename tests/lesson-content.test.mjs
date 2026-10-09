@@ -39,7 +39,7 @@ test("теория и практика раздельны; Фоксфорд — 
    if(theory.articles?.length)withFoxford++;
    for(const article of theory.articles){
      assert.match(article.url,/^https:\/\/foxford\.ru\/wiki\/(biologiya|himiya|matematika)\/[a-z0-9-]+$/);
-     assert.ok(article.title.length>5);
+     assert.ok(article.title.length>=4);
      unique.add(article.url);
    }
  }

@@ -35,21 +35,16 @@ test("органика изучается только после основ, а
   assert.ok(C.order.math.indexOf("math:5:1")<C.order.math.indexOf("math:5:2"));
  assert.ok(C.order.bio.indexOf("bio:6:1")<C.order.bio.indexOf("bio:7:0"));
 });
-test("новый день начинается с теории и не отдаёт готовую практику без её освоения",()=>{
- const st=L.safeState({startDate:"2026-10-05"},"2026-10-05");
- const a=C.agenda(st,"2026-10-05","normal","2026-10-05",L.planDay,L.studyAgenda);
- assert.equal(a.length,3);
- assert.deepEqual(Array.from(a.slice(0,2).map(x=>x.kind)),["new","new"]);
- assert.ok(!a.some(x=>x.phase==="practice"),"Практика скрыта до завершения теории");
- const originalPractice=st.curriculumAssignments["2026-10-05"].find(x=>x.phase==="practice");
- assert.equal(C.readyForCompletion(st,originalPractice),false,"Практику нельзя засчитывать прежде теории");
- assert.equal(C.readyForCompletion(st,a[0]),true);
+test("новый день включает два законченных маршрута теория → задачи и сохраняет пререквизиты",()=>{
+ const day="2026-10-05",st=L.safeState({startDate:day},day);
+ const a=C.agenda(st,day,"normal",day,L.planDay,L.studyAgenda);
+ assert.ok(a.length===2||a.length===3,"Два предмета по 75 минут плюс отдельный повтор при необходимости");
+ assert.deepEqual(Array.from(a.slice(0,2).map(x=>x.phase)),["integrated","integrated"]);
+ assert.ok(a.every(x=>C.readyForCompletion(st,x)), "Новая тема возможна только после основ");
  C.markCompletion(st,a[0],true);
- assert.equal(C.readyForCompletion(st,originalPractice),true);
- assert.ok(C.agenda(st,"2026-10-05","normal","2026-10-05",L.planDay,L.studyAgenda).some(x=>x.phase==="practice"));
- C.markCompletion(st,originalPractice,true);
+ assert.equal(C.topicStatus(st,a[0].topicKey).theory,true);
  assert.equal(C.topicStatus(st,a[0].topicKey).practice,true);
- assert.equal(C.unmet(st,"chem:2:2").length>0,true);
+ assert.ok(C.unmet(st,"chem:2:2").length>0,"Поздняя органика недоступна");
 });
 test("назначение для даты неизменно после прогресса, общие идентификаторы не перезаписываются",()=>{
  const st=L.safeState({startDate:"2026-10-05"},"2026-10-05");
@@ -61,7 +56,7 @@ test("назначение для даты неизменно после про�
  assert.ok(!b.some(x=>x.phase==="theory"&&x.topicKey===a[0].topicKey),
    "Уже пройденная теория не дублируется в видимом плане");
  const next=C.agenda(st,"2026-10-06","normal","2026-10-06",L.planDay,L.studyAgenda);
- assert.ok(st.curriculumAssignments["2026-10-06"].some(x=>x.kind==="practice"),"Unfinished practice is carried over in stored assignment");
+ assert.ok(st.curriculumAssignments["2026-10-06"].some(x=>x.phase==="integrated"),"Новая тема следующего дня назначается как интегрированная");
  assert.ok(!next.some(x=>x.phase==="practice"&&!C.topicStatus(st,x.topicKey).theory),"No practice displayed ahead of theory");
 });
 test("архивные завершения мигрируют по старым ID только при подтверждении двух этапов",()=>{
@@ -88,20 +83,18 @@ test("краткий режим и выходные не увеличивают 
  assert.ok(C.agenda(st,"2026-10-06","short","2026-10-06",L.planDay,L.studyAgenda).length<=2);
 });
 
-test("старая незакрытая практика не остаётся дубликатом после завершения темы через другой день",()=>{
- const st=L.safeState({startDate:"2026-10-05"},"2026-10-05"),first="2026-10-05",second="2026-10-07";
- const original=C.agenda(st,first,"normal",first,L.planDay,L.studyAgenda);
- const later=C.agenda(st,second,"normal",second,L.planDay,L.studyAgenda);
- const previousPractice=st.curriculumAssignments[first].find(x=>x.phase==="practice");
- assert.ok(previousPractice,"Практика сохранена в назначении, но скрыта до теории");
- C.markCompletion(st,original[0],true);
- assert.ok(C.agenda(st,first,"normal",first,L.planDay,L.studyAgenda).some(x=>x.phase==="practice"));
- C.markCompletion(st,previousPractice,true);
- const refresh=C.agenda(st,second,"normal",second,L.planDay,L.studyAgenda);
- assert.ok(!refresh.some(x=>x.topicKey===previousPractice.topicKey&&x.phase==="practice"),
-   "После зачёта старого блока дубликат должен исчезнуть");
+test("завершённый позже блок не остаётся дублем в раннем назначении",()=>{
+ const st=L.safeState({startDate:"2026-10-05"},"2026-10-05");
+ const a=C.agenda(st,"2026-10-05","normal","2026-10-05",L.planDay,L.studyAgenda);
+ const b=C.agenda(st,"2026-10-07","normal","2026-10-07",L.planDay,L.studyAgenda);
+ const first=a[0],oldDay=st.curriculumAssignments["2026-10-05"].map(x=>x.topicKey);
+ assert.ok(b.some(x=>x.topicKey===first.topicKey),"Незавершённая тема переносится");
+ C.markCompletion(st,first,true);
+ assert.deepEqual(Array.from(st.curriculumAssignments["2026-10-05"].map(x=>x.topicKey)),Array.from(oldDay));
+ const changed=C.agenda(st,"2026-10-07","normal","2026-10-07",L.planDay,L.studyAgenda);
+ assert.ok(!changed.some(x=>x.topicKey===first.topicKey&&!st.completed[x.id]),
+ "После завершения предыдущее назначение больше не дублируется в активных заданиях");
 });
-
 test("старый третий блок сохраняет факт изучения, практика — только по результату 80%",()=>{
  const first="2026-10-05",date=first;
  const oldTasks=L.planDay(first,first,{},"normal"),secondary=oldTasks.find(t=>t.id===date+":2");

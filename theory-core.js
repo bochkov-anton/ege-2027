@@ -116,68 +116,65 @@ math:[
 "Пример. x²−2ax+a²=0 имеет один корень x=a для любого действительного a. Если в более сложной задаче коэффициент при x² зависит от a, отдельно проверь случай его обнуления."]
 ]
 };
+/* Только адресные тематические соответствия. Никакого regex matching по общему
+ * слову «метод», «связь», «формула», «структура», «биология» и т.д.
+ * partial значит статья покрывает только часть составной карточки. */
 const articleLinks={
-"bio:1:2":[["Строение ДНК и РНК","https://foxford.ru/wiki/biologiya/stroenie-nukleinovyh-kislot"]],
-"bio:2:0":[["Клеточная мембрана и эукариоты","https://foxford.ru/wiki/biologiya/obschie-printsipy-stroeniya-kletok-kletochnaya-teoriya-pro-i-eukarioty"]],
-"bio:2:1":[["Органоиды эукариотической клетки","https://foxford.ru/wiki/biologiya/stroenie-kletok-eukariot-dvumembrannye-organelly"]],
-"bio:2:2":[["Прокариоты и эукариоты","https://foxford.ru/wiki/biologiya/obschie-printsipy-stroeniya-kletok-kletochnaya-teoriya-pro-i-eukarioty"]],
-"bio:3:2":[["Разбор молекулярных задач","https://foxford.ru/wiki/biologiya/reshenie-zadach-po-molekulyarnoj-biologii-i-citogenetike"]],
-"bio:5:0":[["Фотосинтез и хемосинтез","https://foxford.ru/wiki/biologiya/fotosintez-i-hemosintez"]],
-"bio:6:0":[["Клеточное деление, митоз","https://foxford.ru/wiki/biologiya/kletochnoe-delenie-mitoz"]],
-"bio:9:0":[["Растительная клетка","https://foxford.ru/wiki/biologiya/osobennosti-stroeniya-rastitelnoj-kletki"]],
-"chem:1:0":[["Строение электронной оболочки атома","https://foxford.ru/wiki/himiya/stroenie-elektronnyh-obolochek"],["Модели строения атома","https://foxford.ru/wiki/himiya/modeli-stroeniya-atoma"]],
-"chem:1:1":[["Химическая связь","https://foxford.ru/wiki/himiya/vidy-harakteristiki-i-mehanizmy-obrazovaniya-himicheskoy-svyazi"]],
-"chem:1:2":[["Окислительно-восстановительные реакции","https://foxford.ru/wiki/himiya/okislitelno-vosstanovitelnye-reaktsii"]],
-"chem:2:0":[["Электролитическая диссоциация","https://foxford.ru/wiki/himiya/teoriya-elektroliticheskoy-dissotsiatsii-ted"]],
-"chem:8:1":[["ОВР и электронный баланс","https://foxford.ru/wiki/himiya/okislitelno-vosstanovitelnye-reaktsii"]],
-"chem:10:0":[["Гибридизация атома углерода","https://foxford.ru/wiki/himiya/osobennosti-stroeniya-atoma-ugleroda"]],
-"math:1:1":[["Логарифмы и свойства","https://foxford.ru/wiki/matematika/logarifm"]],
-"math:8:0":[["Логарифмические неравенства","https://foxford.ru/wiki/matematika/logarifmicheskie-neravenstva"]],
-"math:10:0":[["Логарифмические неравенства","https://foxford.ru/wiki/matematika/logarifmicheskie-neravenstva"]]
-};
-const curatedFoxford={
- bio:[
- [/метод.*(биолог|исслед|эксперимент)|биолог.*наук/i,"Методы изучения клетки","https://foxford.ru/wiki/biologiya/metody-izucheniya-kletki"],
- [/днк|рнк|генетическ.*код/i,"Строение нуклеиновых кислот","https://foxford.ru/wiki/biologiya/stroenie-nukleinovyh-kislot"],
- [/транскрипц|процессинг/i,"Транскрипция и созревание РНК","https://foxford.ru/wiki/biologiya/transkriptsiya-sozrevanie-rnk-tipy-rnk"],
- [/молекулярн.*задач|расчётн.*днк/i,"Задачи по молекулярной биологии","https://foxford.ru/wiki/biologiya/reshenie-zadach-po-molekulyarnoj-biologii-i-citogenetike"],
- [/митоз|интерфаз/i,"Клеточное деление; митоз","https://foxford.ru/wiki/biologiya/kletochnoe-delenie-mitoz"],
- [/органоид|строени.*клетк/i,"Строение клеток эукариот","https://foxford.ru/wiki/biologiya/stroenie-kletok-eukariot-odnomembrannye-organelly-yadro"],
- [/прокариот|эукариот|вирус/i,"Основные группы живых организмов","https://foxford.ru/wiki/biologiya/osnovnye-tsarstva-zhivyh-organizmov"],
- [/фотосинтез|хемосинтез/i,"Фотосинтез и хемосинтез","https://foxford.ru/wiki/biologiya/fotosintez-i-hemosintez"],
- [/лист|транспирац/i,"Функции листа","https://foxford.ru/wiki/biologiya/funktsii-lista"],
- [/мейоз|гаметогенез/i,"Мейоз и его биологическое значение","https://foxford.ru/wiki/biologiya/meyoz-i-ego-biologicheskoe-znachenie"],
- [/гаметофит|спорофит|жизненн.*цикл/i,"Жизненные циклы растений","https://foxford.ru/wiki/biologiya/zhiznennye-tsikly-rasteniy-gametofit-i-sporofit"],
- [/генетик|скрещив|родослов|сцепл.*ген|наследован/i,"Решение задач по генетике","https://foxford.ru/wiki/biologiya/reshenie-zadach-po-genetike"],
- [/экологич.*фактор|экосистем|популяци/i,"Экологические факторы и среда обитания","https://foxford.ru/wiki/biologiya/ekologicheskie-faktory-ekologicheskaya-nisha-limitiruyuschie-faktory"],
- [/происхождени.*жизн/i,"Возникновение жизни на Земле","https://foxford.ru/wiki/biologiya/vozniknovenie-zhizni-na-zemle"]
- ],
- chem:[
- [/электрон.*конфигурац|строени.*атом/i,"Строение электронных оболочек","https://foxford.ru/wiki/himiya/stroenie-elektronnyh-obolochek"],
- [/химическ.*связ|решётк/i,"Химическая связь","https://foxford.ru/wiki/himiya/vidy-harakteristiki-i-mehanizmy-obrazovaniya-himicheskoy-svyazi"],
- [/окислительно|овр|электронн.*баланс/i,"Окислительно-восстановительные реакции","https://foxford.ru/wiki/himiya/okislitelno-vosstanovitelnye-reaktsii"],
- [/гидролиз/i,"Гидролиз солей","https://foxford.ru/wiki/himiya/gidroliz"],
- [/раствор|концентрац|массов.*дол/i,"Концентрация растворов","https://foxford.ru/wiki/himiya/kontsentratsiya-rastvorov"],
- [/ионн.*обмен|соль|неорганик/i,"Химические свойства солей","https://foxford.ru/wiki/himiya/himicheskie-svoystva-soley"],
- [/скорост.*реакц|кинетик/i,"Скорость химической реакции","https://foxford.ru/wiki/himiya/skorost-himicheskoy-reaktsii"],
- [/гибридизац/i,"Гибридизация орбиталей","https://foxford.ru/wiki/himiya/gibridizatsiya-orbitaley"],
- [/изомер|номенклатур/i,"Виды изомерии","https://foxford.ru/wiki/himiya/vidy-izomerii"],
- [/классификаци.*реакц/i,"Классификация реакций","https://foxford.ru/wiki/himiya/klassifikatsiya-reaktsiy"]
- ],
- math:[
- [/логарифм.*неравен|неравен.*логарифм/i,"Логарифмические неравенства","https://foxford.ru/wiki/matematika/logarifmicheskie-neravenstva"],
- [/метод интервалов|рациональн.*неравен|одз/i,"Метод интервалов","https://foxford.ru/wiki/matematika/metod-intervalov"],
- [/логарифм/i,"Логарифм","https://foxford.ru/wiki/matematika/logarifm"],
- [/тригонометрическ.*уравнен|№14/i,"Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya"],
- [/производн|экстрем|график/i,"Производная функции","https://foxford.ru/wiki/matematika/proizvodnaya"],
- [/финансов|кредит|вклад/i,"Кредит: математическая модель","https://foxford.ru/wiki/matematika/kredit"]
- ]
+ "bio:1:2":[["ДНК и РНК: нуклеиновые кислоты","https://foxford.ru/wiki/biologiya/stroenie-nukleinovyh-kislot","partial"]],
+ "bio:2:1":[["Органоиды клетки: двумембранные","https://foxford.ru/wiki/biologiya/stroenie-kletok-eukariot-dvumembrannye-organelly","partial"],
+   ["Органоиды клетки: одномембранные, ядро","https://foxford.ru/wiki/biologiya/stroenie-kletok-eukariot-odnomembrannye-organelly-yadro","partial"]],
+ "bio:2:2":[["Клеточная организация: прокариоты и эукариоты","https://foxford.ru/wiki/biologiya/obschie-printsipy-stroeniya-kletok-kletochnaya-teoriya-pro-i-eukarioty","partial"]],
+ "bio:3:0":[["Транскрипция, созревание РНК","https://foxford.ru/wiki/biologiya/transkriptsiya-sozrevanie-rnk-tipy-rnk","partial"]],
+ "bio:3:2":[["Решение задач по молекулярной биологии","https://foxford.ru/wiki/biologiya/reshenie-zadach-po-molekulyarnoj-biologii-i-citogenetike","full"]],
+ "bio:5:0":[["Фотосинтез и хемосинтез","https://foxford.ru/wiki/biologiya/fotosintez-i-hemosintez","full"]],
+ "bio:5:2":[["Фотосинтез и хемосинтез","https://foxford.ru/wiki/biologiya/fotosintez-i-hemosintez","partial"]],
+ "bio:6:0":[["Митоз","https://foxford.ru/wiki/biologiya/kletochnoe-delenie-mitoz","partial"]],
+ "bio:6:1":[["Мейоз","https://foxford.ru/wiki/biologiya/meyoz-i-ego-biologicheskoe-znachenie","partial"]],
+ "bio:7:1":[["Решение задач по генетике","https://foxford.ru/wiki/biologiya/reshenie-zadach-po-genetike","partial"]],
+ "bio:8:0":[["Задачи по генетике","https://foxford.ru/wiki/biologiya/reshenie-zadach-po-genetike","partial"]],
+ "bio:8:1":[["Задачи по генетике","https://foxford.ru/wiki/biologiya/reshenie-zadach-po-genetike","partial"]],
+ "bio:9:0":[["Особенности растительной клетки","https://foxford.ru/wiki/biologiya/osobennosti-stroeniya-rastitelnoj-kletki","partial"]],
+ "bio:9:1":[["Функции листа","https://foxford.ru/wiki/biologiya/funktsii-lista","partial"]],
+ "bio:10:1":[["Функции листа","https://foxford.ru/wiki/biologiya/funktsii-lista","partial"]],
+ "bio:11:2":[["Гаметофит, спорофит, жизненные циклы","https://foxford.ru/wiki/biologiya/zhiznennye-tsikly-rasteniy-gametofit-i-sporofit","full"]],
+ "bio:22:2":[["Возникновение жизни на Земле","https://foxford.ru/wiki/biologiya/vozniknovenie-zhizni-na-zemle","partial"]],
+ "bio:23:0":[["Экологические факторы и экологическая ниша","https://foxford.ru/wiki/biologiya/ekologicheskie-faktory-ekologicheskaya-nisha-limitiruyuschie-faktory","partial"]],
+ "chem:1:0":[["Строение электронных оболочек","https://foxford.ru/wiki/himiya/stroenie-elektronnyh-obolochek","partial"],
+  ["Модели атома","https://foxford.ru/wiki/himiya/modeli-stroeniya-atoma","partial"]],
+ "chem:1:1":[["Химическая связь","https://foxford.ru/wiki/himiya/vidy-harakteristiki-i-mehanizmy-obrazovaniya-himicheskoy-svyazi","partial"]],
+ "chem:2:0":[["Электролитическая диссоциация","https://foxford.ru/wiki/himiya/teoriya-elektroliticheskoy-dissotsiatsii-ted","partial"]],
+ "chem:3:0":[["Гидролиз","https://foxford.ru/wiki/himiya/gidroliz","partial"]],
+ "chem:5:1":[["Концентрация растворов","https://foxford.ru/wiki/himiya/kontsentratsiya-rastvorov","partial"]],
+ "chem:5:2":[["Окислительно-восстановительные реакции","https://foxford.ru/wiki/himiya/okislitelno-vosstanovitelnye-reaktsii","full"]],
+ "chem:7:0":[["Гидролиз","https://foxford.ru/wiki/himiya/gidroliz","partial"]],
+ "chem:10:0":[["Гибридизация орбиталей углерода","https://foxford.ru/wiki/himiya/osobennosti-stroeniya-atoma-ugleroda","partial"]],
+ "math:2:2":[],
+ "math:4:1":[["Математическая модель кредита","https://foxford.ru/wiki/matematika/kredit","partial"]],
+ "math:5:1":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","full"]],
+ "math:5:2":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]],
+ "math:6:1":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","full"]],
+ "math:6:2":[["Метод интервалов","https://foxford.ru/wiki/matematika/metod-intervalov","full"]],
+ "math:7:0":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]],
+ "math:7:1":[["Метод интервалов","https://foxford.ru/wiki/matematika/metod-intervalov","partial"]],
+ "math:8:0":[["Логарифмические неравенства","https://foxford.ru/wiki/matematika/logarifmicheskie-neravenstva","partial"]],
+ "math:8:1":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]],
+ "math:9:0":[["Логарифмические неравенства","https://foxford.ru/wiki/matematika/logarifmicheskie-neravenstva","partial"]],
+ "math:9:1":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]],
+ "math:10:0":[["Логарифмические неравенства","https://foxford.ru/wiki/matematika/logarifmicheskie-neravenstva","partial"]],
+ "math:10:2":[["Производная","https://foxford.ru/wiki/matematika/proizvodnaya","partial"]],
+ "math:11:0":[["Кредит: математическая модель","https://foxford.ru/wiki/matematika/kredit","partial"]],
+ "math:11:1":[["Метод интервалов","https://foxford.ru/wiki/matematika/metod-intervalov","partial"]],
+ "math:12:2":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]],
+ "math:13:0":[["Производная и экстремумы","https://foxford.ru/wiki/matematika/proizvodnaya","partial"]],
+ "math:14:1":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]],
+ "math:15:2":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]],
+ "math:20:1":[["Тригонометрические уравнения","https://foxford.ru/wiki/matematika/trigonometricheskie-uravneniya","partial"]]
 };
 function pickedFoxford(key,subject,title){
- const links=articleLinks[key]||[];
- const selected=curatedFoxford[subject]?.find(([rx])=>rx.test(title));
- if(selected&&!links.some(([n,url])=>url===selected[2]))links.push([selected[1],selected[2]]);
- return links.map(([name,url])=>({title:name,url}));
+ const validated=window.EGE_LESSONS?.get(key);
+ if(!validated||validated.subject!==subject||validated.title!==title)return [];
+ return (articleLinks[key]||[]).map(([name,url,coverage])=>
+   ({title:name,url,coverage,audit:"manual_topic_match",sourceRole:"foxford"}));
 }
 function get(key,subject,title,guide){
  if(key==="math:2:2"){

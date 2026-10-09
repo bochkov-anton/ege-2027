@@ -1,10 +1,10 @@
 /* Offline app shell. One immutable cache per release; no personal data leaves localStorage.
  * A successful install activates automatically and requests a client reload. */
-const CACHE_NAME="ege-2027-shell-4ab89555d952";
+const CACHE_NAME="ege-2027-shell-ff1dc2b053c2";
 const SCOPE=self.registration.scope;
 const APP_SHELL=[
   "./","./index.html","./style.css","./ux.css","./android.css","./flow.css","./session.css","./wellbeing.css","./lessons.css","./textbooks.css",
-  "./data.js","./wellbeing.js","./logic.js","./curriculum.js","./fipi-map.js","./resources.js","./topic-practice.js","./lesson-content.js","./theory-core.js","./fipi-supplements.js","./textbooks.js","./verified-tocs.js","./page-assignments.js","./reading-guide.js","./experience.js","./app.js",
+  "./data.js","./wellbeing.js","./logic.js","./curriculum.js","./fipi-map.js","./resources.js","./topic-practice.js","./lesson-content.js","./theory-core.js","./fipi-supplements.js","./resource-integrity.js","./textbooks.js","./verified-tocs.js","./page-assignments.js","./reading-guide.js","./experience.js","./app.js",
   "./android.js","./manifest.webmanifest",
   "./icons/icon-192.png","./icons/icon-512.png"
 ];
