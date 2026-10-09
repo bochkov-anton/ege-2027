@@ -475,21 +475,8 @@
           '<div class="week-topic">Состав дня определится после проверки предыдущих тем</div>')+
         '</button>';
     }).join("")+'</div>';
-    html+='<div class="card padding" style="margin-top:19px"><div class="row between wrap"><h2>Темы недели</h2><span class="chip">Сб и Вс — выходные</span></div><div class="grid-3">'+D.subjectOrder.map(s=>{
-      const data=subj(s);return '<details class="week-course"'+(s==="math"?"":" open")+'><summary class="week-course-summary">'+badge(s)+'<span>3 темы · открыть список</span></summary>'+
-      C.projectedWeek(s,focusWeek).map((topic,i)=>{
-        const t=topic.title;
-        const key=topic.id,guide=authored(key,s,t),articles=theoryFor(key,s,t).articles||[];
-        return '<article class="week-lesson"><strong>'+safe(t)+'</strong>'+
-          '<p class="note"><b>Изучить:</b> '+safe(guide.know)+'</p>'+pagePreview(key)+
-          '<p class="note">'+safe(window.EGE_FIPI?.get(key)?.section||"")+'</p>'+
-          '<p class="note"><b>Выполнить:</b> '+safe(guide.doTask)+'</p>'+
-          '<p class="note">'+(articles.length?"Есть статья Фоксфорда":"Краткий конспект")+
-          ' · '+directExercises(key).length+' набора заданий</p>'+
-          '<button class="btn secondary small" data-action="open-topic" data-key="'+safe(key)+'">Разобрать тему →</button></article>';
-      }).join("")+'</details>';
-    }).join("")+'</div></div>';
-    return html+'<p class="note" style="margin-top:12px">Это ориентир маршрута с учётом зависимостей. Реальное занятие назначается в разделе «Сегодня» после проверки уже освоенных тем. Проекты КИМ-2027 и прежние исходные планы требуют периодической сверки.</p>';
+    html+=window.EGE_WEEK_UI.renderWeek(state,C,focusWeek,{safe,badge,authored,pagePreview,subj});
+    return html;
   }
   function links(key,week,title){return externalLinks(R.forTopic(key,week??focusWeek,title||subj(key).weeks[week??focusWeek][0]));}
   function topicCard(topic){
@@ -566,24 +553,12 @@
     return html;
   }
   function renderProgress(){
-    const st=L.stats(state),weeks=Math.min(26,Math.max(0,L.weekNumber(L.today(),state.startDate)+1));
-    const attempts=Object.values(state.results).filter(v=>v&&Number.isFinite(v.correct)&&Number.isFinite(v.total)&&v.total>0);
-    let html=head("Обратная связь","Прогресс обучения","Отдельно считаются знакомство с темами и отложенное подтверждение их освоения.");
-    html+='<div class="metric-strip"><div class="card metric"><b>'+st.total+'</b><span>Завершённых блоков</span></div><div class="card metric"><b>'+Object.keys(state.reviews).length+'</b><span>Тем начато</span></div><div class="card metric"><b>'+st.openErrors+'</b><span>Открытых ошибок</span></div></div>';
-    if(attempts.length){
-      const scoreParts=D.subjectOrder.map(s=>{
-        const a=attempts.filter(v=>v.subject===s),solved=a.reduce((n,v)=>n+v.total,0),correct=a.reduce((n,v)=>n+v.correct,0);
-        return a.length?'<span>'+safe(subj(s).name)+': <strong>'+Math.round(correct/solved*100)+'%</strong> ('+solved+' заданий)</span>':'';
-      }).filter(Boolean);
-      html+='<div class="card padding" style="margin-bottom:18px"><h2>Точность записанных проверок</h2><div class="row wrap">'+scoreParts.join(' · ')+'</div><p class="note" style="margin:10px 0 0">Это точность только по вручную введённым наборам. Она не равна прогнозу баллов ЕГЭ и может зависеть от сложности задач.</p></div>';
-    }
-    html+='<div class="grid-2"><div class="card padding"><h2>Темы по предметам</h2>'+D.subjectOrder.map(s=>{
-      const keys=Object.keys(state.reviews).filter(k=>k.startsWith(s+":")),mastered=keys.filter(k=>(state.reviews[k]?.successes||0)>=2).length,total=subj(s).weeks.reduce((n,w)=>n+w.length,0);
-      const studied=Math.round(keys.length/total*100),stable=Math.round(mastered/total*100);
-      return '<div class="progress-row"><div class="row between"><strong>'+safe(subj(s).name)+'</strong><span class="note">'+keys.length+'/'+total+' начато · '+mastered+' подтверждено</span></div><div class="bar" style="margin-bottom:5px"><span style="width:'+studied+'%;background:'+subj(s).color+'"></span></div><div class="bar"><span style="width:'+stable+'%;background:#243b54"></span></div></div>';
-    }).join("")+'<p class="note">Верхняя полоса — начатые темы, нижняя — минимум две уверенные отложенные проверки. Это не прогноз баллов ЕГЭ.</p></div>';
-    html+='<div class="stack"><div class="card padding"><h2>Календарный маршрут</h2><div class="row between" style="margin-bottom:10px"><strong>'+weeks+' / 26 недель</strong><span class="note">'+Math.round(weeks/26*100)+'%</span></div><div class="bar"><span style="width:'+Math.round(weeks/26*100)+'%"></span></div><p class="note" style="margin-top:14px">Неделя календаря не означает автоматически освоение её тем.</p></div>';
-    html+='<div class="card padding"><h2>Выполненные блоки</h2>'+D.subjectOrder.map(s=>'<div class="row between" style="margin:9px 0">'+badge(s)+'<strong>'+st.bySubject[s]+'</strong></div>').join("")+'</div><div class="callout">Баллы пробников и точность задач пока вносятся вручную в примечания. Это намеренно простой локальный инструмент, а не платформа автоматической проверки ЕГЭ.</div></div></div>';
+    const weeks=Math.min(26,Math.max(0,L.weekNumber(L.today(),state.startDate)+1));
+    let html=head("Обратная связь","Прогресс обучения","Отмеченная теория, самостоятельная практика и повторение считаются отдельно.");
+    html+=window.EGE_WEEK_UI.renderProgress(state,C,L.today(),{safe,badge,subj});
+    html+='<section class="calendar-context"><div><strong>Календарный ориентир: '+weeks+' из 26 недель</strong>'+
+      '<p>Прошедшая неделя не означает освоенную тему. Смотрите показатели подготовки выше.</p></div>'+
+      '<button class="btn secondary small" data-view="week">Открыть неделю →</button></section>';
     const activity=Object.entries(state.results).filter(([,r])=>r&&typeof r==="object").map(([id,r])=>({id,date:id.split(":")[0],subject:r.subject,score:U.scoreText(r),note:state.notes[id]||""}))
       .concat(Object.entries(state.notes).filter(([id])=>!state.results[id]&&id.includes(":")).map(([id,note])=>({id,date:id.split(":")[0],subject:state.completed[id]||lookup(id)?.subject||"bio",score:"",note})))
       .filter(x=>x.score||x.note).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,15);

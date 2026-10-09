@@ -22,7 +22,7 @@ function runApp(seed=null,clock=null) {
   const window={EGE_DATA:null,EGE_LOGIC:null,EGE_RESOURCES:null,EGE_UX:null};
   class FakeFormData {constructor(form){this.data=form.values||{};}get(key){return this.data[key]??null;}}
   const context=vm.createContext({window,document,localStorage,Date:RuntimeDate,Intl,console,URL,FormData:FakeFormData,setTimeout:()=>1,clearTimeout(){},setInterval(fn){const id=++intervalId;intervals.set(id,fn);return id;},clearInterval(id){intervals.delete(id);},confirm:()=>true});
-  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","topic-coverage.js","coverage-candidates.js","study-source-routes.js","experience.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
+  for(const file of ["data.js","wellbeing.js","logic.js","curriculum.js","fipi-map.js","resources.js","topic-practice.js","lesson-content.js","theory-core.js","fipi-supplements.js","resource-integrity.js","textbooks.js","verified-tocs.js","page-assignments.js","reading-guide.js","topic-coverage.js","coverage-candidates.js","study-source-routes.js","experience.js","learning-analytics.js","week-ui.js","app.js"])vm.runInContext(readFileSync(new URL("../"+file,import.meta.url),"utf8"),context,{filename:file});
   return {nodes,events,store,window,node,tick(){for(const fn of [...intervals.values()])fn();}};
 }
 function markStudySteps(a,click,verify=true){
@@ -81,9 +81,9 @@ test("неделя позволяет сворачивать предметы б
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
  click({view:"week"});
  const html=a.node("#app").innerHTML;
- assert.ok(html.includes('class="week-course" open'));
- assert.ok(html.includes('class="week-course"><summary'));
- assert.equal((html.match(/class="week-lesson"/g)||[]).length,9);
+ assert.ok(html.includes('class="week-subject week-subject-bio"'));
+ assert.ok(html.includes('class="week-subject week-subject-math"'));
+ assert.equal((html.match(/class="week-mini-lesson"/g)||[]).length,9);
 });
 test("планшетный режим чтения увеличивает текст, не изменяя прогресс",()=>{
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
@@ -473,7 +473,8 @@ test("карточка выводит точный §, страницу и ISBN 
 });
 
 test("при диагностике после ошибки выводятся § и страницы для адресного повторения",()=>{
- const initial=runApp(),saved=JSON.parse(initial.store.get("ege2027-local-progress-v1"));
+ const initial=runApp(),saved=JSON.parse(initial.store.get("ege2027-local-progress-v1")||"{}");
+ saved.errors=Array.isArray(saved.errors)?saved.errors:[];
  saved.errors.unshift({id:"err-remedial",subject:"bio",title:"Плоские черви",topicKey:"bio:13:1",description:"ошибка в систематике",kind:"concept",done:false});
  const a=runApp(saved),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
  click({action:"open-topic",key:"bio:24:0"});
@@ -486,10 +487,11 @@ test("при диагностике после ошибки выводятся �
  html=a.node("#dialog-content").innerHTML;
  assert.ok(html.includes("Параграфы и страницы — проверены"));
 });
-test("короткие ссылки на § видны сразу в недельном и предметном обзоре",()=>{
+test("параграфы есть в развёртываемых деталях недели и в предметном обзоре",()=>{
  const a=runApp(),click=dataset=>a.events.get("document:click")({target:{closest:()=>({dataset})}});
  click({view:"week"});
- assert.ok(a.node("#app").innerHTML.includes("Учебник"),"В недельном обзоре присутствуют §");
+ assert.ok(a.node("#app").innerHTML.includes("Подробнее"),"Подробности доступны по запросу");
+ assert.ok(a.node("#app").innerHTML.includes("Учебник"),"§ сохранены в развёртываемых деталях");
  click({view:"subjects"});
  assert.ok(a.node("#app").innerHTML.includes("reading-short"),"На карточках предметов присутствует ориентир");
 });
