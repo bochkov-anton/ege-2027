@@ -14,6 +14,16 @@
   function monday(date) { const d=new Date(date); return move(d,-(d.getDay()+6)%7); }
   function today() { return iso(new Date()); }
   function isStudyDay(date) { const d=typeof date==="string"?parseDate(date):date; return !!d && d.getDay()>=1 && d.getDay()<=5; }
+  // Saturday is never a compulsory study day. Sessions are explicitly opted in per date.
+  function saturdaySession(state,date){
+    const d=typeof date==="string"?parseDate(date):date;
+    if(!d||d.getDay()!==6)return null;
+    const entry=state?.saturdaySessions?.[iso(d)];
+    if(!entry||!["review","lesson"].includes(entry.kind))return null;
+    if(entry.kind==="lesson"&&!D.subjectOrder.includes(entry.subject))return null;
+    return entry;
+  }
+  function canStudyToday(state,date){return isStudyDay(date)||!!saturdaySession(state,date);}
   function shiftStudyDays(date,n) {
     let d=parseDate(date);
     if (!d) return null;
@@ -130,6 +140,10 @@
       notes:o.notes && typeof o.notes==="object" && !Array.isArray(o.notes)?o.notes:{},
       minimum:o.minimum && typeof o.minimum==="object" && !Array.isArray(o.minimum)?o.minimum:{},
       school:o.school && typeof o.school==="object" && !Array.isArray(o.school)?o.school:{},
+      saturdaySessions:Object.fromEntries(Object.entries(o.saturdaySessions&&typeof o.saturdaySessions==="object"&&!Array.isArray(o.saturdaySessions)?o.saturdaySessions:{})
+        .filter(([date,x])=>parseDate(date)?.getDay()===6&&x&&
+          (x.kind==="review"||(x.kind==="lesson"&&D.subjectOrder.includes(x.subject))))
+        .slice(-52)),
       results:o.results && typeof o.results==="object" && !Array.isArray(o.results)?o.results:{},
       steps:o.steps && typeof o.steps==="object" && !Array.isArray(o.steps)?o.steps:{},
       topicNotes:o.topicNotes && typeof o.topicNotes==="object" && !Array.isArray(o.topicNotes)?o.topicNotes:{},
@@ -178,5 +192,5 @@
     }
     return {total:all.length,bySubject:map,openErrors:state.errors.filter(e=>!e.done).length};
   }
-  window.EGE_LOGIC={parseDate,iso,move,monday,today,isStudyDay,shiftStudyDays,weekNumber,topicKey,suggestDay,planDay,pendingStudy,studyAgenda,debtSummary,safeState,dueItems,beginReview,rateReview,stats};
+  window.EGE_LOGIC={parseDate,iso,move,monday,today,isStudyDay,saturdaySession,canStudyToday,shiftStudyDays,weekNumber,topicKey,suggestDay,planDay,pendingStudy,studyAgenda,debtSummary,safeState,dueItems,beginReview,rateReview,stats};
 })();

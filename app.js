@@ -310,7 +310,19 @@
   }
   function quickCapture(t){return state.results[t.id]?'<span class="chip status-good">'+safe(U.scoreText(state.results[t.id]))+'</span>':"";}
   function stepsFor(t){return [1,2,3];}
-  function schoolInfo(day){return {...window.EGE_WELLBEING.DEFAULTS,...(state.school[day]||{})};}
+  function schoolInfo(day){
+    const saturday=L.parseDate(day)?.getDay()===6;
+    // Saturday has no assumed school timetable, but any explicitly saved overrides prevail.
+    return {...window.EGE_WELLBEING.DEFAULTS,...(saturday?{schoolEnd:"09:00",homework:0,commute:0,recovery:30}:{}),...(state.school[day]||{})};
+  }
+  function saturdayActivity(day){
+    const value=state.curriculumAssignments?.[day];
+    const tasks=Array.isArray(value)?value:[];
+    return tasks.some(t=>t&&(state.completed[t.id]||state.results[t.id]||state.notes[t.id]||
+      (Array.isArray(state.steps[t.id])&&state.steps[t.id].some(Boolean))||Number(state.timeSpent[t.id])>0||
+      state.studyTimer?.taskId===t.id));
+  }
+  function canStudyToday(){return L.canStudyToday(state,L.today());}
   function liveInfo(day){const i=schoolInfo(day);return day===L.today()?{...i,nowMinute:new Date().getHours()*60+new Date().getMinutes()}:i;}
   function modeFor(day){return L.suggestDay(liveInfo(day));}
   function externalLinks(resources){
@@ -364,7 +376,7 @@
       '</div></details></div></article>';
   }
   function ensureAssignments(day){
-    if(day!==L.today()||!L.isStudyDay(day)||L.weekNumber(day,state.startDate)<0)return;
+    if(day!==L.today()||!L.canStudyToday(state,day)||L.weekNumber(day,state.startDate)<0)return;
     if(!Array.isArray(state.curriculumAssignments?.[day])){
       C.assign(state,day,state.startDate,L.planDay);
       save();
@@ -373,7 +385,61 @@
   function currentAgenda(day,mode){
     return C.agenda(state,day,mode,L.today(),L.planDay,L.studyAgenda);
   }
+  function renderSaturday(){
+    const session=L.saturdaySession(state,date),isToday=date===L.today();
+    let html=head("Ежедневный план · добровольная суббота","Суббота, "+dformat(date),
+      "Суббота свободна по умолчанию. Можно учиться по желанию — без обязательной нормы, штрафов и переноса долгов.",viewDateNav());
+    if(!session){
+      if(!isToday)return html+'<section class="card padding saturday-rest"><h2>Суббота — день отдыха</h2><p>Занятия не назначались. Включить дополнительную сессию можно в саму субботу.</p></section>';
+      if(L.weekNumber(date,state.startDate)<0)return html+'<section class="card padding saturday-rest"><h2>Программа ещё не началась</h2><p>Начните основной маршрут с даты старта программы.</p></section>';
+      const pinned=state.curriculumAssignments?.[date]?.[0],hasActivity=saturdayActivity(date);
+      return html+'<section class="saturday-welcome card" aria-label="Добровольная учёба в субботу">'+
+       '<div class="saturday-welcome-head"><span class="study-kicker">ВЫ РЕШАЕТЕ</span>'+
+       '<h2>Отдохнуть или немного позаниматься?</h2>'+
+       '<p>Обычное расписание остаётся с понедельника по пятницу. Дополнительное занятие не создаёт обязательств на будущие субботы и не увеличивает учебный долг.</p></div>'+
+       '<div class="saturday-options">'+
+       '<div class="saturday-option"><div><strong>Повторить изученное</strong><p>Разобрать ошибки и ответить по памяти на отложенные вопросы. Можно остановиться в любой момент.</p></div>'+
+       '<button class="btn secondary" data-action="saturday-enable" data-kind="review">Выбрать повторение →</button></div>'+
+       D.subjectOrder.map(s=>{
+        const next=C.nextSubject(state,s);
+        const fixed=pinned?.subject===s?C.records[pinned.topicKey]:next;
+        const locked=hasActivity&&pinned?.subject!==s;
+        return '<div class="saturday-option"><div>'+badge(s)+'<strong>Одно занятие по предмету</strong>'+
+         '<p>'+(fixed?safe(fixed.title):"Все доступные темы уже освоены или требуют завершения основ.")+'</p></div>'+
+         '<button class="btn secondary" data-action="saturday-enable" data-kind="lesson" data-subject="'+s+'"'+
+         (!fixed||locked?' disabled':'')+'>Начать →</button></div>';
+       }).join("")+'</div>'+
+       '<p class="note">Воскресенье остаётся выходным. Повторные проверки новых тем будут назначены на ближайшие учебные дни.</p></section>';
+    }
+    const label=session.kind==="review"?"Повторение без нового материала":"Дополнительное занятие · "+subj(session.subject).name;
+    html+='<section class="saturday-active card padding"><div class="row between wrap"><div><div class="study-kicker">ДОБРОВОЛЬНОЕ ЗАНЯТИЕ</div>'+
+      '<h2>'+safe(label)+'</h2></div>'+
+      (isToday?'<button class="btn ghost small" data-action="saturday-disable">Закончить сегодня</button>':"")+
+      '</div><p class="note">Нет ежедневной серии, штрафа или обязанности повторять это в следующие субботы. Если устали — можно закончить.</p></section>';
+    if(session.kind==="review"){
+      const due=L.dueItems(state.reviews,L.today()),errors=state.errors.filter(x=>!x.done).length;
+      html+='<section class="card padding saturday-review"><h2>Выберите один небольшой шаг</h2>'+
+        '<p>Вопросов для повторения: <strong>'+due.length+'</strong>. Ошибок для разбора: <strong>'+errors+'</strong>.</p>'+
+        '<div class="row wrap"><button class="btn" data-view="reviews">Открыть повторения →</button>'+
+        '<button class="btn secondary" data-view="subjects">Выбрать изученную тему</button></div>'+
+        '<p class="note">При отсутствии назначенных проверок можно просто перечитать заметки или выполнить несколько задач; новых обязательных сроков не будет.</p></section>';
+      return html;
+    }
+    if(isToday)ensureAssignments(date);
+    const mode=modeFor(date),blocks=currentAgenda(date,mode),done=blocks.filter(x=>state.completed[x.id]).length;
+    if(mode==="off")html+='<div class="safety-notice"><p>По текущему сну, самочувствию или доступному времени новое занятие сегодня не рекомендуется. Можно выбрать отдых или короткое повторение.</p></div>';
+    html+='<section class="card padding saturday-work"><div class="row between wrap"><h2>Одна тема — без перегрузки</h2>'+
+      '<span class="chip">'+(blocks[0]?.minutes||0)+' минут</span></div>'+
+      (blocks.length?'<p class="note">'+done+' из '+blocks.length+' завершено. Для зачёта требуется проверенная самостоятельная практика.</p>'+
+        '<div class="schedule">'+blocks.map((task,i)=>taskCard(task,i,false)).join("")+'</div>':
+       '<p class="note">Нет доступных новых заданий по выбранному предмету либо выбран отдых по состоянию. Можно перейти к повторениям.</p>')+
+      '<div class="row wrap"><button class="btn secondary" data-view="reviews">Открыть повторения</button>'+
+      '<button class="btn ghost" data-view="week">План следующей недели</button></div></section>';
+    if(isToday)html+=schoolPanel(date,mode);
+    return html;
+  }
   function renderToday(){
+    if(L.parseDate(date)?.getDay()===6)return renderSaturday();
     ensureAssignments(date);
     const week=L.weekNumber(date,state.startDate),mode=modeFor(date),blocks=currentAgenda(date,mode),debt=C.debtSummary(state,date),isActualToday=date===L.today();
     const isRest=!L.isStudyDay(date);
@@ -382,7 +448,7 @@
     const due=L.dueItems(state.reviews,L.today());
     let html=head("Ежедневный план",nameDay(date).replace(/^./,c=>c.toUpperCase())+", "+dformat(date),
       (week>=26?"После основного курса · ":(week>=0?"Неделя "+(week+1)+" из 26 · ":""))+(isRest?"День без занятий":"Нагрузка регулируется по ДЗ, сну, самочувствию и времени"),viewDateNav());
-    if(isRest)return html+'<div class="empty"><strong>Полный выходной</strong>Сегодня нет занятий, карточек, пробников и повторений. Суббота и воскресенье всегда свободны.</div>';
+    if(isRest)return html+'<div class="empty"><strong>Воскресенье — день отдыха</strong>Обязательные занятия и повторения не назначаются. По субботам доступна добровольная учебная сессия.</div>';
     if(week<0)return html+'<div class="empty"><strong>Программа ещё не началась</strong>Начало: '+dformat(state.startDate)+'. Дату можно изменить в настройках.</div>';
     if(week>=26&&!debt.total)html+='<div class="callout" style="margin-bottom:14px"><strong>Основная программа выполнена.</strong> Теперь смешанная практика, пробники и повторение.</div>';
     if(isActualToday&&debt.overdue)html+='<section class="backlog card padding"><div><strong>Темы, требующие завершения: '+debt.overdue+'</strong><p class="note">Это количество тем из ориентировочно пройденной части программы, а не число занятий на сегодня. Следующие темы открываются только после освоения необходимых основ.</p></div><button class="btn secondary small" data-action="show-backlog">Порядок и зависимости →</button></section>';
@@ -520,7 +586,7 @@
     return html+'</section>';
   }
   function renderReviews(){
-    const due=L.dueItems(state.reviews,L.today()),restDay=!L.isStudyDay(L.today()),upcoming=Object.entries(state.reviews).filter(([,v])=>v&&v.due>L.today()).sort((a,b)=>a[1].due.localeCompare(b[1].due)).slice(0,6);
+    const due=L.dueItems(state.reviews,L.today()),restDay=!canStudyToday(),upcoming=Object.entries(state.reviews).filter(([,v])=>v&&v.due>L.today()).sort((a,b)=>a[1].due.localeCompare(b[1].due)).slice(0,6);
     const errors=state.errors.filter(x=>!x.done);
     let html=head("Закрепление","Повторения и ошибки","Ответьте без подсказки, затем оцените реальный результат. В выходные ничего не назначается.");
     html+='<div class="grid-2"><section class="stack"><div class="row between"><h2>Пора повторить</h2><span class="chip">'+due.length+' тем</span></div>';
@@ -537,7 +603,7 @@
         '<button class="btn" data-action="rate" data-key="'+safe(r.key)+'" data-rate="easy">Самостоятельно</button></div></div></details>'+
         '<button class="btn ghost small recall-materials" data-action="open-topic" data-key="'+safe(r.key)+'">Открыть объяснение и материалы ↗</button>'+
         '</div></article>';
-    }).join(""):(restDay?'<div class="empty"><strong>Сегодня выходной</strong>Повторения можно выполнить в понедельник. Суббота и воскресенье свободны.</div>':'<div class="empty"><strong>Очередь пока пуста</strong>После изучения темы появится контроль на следующий учебный день.</div>');
+    }).join(""):(restDay?'<div class="empty"><strong>Сегодня день отдыха</strong>Если хотите повторять материал в субботу, сначала включите добровольную сессию в разделе «Сегодня». Воскресенье остаётся выходным.</div>':'<div class="empty"><strong>Очередь пока пуста</strong>После изучения темы появится контроль на следующий учебный день.</div>');
     if(due.length>6&&!restDay)html+='<div class="callout"><strong>Не нужно закрывать все '+due.length+' повторений сегодня.</strong><p class="note" style="margin:8px 0">Начните с 2–3 тем, остальные останутся в очереди. Не увеличивайте дневную нагрузку.</p><button class="btn ghost small" data-action="toggle-all-reviews">'+(showAllReviews?"Показать только первые 6":"Показать всю очередь")+'</button></div>';
     html+='<div class="card padding"><h2>Следующие проверки</h2>'+(upcoming.length?upcoming.map(([key,v])=>'<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line);gap:16px"><span style="font-size:12px">'+safe(v.title)+'</span><span class="note nowrap">'+dformat(v.due)+'</span></div>').join(""):'<p class="note">Нет запланированных проверок.</p>')+'</div></section>';
     html+='<section class="stack"><div class="card padding"><h2>Добавить ошибку</h2><form id="add-error-form" class="stack gap-small"><div class="field"><label>Предмет</label><select name="subject">'+D.subjectOrder.map(s=>'<option value="'+s+'">'+safe(subj(s).name)+'</option>').join("")+'</select></div><div class="field"><label>Тема или задание</label><input name="title" maxlength="180" placeholder="Например: ОВР, задание 29" required></div><div class="field"><label>Что исправить</label><textarea name="description" maxlength="800" placeholder="Конкретный пробел и корректирующее действие" required></textarea></div><button class="btn" type="submit">Добавить в работу</button></form></div>';
@@ -870,9 +936,43 @@
     if(b.dataset.view){if($("#task-dialog").open)closeDialog();setView(b.dataset.view);return;}
     const action=b.dataset.action;if(!action)return;
     switch(action){
+      case "show-saturday":{
+        date=L.iso(L.move(L.parseDate(state.startDate),focusWeek*7+5));
+        view="today";render();break;
+      }
+      case "saturday-enable":{
+        if(date!==L.today()||L.parseDate(date)?.getDay()!==6||
+          L.weekNumber(date,state.startDate)<0){notice("Добровольная сессия доступна только в текущую субботу после начала программы.");break;}
+        const kind=b.dataset.kind,subject=b.dataset.subject;
+        if(kind==="review"){
+          state.saturdaySessions[date]={kind:"review"};
+          save();render();break;
+        }
+        if(kind!=="lesson"||!D.subjectOrder.includes(subject))break;
+        const assigned=state.curriculumAssignments?.[date]?.[0];
+        if(assigned?.subject!==subject&&saturdayActivity(date)){
+          notice("Занятие уже начато. Записи и результат сохранены за первоначальной темой.");break;
+        }
+        if(assigned?.subject!==subject&&state.curriculumAssignments?.[date]){
+          delete state.curriculumAssignments[date];
+        }
+        if(!assigned||assigned.subject!==subject){
+          if(!C.nextSubject(state,subject)){notice("По предмету сейчас нет доступной темы. Можно выбрать повторение.");break;}
+        }
+        state.saturdaySessions[date]={kind:"lesson",subject};
+        C.assign(state,date,state.startDate,L.planDay);
+        save();render();break;
+      }
+      case "saturday-disable":{
+        if(date!==L.today()||!L.saturdaySession(state,date))break;
+        if(state.studyTimer?.taskId?.startsWith(date+":"))pauseStudyTimer();
+        if(!saturdayActivity(date))delete state.curriculumAssignments[date];
+        delete state.saturdaySessions[date];
+        save();render();notice("Суббота снова свободна. Сохранённые результаты не удалены.");break;
+      }
       case "prev-day":case "next-day":{
         let d=L.parseDate(date),delta=action==="prev-day"?-1:1;
-        do{d=L.move(d,delta);}while(!L.isStudyDay(d));
+        do{d=L.move(d,delta);}while(!L.canStudyToday(state,L.iso(d)));
         date=L.iso(d);render();break;
       }
       case "prev-week":case "next-week":focusWeek=Math.min(25,Math.max(0,focusWeek+(action==="prev-week"?-1:1)));render();break;
@@ -881,7 +981,7 @@
       case "repeat-error":{
         const er=state.errors.find(x=>x.id===b.dataset.id);
         if(!er?.topicKey){notice("У этой записи нет привязки к теме.");break;}
-        if(!L.isStudyDay(L.today())){notice("Повторения не проводятся в выходные.");break;}
+        if(!canStudyToday()){notice("Чтобы повторять в субботу, включите добровольную сессию в разделе «Сегодня».");break;}
         const t=U.topicByKey(er.topicKey);if(!t)break;
         L.beginReview(state,{topicKey:t.key,subject:t.subject,title:t.title},L.today());
         state.reviews[t.key].due=L.shiftStudyDays(L.today(),1);
@@ -943,7 +1043,7 @@
       case "start-topic-review":{
         const t=U.topicByKey(b.dataset.key);
         if(!t)break;
-        if(!L.isStudyDay(L.today())){notice("В выходные учебные действия не планируются.");break;}
+        if(!canStudyToday()){notice("Чтобы учиться в субботу, включите добровольную сессию в разделе «Сегодня».");break;}
         const progress=C.topicStatus(state,t.key);
         if(!progress.ready||!progress.theory||!progress.practice){
           notice("Повторение назначается после завершения теории и практики. Сначала пройдите необходимую базу в учебной очереди.");
@@ -1005,7 +1105,7 @@
         else setView("reviews");
         break;
       }
-      case "rate":if(!L.isStudyDay(L.today())){notice("В выходные занятия и повторения не проводятся.");break;}if(L.rateReview(state,b.dataset.key,b.dataset.rate,L.today())){save();render();notice("Следующая проверка назначена.");}break;
+      case "rate":if(!canStudyToday()){notice("В субботу сначала включите добровольную сессию. Воскресенье остаётся выходным.");break;}if(L.rateReview(state,b.dataset.key,b.dataset.rate,L.today())){save();render();notice("Следующая проверка назначена.");}break;
       case "resolve-error":{
         const er=state.errors.find(x=>x.id===b.dataset.id);if(er){er.done=true;save();render();}break;
       }

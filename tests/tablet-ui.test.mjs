@@ -6,7 +6,8 @@ const read=name=>readFileSync(new URL(name,root),"utf8");
 const html=read("index.html"),css=read("tablet-ui.css"),app=read("app.js");
 test("tablet styles are loaded last and included in offline packaging",()=>{
  const styles=[...html.matchAll(/<link rel="stylesheet" href="\.\/([^"]+)">/g)].map(m=>m[1]);
- assert.equal(styles.at(-1),"dashboard-ui.css");
+ assert.equal(styles.at(-1),"saturday-ui.css");
+ assert.ok(styles.indexOf("dashboard-ui.css")<styles.indexOf("saturday-ui.css"));
  assert.ok(styles.indexOf("tablet-ui.css")<styles.indexOf("dashboard-ui.css"));
  assert.equal(new Set(styles).size,styles.length);
  for(const file of ["scripts/package-site.py","sw.js","scripts/verify-live.mjs"])

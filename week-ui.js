@@ -46,7 +46,7 @@ function renderWeek(state,C,n,ctx){
  }).join("");
  return '<section class="week-topics-redesigned" aria-label="Темы недели">'+
    '<div class="week-section-heading"><div><span class="week-eyebrow">ПРОГРАММА</span><h2>Темы недели</h2></div>'+
-   '<span class="week-rest-chip">Суббота и воскресенье — отдых</span></div>'+
+   '<button type="button" class="week-rest-chip" data-action="show-saturday" title="Открыть субботу выбранной недели: учёба только по желанию">Сб · можно учиться по желанию · Вс · отдых</button></div>'+
    summary+'<div class="week-subject-grid">'+columns+'</div>'+
    '<p class="week-data-disclaimer">Это учебный ориентир, а не фактически назначенные занятия. Доступность учитывает зависимости; освоение означает завершённые теорию и практику. Календарное время само по себе не засчитывается.</p>'+
    '</section>';

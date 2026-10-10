@@ -222,7 +222,15 @@ function assign(state,day,start,planDay){
  if(hasLegacyActivity)return null; // Never reinterpret a previously started day.
  migrateLegacy(state,planDay);
  const dat=new Date(day+"T12:00:00");
- if(dat.getDay()===0||dat.getDay()===6)return [];
+ if(day<start)return [];
+ const saturday=dat.getDay()===6?window.EGE_LOGIC?.saturdaySession(state,day):null;
+ if(dat.getDay()===0||(dat.getDay()===6&&saturday?.kind!=="lesson"))return [];
+ if(saturday?.kind==="lesson"){
+   const next=nextSubject(state,saturday.subject);
+   const assignments=next?[task(day,0,next.id,next.status.theory?"practice":"integrated",75)]:[];
+   state.curriculumAssignments[day]=assignments;
+   return assignments;
+ }
  const week=Math.max(0,Math.floor((dat-new Date(start+"T12:00:00"))/604800000));
  const pair=D.patterns[week%2][dat.getDay()-1]||["bio","chem"];
  const preferred=[...pair,...D.subjectOrder.filter(x=>!pair.includes(x))];
@@ -243,6 +251,19 @@ function assign(state,day,start,planDay){
  return tasks;
 }
 function agenda(state,day,mode,currentDate,legacyPlan,legacyAgenda){
+ const saturday=window.EGE_LOGIC?.saturdaySession(state,day);
+ const dayOfWeek=new Date(day+"T12:00:00").getDay();
+ if(dayOfWeek===0||(dayOfWeek===6&&!saturday))return [];
+ if(dayOfWeek===6){
+   if(saturday.kind!=="lesson"||mode==="off")return [];
+   const stored=state.curriculumAssignments?.[day];
+   const tasks=(day===currentDate?assign(state,day,state.startDate,legacyPlan):
+     (Array.isArray(stored)?stored:[]))||[];
+   return tasks.filter(x=>state.completed?.[x.id]||
+     (topicStatus(state,x.topicKey).ready&&
+       !(topicStatus(state,x.topicKey).theory&&topicStatus(state,x.topicKey).practice)))
+     .map(x=>({...x,minutes:mode==="short"?25:mode==="light"?45:75}));
+ }
  if(day!==currentDate||!state.curriculumAssignments?.[day]&&Array.isArray(state.assignments?.[day])&&
    state.assignments[day].some(id=>state.completed?.[id]||state.notes?.[id]))
    return legacyAgenda(state,day,mode,currentDate);
